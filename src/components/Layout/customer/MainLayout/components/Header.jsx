@@ -4,7 +4,7 @@ import Action from './Action';
 
 export default function Header() {
    return (
-      <div className="flex items-center h-[66px] px-[28px] ">
+      <div className="flex items-center h-[66px] px-[28px]">
          <div className="flex justify-between items-center flex-1">
             {/* ICON */}
             <div className="flex items-center">

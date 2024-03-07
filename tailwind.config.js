@@ -17,7 +17,11 @@ export default {
          white: '#fff',
          transparent: 'transparent',
       },
-      extend: {},
+      extend: {
+         boxShadow: {
+            base: '0px 0px 15px #00000038',
+         },
+      },
    },
    plugins: [],
 };
