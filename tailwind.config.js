@@ -11,7 +11,7 @@ export default {
          green: '#13ce66',
          yellow: '#ffc82c',
          'gray-dark': '#273444',
-         gray: '#8492a6',
+         gray: '#666',
          'gray-light': '#d3dce6',
          black: '#000',
          white: '#fff',
@@ -21,7 +21,26 @@ export default {
          boxShadow: {
             base: '0px 0px 15px #00000038',
          },
+         keyframes: {
+            fade: {
+               '0%': {
+                  opacity: 0,
+                  transform: 'translateY(-8px)',
+               },
+               '100%': {
+                  opacity: 1,
+                  transform: 'translateY(0)',
+               },
+            },
+         },
+         animation: {
+            fade: 'fade .3s ease',
+         },
+         height: {
+            popper: 'min((100vh - 96px) - 60px, 734px)',
+         },
       },
    },
+
    plugins: [],
 };

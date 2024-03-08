@@ -20,7 +20,6 @@ export const router = createBrowserRouter([
             <Home />
          </MainLayout>
       ),
-      errorElement: <NotFoundPage />,
    },
    {
       path: '/course',
@@ -46,4 +45,6 @@ export const router = createBrowserRouter([
          },
       ],
    },
+
+   // ADMIN
 ]);

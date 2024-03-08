@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+hr {
+   color: #cccccc4d;
+   box-sizing: content-box;
+   height: 0;
+   overflow: visible;
+   margin: 8px 0;
+}
