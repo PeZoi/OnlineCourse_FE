@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import TippyModal from '../../../../TippyModal';
+import TippyModal from '../../../../../TippyModal';
+import SearchResult from './SearchResult';
 
 export default function Search() {
    const divContainerRef = useRef();
@@ -21,11 +22,8 @@ export default function Search() {
          isShow={showResult && searchText?.length > 0}
          setIsShow={setShowresult}
          ModalChildren={
-            <div className="animate-fade w-[420px] h-popper rounded-lg p-3 shadow-base bg-white">
-               <div className="flex justify-start items-center">
-                  <div className="w-[32px] h-[32px] bg-[url(https://fullstack.edu.vn/static/media/search.9bd3926522ea0937310c.svg)] bg-[length:15px] bg-no-repeat bg-[50%] opacity-70 hover:opacity-100 transition-all"></div>
-                  <span className="text-sm text-gray">Kết quả cho &apos;{searchText}&apos;</span>
-               </div>
+            <div className="animate-fade w-[420px] min-h-fit max-h-popper rounded-lg py-3 px-6 shadow-base bg-white overflow-y-auto">
+               <SearchResult searchText={searchText} searchResult={searchResult} />
             </div>
          }
          TriggerChildren={

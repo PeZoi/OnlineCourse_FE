@@ -12,7 +12,7 @@ export default {
          yellow: '#ffc82c',
          'gray-dark': '#273444',
          gray: '#666',
-         'gray-light': '#d3dce6',
+         'gray-light': '#f3f3f4',
          black: '#000',
          white: '#fff',
          transparent: 'transparent',
@@ -36,7 +36,7 @@ export default {
          animation: {
             fade: 'fade .3s ease',
          },
-         height: {
+         maxHeight: {
             popper: 'min((100vh - 96px) - 60px, 734px)',
          },
       },
