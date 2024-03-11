@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import NotificationIcon from '../../../../../public/icons/NotificationIcon';
 import TippyModal from '../../../../TippyModal';
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
 
 export default function Action() {
    const useData = useState(true);
