@@ -23,7 +23,11 @@ export const router = createBrowserRouter([
    },
    {
       path: '/course',
-      element: <Course />,
+      element: (
+         <MainLayout>
+            <Course />
+         </MainLayout>
+      ),
       children: [
          {
             path: '',
@@ -37,7 +41,11 @@ export const router = createBrowserRouter([
    },
    {
       path: '/blog',
-      element: <Blog />,
+      element: (
+         <MainLayout>
+            <Blog />
+         </MainLayout>
+      ),
       children: [
          {
             path: '',

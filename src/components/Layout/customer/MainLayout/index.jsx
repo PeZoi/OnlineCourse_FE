@@ -6,8 +6,10 @@ export default function MainLayout({ children }) {
    return (
       <div>
          <Header />
-         <Sidebar>{children}</Sidebar>
-         {/* <Footer /> */}
+         <div className="pt-[67px]">
+            <Sidebar>{children}</Sidebar>
+         </div>
+         <Footer />
       </div>
    );
 }

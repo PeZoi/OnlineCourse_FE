@@ -2,10 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Thêm custom utility */
+@layer utilities {
+   .opacity-hover {
+      transition: opacity 0.3s ease-in-out;
+   }
+
+   .opacity-hover:hover:not(.active) {
+      opacity: 0.7;
+   }
+}
+
+* {
+   box-sizing: border-box;
+}
+
 hr {
    color: #cccccc4d;
    box-sizing: content-box;
    height: 0;
    overflow: visible;
    margin: 8px 0;
+}
+
+.active {
+   background-color: #e8ebed;
 }

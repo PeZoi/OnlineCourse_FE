@@ -116,6 +116,7 @@ export default function Action() {
                            }}
                         >
                            <NotificationIcon />
+                           <span className=" inline-block text-red absolute top-[-10px] right-[-2px] text-lg">●</span>
                         </div>
                      }
                   />

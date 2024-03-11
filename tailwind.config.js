@@ -4,12 +4,13 @@ export default {
    theme: {
       colors: {
          primary: '#24303f',
-         blue: '#1fb6ff',
+         blue: '#1473e6',
          purple: '#7e5bef',
          pink: '#ff49db',
          orange: '#ff7849',
          green: '#13ce66',
          yellow: '#ffc82c',
+         red: '#fd0200',
          'gray-dark': '#273444',
          gray: '#666',
          'gray-light': '#f3f3f4',
@@ -39,8 +40,32 @@ export default {
          maxHeight: {
             popper: 'min((100vh - 96px) - 60px, 734px)',
          },
+         gridTemplateColumns: {
+            // Simple 16 column grid
+            16: 'repeat(16, minmax(0, 1fr))',
+         },
+         gridColumn: {
+            'span-15': 'span 15 / span 15',
+         },
       },
    },
 
-   plugins: [],
+   plugins: [
+      function ({ addUtilities }) {
+         const navLinkUtilities = {
+            '.opacity-hover-nav': {
+               transition: 'all 0.3s ease-in-out',
+            },
+            '.opacity-hover-nav:hover:not(.active)': {
+               opacity: 1,
+               backgroundColor: '#e8ebed87',
+            },
+            '.opacity-hover-nav:not(.active)': {
+               opacity: 0.7,
+            },
+         };
+
+         addUtilities(navLinkUtilities, ['responsive', 'hover']);
+      },
+   ],
 };
