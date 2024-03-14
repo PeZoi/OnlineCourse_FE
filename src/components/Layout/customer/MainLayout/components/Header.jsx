@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Search from './search/Search';
 import Action from './Action';
+import Logo from '../../../../../public/images/logo.png';
 
 export default function Header() {
    return (
@@ -11,11 +12,7 @@ export default function Header() {
                   {/* ICON */}
                   <div className="flex items-center">
                      <Link to={'/'}>
-                        <img
-                           className="h-[38px] rounded-lg"
-                           src="https://fullstack.edu.vn/static/media/f8-icon.18cd71cfcfa33566a22b.png"
-                           alt="F8"
-                        />
+                        <img className="h-[38px] rounded-lg" src={Logo} alt="F8" />
                      </Link>
                      <h4 className="font-bold text-black text-sm ml-4">Học Lập Trình Để Đi Làm</h4>
                   </div>

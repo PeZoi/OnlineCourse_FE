@@ -15,8 +15,12 @@ import GaugeIcon from './GaugeIcon';
 import HyphenIcon from './HyphenIcon';
 import CirclePlayIcon from './CirclePlayIcon';
 import CircleQuestion from './CircleQuestion';
+import FileIcon from './FileIcon';
+import XMark from './XMarkIcon';
 
 export {
+   XMark,
+   FileIcon,
    CirclePlayIcon,
    CircleQuestion,
    HyphenIcon,

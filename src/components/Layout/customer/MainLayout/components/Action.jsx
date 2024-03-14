@@ -115,7 +115,9 @@ export default function Action() {
                            }}
                         >
                            <NotificationIcon />
-                           <span className=" inline-block text-red absolute top-[-10px] right-[-2px] text-lg">●</span>
+                           <span className=" bg-red rounded-full size-4 flex items-center justify-center absolute top-[-3px] right-[-5px] text-white text-xs font-semibold">
+                              1
+                           </span>
                         </div>
                      }
                   />

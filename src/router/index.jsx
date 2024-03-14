@@ -7,6 +7,8 @@ import BlogsList from '../features/customer/blog/pages/BlogsList.jsx';
 import Home from '../features/customer/home/index.jsx';
 import NotFoundPage from '../features/NotFound.jsx';
 import MainLayout from '../components/Layout/customer/MainLayout/index.jsx';
+import LearnLayout from '../components/Layout/customer/LearnLayout/index.jsx';
+import CourseLearn from '../features/customer/course/pages/CourseLearn.jsx';
 
 export const router = createBrowserRouter([
    {
@@ -23,19 +25,31 @@ export const router = createBrowserRouter([
    },
    {
       path: '/course',
-      element: (
-         <MainLayout>
-            <Course />
-         </MainLayout>
-      ),
+      element: <Course />,
       children: [
          {
             path: '',
-            element: <CourseList />,
+            element: (
+               <MainLayout>
+                  <CourseList />
+               </MainLayout>
+            ),
          },
          {
             path: ':courseId',
-            element: <CourseDetail />,
+            element: (
+               <MainLayout>
+                  <CourseDetail />
+               </MainLayout>
+            ),
+         },
+         {
+            path: 'learn/:courseId',
+            element: (
+               <LearnLayout>
+                  <CourseLearn />
+               </LearnLayout>
+            ),
          },
       ],
    },
