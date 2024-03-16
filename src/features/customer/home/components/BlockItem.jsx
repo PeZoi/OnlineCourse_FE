@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import { GroupUser } from '../../../../public/icons';
 
-// Gộp Blog Item và Course Item vào 1
+// Gộp Blog Item và Course Item vào 1 (để có tính tái sử dụng)
 export default function BlockItem({ type, className }) {
    return (
       <div className={className}>

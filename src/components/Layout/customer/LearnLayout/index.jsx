@@ -1,10 +1,10 @@
 import Header from './components/Header';
 
-export default function LearnLayout() {
+export default function LearnLayout({ children }) {
    return (
       <div>
          <Header />
-         <div className="pt-[67px]"></div>
+         <div className="pt-[50px]">{children}</div>
       </div>
    );
 }

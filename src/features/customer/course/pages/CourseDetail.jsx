@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { CheckIcon, BatteryFullIcon, ClockIcon, FilmIcon, GaugeIcon } from '../../../../public/icons';
 import CourseContent from '../components/CourseContent';
+import CourseFeedback from '../components/CourseFeedback';
 
 export default function CourseDetail() {
    const { courseId } = useParams();
@@ -15,6 +16,7 @@ export default function CourseDetail() {
 
    return (
       <div className="px-11 pb-16 mt-8 grid grid-cols-12 gap-4">
+         {/*===== LEFT ====== */}
          <div className="col-span-8">
             <div>
                <h1 className="text-4xl font-bold">Làm việc với Terminal & Ubuntu</h1>
@@ -68,8 +70,12 @@ export default function CourseDetail() {
                      </li>
                   </ul>
                </div>
+
+               <CourseFeedback />
             </div>
          </div>
+
+         {/*===== RIGHT ====== */}
          <div className="col-span-4">
             <div className="sticky top-[85px]">
                <div className=" flex flex-col items-center ml-8">
