@@ -17,8 +17,12 @@ import CirclePlayIcon from './CirclePlayIcon';
 import CircleQuestion from './CircleQuestion';
 import FileIcon from './FileIcon';
 import XMark from './XMarkIcon';
+import LockIcon from './LockIcon';
+import CommentIcon from './CommentIcon';
 
 export {
+   CommentIcon,
+   LockIcon,
    XMark,
    FileIcon,
    CirclePlayIcon,

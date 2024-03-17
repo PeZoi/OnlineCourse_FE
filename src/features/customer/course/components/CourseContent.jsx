@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CourseContentDetail from './CourseContentDetail';
 
 export default function CourseContent() {
+   // Khi thay vào thì nên để ở ngoài (vì có chỗ dùng chung)
    const chapters = [{ name: 'Chapters 1' }, { name: 'Chapters 2' }, { name: 'Chapters 3' }];
 
    // Khi lấy các chapters của khoá học thì thay vào đây

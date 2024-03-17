@@ -42,25 +42,8 @@ export default function Header() {
                      >
                         <FileIcon className="size-[14px]" /> <span className="ml-1">Ghi chú</span>
                      </button>
-                     <div
-                        className={`fixed top-0 right-0 w-screen h-screen flex flex-row-reverse z-50  ${
-                           isShowMyNote ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
-                        }`}
-                     >
-                        <div
-                           className={`w-[720px] bg-white px-10 z-20 pb-14 text-black overflow-y-auto transition-all ease-linear duration-500 transform ${
-                              isShowMyNote ? ' translate-x-0 opacity-100' : ' translate-x-full opacity-0'
-                           }`}
-                        >
-                           <MyNote isShow={isShowMyNote} setIsShow={setIsShowMyNote} />
-                        </div>
-                        <div
-                           className={`bg-[#0000002e] w-screen h-screen top-0 right-0 fixed z-10 transition-all ease-linear cursor-pointer ${
-                              isShowMyNote ? 'opacity-100' : 'opacity-0'
-                           }`}
-                           onClick={() => setIsShowMyNote(false)}
-                        ></div>
-                     </div>
+
+                     <MyNote isShow={isShowMyNote} setIsShow={setIsShowMyNote} />
 
                      <button className="text-sm flex items-center opacity-80 hover:opacity-100">
                         <CircleQuestion className="size-[14px]" /> <span className="ml-1">Hướng dẫn</span>
