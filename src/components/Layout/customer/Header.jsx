@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Search from './search/Search';
-import Action from './Action';
-import Logo from '../../../../../public/images/logo.png';
+import Search from './MainLayout/components/search/Search';
+import Action from './MainLayout/components/Action';
+import Logo from '../../../public/images/logo.png';
 
 export default function Header() {
    return (

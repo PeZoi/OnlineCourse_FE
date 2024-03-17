@@ -19,8 +19,12 @@ import FileIcon from './FileIcon';
 import XMark from './XMarkIcon';
 import LockIcon from './LockIcon';
 import CommentIcon from './CommentIcon';
+import ShieldIcon from './ShieldIcon';
+import UserIcon from './UserIcon';
 
 export {
+   ShieldIcon,
+   UserIcon,
    CommentIcon,
    LockIcon,
    XMark,

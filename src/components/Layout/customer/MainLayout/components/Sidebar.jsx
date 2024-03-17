@@ -2,7 +2,7 @@ import { useState } from 'react';
 import TippyModal from '../../../../TippyModal';
 import { Link, NavLink } from 'react-router-dom';
 import { CreateIcon, BlogIcon, HomeIcon, QuizIcon, RoadMapIcon, PenIcon } from '../../../../../public/icons';
-import '../../../../../index.css';
+
 export default function Sidebar({ children }) {
    const [isShowModalCreateBtn, setIsShowModalCreateBtn] = useState(false);
 
@@ -73,7 +73,6 @@ export default function Sidebar({ children }) {
                         key={index}
                         to={item.path}
                         className="flex flex-col items-center justify-center size-[72px] rounded-2xl p-1 transition-opacity ease-in-out opacity-hover-nav"
-                        style={{}}
                      >
                         <div className="size-5">{item.icon}</div>
                         <p className="text-[11px] text-black font-medium mt-[2px]">{item.name}</p>

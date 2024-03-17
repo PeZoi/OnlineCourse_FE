@@ -8,7 +8,12 @@ import Home from '../features/customer/home/index.jsx';
 import NotFoundPage from '../features/NotFound.jsx';
 import MainLayout from '../components/Layout/customer/MainLayout/index.jsx';
 import LearnLayout from '../components/Layout/customer/LearnLayout/index.jsx';
+import SettingsLayout from '../components/Layout/customer/SettingLayout/index.jsx';
 import CourseLearn from '../features/customer/course/pages/CourseLearn.jsx';
+
+import Settings from '../features/customer/settings/index.jsx';
+import Personal from '../features/customer/settings/pages/Personal.jsx';
+import ChangePassword from '../features/customer/settings/pages/ChangePassword.jsx';
 
 export const router = createBrowserRouter([
    {
@@ -49,6 +54,28 @@ export const router = createBrowserRouter([
                <LearnLayout>
                   <CourseLearn />
                </LearnLayout>
+            ),
+         },
+      ],
+   },
+   {
+      path: '/settings',
+      element: <Settings />,
+      children: [
+         {
+            path: 'personal',
+            element: (
+               <SettingsLayout>
+                  <Personal />
+               </SettingsLayout>
+            ),
+         },
+         {
+            path: 'change-password',
+            element: (
+               <SettingsLayout>
+                  <ChangePassword />
+               </SettingsLayout>
             ),
          },
       ],
