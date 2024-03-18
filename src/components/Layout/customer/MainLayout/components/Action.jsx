@@ -160,7 +160,7 @@ export default function Action() {
                            Bài viết đã lưu
                         </Link>
                         <hr />
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
+                        <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">
                            Cài đặt
                         </Link>
                         <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">

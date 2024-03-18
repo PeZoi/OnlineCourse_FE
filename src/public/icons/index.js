@@ -21,8 +21,10 @@ import LockIcon from './LockIcon';
 import CommentIcon from './CommentIcon';
 import ShieldIcon from './ShieldIcon';
 import UserIcon from './UserIcon';
+import CameraIcon from './CameraIcon';
 
 export {
+   CameraIcon,
    ShieldIcon,
    UserIcon,
    CommentIcon,
