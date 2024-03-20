@@ -14,6 +14,7 @@ import CourseLearn from '../features/customer/course/pages/CourseLearn.jsx';
 import Settings from '../features/customer/settings/index.jsx';
 import Personal from '../features/customer/settings/pages/Personal.jsx';
 import ChangePassword from '../features/customer/settings/pages/ChangePassword.jsx';
+import MyCourses from '../features/customer/settings/pages/MyCourses.jsx';
 
 export const router = createBrowserRouter([
    {
@@ -75,6 +76,14 @@ export const router = createBrowserRouter([
             element: (
                <SettingsLayout>
                   <ChangePassword />
+               </SettingsLayout>
+            ),
+         },
+         {
+            path: 'my-courses',
+            element: (
+               <SettingsLayout>
+                  <MyCourses />
                </SettingsLayout>
             ),
          },

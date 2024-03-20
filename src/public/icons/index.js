@@ -22,8 +22,12 @@ import CommentIcon from './CommentIcon';
 import ShieldIcon from './ShieldIcon';
 import UserIcon from './UserIcon';
 import CameraIcon from './CameraIcon';
+import CourseIcon from './CourseIcon';
+import CirclePlus from './CirclePlus';
 
 export {
+   CirclePlus,
+   CourseIcon,
    CameraIcon,
    ShieldIcon,
    UserIcon,

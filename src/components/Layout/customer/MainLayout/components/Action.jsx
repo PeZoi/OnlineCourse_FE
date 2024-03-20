@@ -24,13 +24,16 @@ export default function Action() {
                         <div className="animate-fade w-[380px] min-h-fit max-h-popper rounded-lg py-5 shadow-base bg-white overflow-hidden pb-3">
                            <div className="flex items-center justify-between px-5">
                               <h6 className="text-black text-lg font-medium">Khoá học của tôi</h6>
-                              <Link to={'/'} className="flex items-center">
+                              <Link
+                                 to={'/settings/my-courses'}
+                                 className="flex items-center px-2 py-1 hover:bg-gray-light rounded-md transition-all ease-in"
+                              >
                                  <span className="text-primary">Xem tất cả</span>
                               </Link>
                            </div>
-                           <div className="overflow-y-auto overscroll-contain mt-3 max-h-[60vh] px-5">
+                           <div className="overflow-y-auto overscroll-contain mt-3 max-h-[60vh] px-3">
                               <Link to={'/'}>
-                                 <div className="flex items-center my-3 px-3 py-2 rounded-lg hover:bg-gray-light">
+                                 <div className="flex items-center my-3 p-3 rounded-lg hover:bg-gray-light">
                                     <img
                                        src="https://files.fullstack.edu.vn/f8-prod/courses/4/61a9e9e701506.png"
                                        alt=""
