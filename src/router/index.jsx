@@ -16,6 +16,11 @@ import Personal from '../features/customer/settings/pages/Personal.jsx';
 import ChangePassword from '../features/customer/settings/pages/ChangePassword.jsx';
 import MyCourses from '../features/customer/settings/pages/MyCourses.jsx';
 
+import Quiz from '../features/customer/quiz/index.jsx';
+import QuizList from '../features/customer/quiz/pages/QuizList.jsx';
+import QuizTest from '../features/customer/quiz/pages/QuizTest.jsx';
+import LearQuizLayout from '../components/Layout/customer/LearnQuizLayout/index.jsx';
+
 export const router = createBrowserRouter([
    {
       path: '/not-found',
@@ -55,6 +60,28 @@ export const router = createBrowserRouter([
                <LearnLayout>
                   <CourseLearn />
                </LearnLayout>
+            ),
+         },
+      ],
+   },
+   {
+      path: '/quiz',
+      element: <Quiz />,
+      children: [
+         {
+            path: '',
+            element: (
+               <MainLayout>
+                  <QuizList />
+               </MainLayout>
+            ),
+         },
+         {
+            path: 'tests/:quizId',
+            element: (
+               <LearQuizLayout>
+                  <QuizTest />
+               </LearQuizLayout>
             ),
          },
       ],

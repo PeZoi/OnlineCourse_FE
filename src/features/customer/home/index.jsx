@@ -15,6 +15,12 @@ export default function Home() {
                   <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />
                </Link>
             </div>
+            <div className="my-5">
+               <button className="rounded-2xl px-3 py-1 bg-primary text-white mx-1 font-semibold">Tất cả</button>
+               <button className="rounded-2xl px-3 py-1 bg-[#ccc8] text-black mx-1 font-semibold opacity-80 hover:opacity-100 hover:-translate-y-1 transition-all ease-linear">
+                  Frontend
+               </button>
+            </div>
             <div className="mt-5 grid grid-cols-4 gap-6 min-h-96">
                {Array.from({ length: 10 }, (_, index) => (
                   <BlockItem type={'course'} key={index} />

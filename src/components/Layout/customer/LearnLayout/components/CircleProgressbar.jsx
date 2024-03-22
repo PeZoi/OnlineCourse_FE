@@ -14,7 +14,7 @@ export default function CircleProgressbar() {
                pathTransitionDuration: 0.5,
 
                // Colors
-               pathColor: '#782',
+               pathColor: '#f05123',
                textColor: '#fff',
                trailColor: '#d6d6d6',
             })}

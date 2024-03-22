@@ -1,6 +1,6 @@
-import { ArrowRightIcon, CheckIcon, CreateIcon, HyphenIcon, LockIcon } from '../../../../public/icons';
+import { ArrowRightIcon, CheckIcon, CreateIcon, HyphenIcon, LockIcon } from '../../../../../public/icons';
 import Collapse from 'react-collapse';
-import { CirclePlayIcon } from '../../../../public/icons';
+import { CirclePlayIcon } from '../../../../../public/icons';
 
 export default function CourseChapterItem({ isOpen, handleToggle, index, chapter }) {
    return (

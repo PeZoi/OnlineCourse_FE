@@ -3,7 +3,8 @@ export default {
    content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
    theme: {
       colors: {
-         primary: '#24303f',
+         primary: '#f05123',
+         primaryBlur: '#f5734f30',
          blue: '#1473e6',
          purple: '#7e5bef',
          pink: '#ff49db',
@@ -46,6 +47,8 @@ export default {
          },
          gridColumn: {
             'span-15': 'span 15 / span 15',
+            'span-14': 'span 14 / span 14',
+            'span-13': 'span 13 / span 13',
          },
       },
    },
