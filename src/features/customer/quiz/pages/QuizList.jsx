@@ -1,4 +1,4 @@
-import QuizItem from '../components/QuizItem';
+import QuizItem from '../../../../components/Layout/customer/QuizItem';
 
 export default function QuizList() {
    return (

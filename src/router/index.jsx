@@ -20,6 +20,10 @@ import Quiz from '../features/customer/quiz/index.jsx';
 import QuizList from '../features/customer/quiz/pages/QuizList.jsx';
 import QuizTest from '../features/customer/quiz/pages/QuizTest.jsx';
 import LearQuizLayout from '../components/Layout/customer/LearnQuizLayout/index.jsx';
+import Search from '../features/customer/search/index.jsx';
+import SearchCourses from '../features/customer/search/pages/SearchCourses.jsx';
+import SearchBlogs from '../features/customer/search/pages/SearchBlogs.jsx';
+import SearchQuizs from '../features/customer/search/pages/SearchQuizs.jsx';
 
 export const router = createBrowserRouter([
    {
@@ -113,6 +117,28 @@ export const router = createBrowserRouter([
                   <MyCourses />
                </SettingsLayout>
             ),
+         },
+      ],
+   },
+   {
+      path: '/search',
+      element: (
+         <MainLayout>
+            <Search />
+         </MainLayout>
+      ),
+      children: [
+         {
+            path: 'courses',
+            element: <SearchCourses />,
+         },
+         {
+            path: 'blogs',
+            element: <SearchBlogs />,
+         },
+         {
+            path: 'quizs',
+            element: <SearchQuizs />,
          },
       ],
    },

@@ -25,8 +25,10 @@ import CameraIcon from './CameraIcon';
 import CourseIcon from './CourseIcon';
 import CirclePlus from './CirclePlus';
 import ClockBorderIcon from './ClockBorderIcon';
+import HeartIcon from './HeartIcon';
 
 export {
+   HeartIcon,
    ClockBorderIcon,
    CirclePlus,
    CourseIcon,

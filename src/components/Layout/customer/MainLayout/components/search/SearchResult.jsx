@@ -10,7 +10,7 @@ export default function SearchResult({ searchText, SearchResult }) {
          <div>
             <div className="flex items-center justify-between mt-3">
                <span className="text-sm font-medium text-black">KHOÁ HỌC</span>
-               <Link to={'/'} className="text-gray">
+               <Link to={'/search/courses'} className="text-gray">
                   Xem thêm
                </Link>
             </div>
@@ -29,7 +29,7 @@ export default function SearchResult({ searchText, SearchResult }) {
          <div className="mt-7">
             <div className="flex items-center justify-between mt-3">
                <span className="text-sm font-medium text-black">BÀI VIẾT</span>
-               <Link to={'/'} className="text-gray">
+               <Link to={'/search/blogs'} className="text-gray">
                   Xem thêm
                </Link>
             </div>

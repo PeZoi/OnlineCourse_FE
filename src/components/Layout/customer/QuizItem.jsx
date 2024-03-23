@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ClockBorderIcon, UserIcon } from '../../../../public/icons';
+import { ClockBorderIcon, UserIcon } from '../../../public/icons';
 
 export default function QuizItem() {
    return (
