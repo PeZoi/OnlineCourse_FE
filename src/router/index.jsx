@@ -1,29 +1,27 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Course from '../features/customer/course';
-import CourseDetail from '../features/customer/course/pages/CourseDetail.jsx';
-import CourseList from '../features/customer/course/pages/CourseList.jsx';
-import Blog from '../features/customer/blog';
-import BlogsList from '../features/customer/blog/pages/BlogsList.jsx';
-import Home from '../features/customer/home/index.jsx';
-import NotFoundPage from '../features/NotFound.jsx';
-import MainLayout from '../components/Layout/customer/MainLayout/index.jsx';
-import LearnLayout from '../components/Layout/customer/LearnLayout/index.jsx';
-import SettingsLayout from '../components/Layout/customer/SettingLayout/index.jsx';
-import CourseLearn from '../features/customer/course/pages/CourseLearn.jsx';
-
-import Settings from '../features/customer/settings/index.jsx';
-import Personal from '../features/customer/settings/pages/Personal.jsx';
-import ChangePassword from '../features/customer/settings/pages/ChangePassword.jsx';
-import MyCourses from '../features/customer/settings/pages/MyCourses.jsx';
-
-import Quiz from '../features/customer/quiz/index.jsx';
-import QuizList from '../features/customer/quiz/pages/QuizList.jsx';
-import QuizTest from '../features/customer/quiz/pages/QuizTest.jsx';
-import LearQuizLayout from '../components/Layout/customer/LearnQuizLayout/index.jsx';
-import Search from '../features/customer/search/index.jsx';
-import SearchCourses from '../features/customer/search/pages/SearchCourses.jsx';
-import SearchBlogs from '../features/customer/search/pages/SearchBlogs.jsx';
-import SearchQuizs from '../features/customer/search/pages/SearchQuizs.jsx';
+import LearnLayout from 'src/components/Layout/customer/LearnLayout';
+import LearnQuizLayout from 'src/components/Layout/customer/LearnQuizLayout';
+import MainLayout from 'src/components/Layout/customer/MainLayout';
+import SettingLayout from 'src/components/Layout/customer/SettingLayout';
+import Blog from 'src/features/customer/blog';
+import BlogsList from 'src/features/customer/blog/pages/BlogsList';
+import Course from 'src/features/customer/course';
+import CourseDetail from 'src/features/customer/course/pages/CourseDetail';
+import CourseLearn from 'src/features/customer/course/pages/CourseLearn';
+import CourseList from 'src/features/customer/course/pages/CourseList';
+import Home from 'src/features/customer/home';
+import Quiz from 'src/features/customer/quiz';
+import QuizList from 'src/features/customer/quiz/pages/QuizList';
+import QuizTest from 'src/features/customer/quiz/pages/QuizTest';
+import Search from 'src/features/customer/search';
+import SearchBlogs from 'src/features/customer/search/pages/SearchBlogs';
+import SearchCourses from 'src/features/customer/search/pages/SearchCourses';
+import SearchQuizs from 'src/features/customer/search/pages/SearchQuizs';
+import Settings from 'src/features/customer/settings';
+import ChangePassword from 'src/features/customer/settings/pages/ChangePassword';
+import MyCourses from 'src/features/customer/settings/pages/MyCourses';
+import Personal from 'src/features/customer/settings/pages/Personal';
+import NotFoundPage from 'src/features/NotFound';
 
 export const router = createBrowserRouter([
    {
@@ -83,9 +81,9 @@ export const router = createBrowserRouter([
          {
             path: 'tests/:quizId',
             element: (
-               <LearQuizLayout>
+               <LearnQuizLayout>
                   <QuizTest />
-               </LearQuizLayout>
+               </LearnQuizLayout>
             ),
          },
       ],
@@ -97,25 +95,25 @@ export const router = createBrowserRouter([
          {
             path: 'personal',
             element: (
-               <SettingsLayout>
+               <SettingLayout>
                   <Personal />
-               </SettingsLayout>
+               </SettingLayout>
             ),
          },
          {
             path: 'change-password',
             element: (
-               <SettingsLayout>
+               <SettingLayout>
                   <ChangePassword />
-               </SettingsLayout>
+               </SettingLayout>
             ),
          },
          {
             path: 'my-courses',
             element: (
-               <SettingsLayout>
+               <SettingLayout>
                   <MyCourses />
-               </SettingsLayout>
+               </SettingLayout>
             ),
          },
       ],
