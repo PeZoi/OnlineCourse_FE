@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { CommentIcon, CreateIcon } from '../../../../public/icons';
-import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
-import { secondsConvert } from '../../../../utils/common';
+import { useState } from 'react';
+import { CommentIcon } from '../../../../public/icons';
 import CourseComment from '../components/CourseComment';
-import LearnTypeVideo from '../components/CourseLearn/LearnTypeVideo';
-import LearnTypeText from '../components/CourseLearn/LearnTypeText';
+import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
 import LearnTypeQuiz from '../components/CourseLearn/LearnTypeQuiz';
 
 export default function CourseLearn() {

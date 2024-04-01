@@ -49,7 +49,7 @@ export const router = createBrowserRouter([
             ),
          },
          {
-            path: ':courseId',
+            path: ':courseSlug',
             element: (
                <MainLayout>
                   <CourseDetail />
@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
             ),
          },
          {
-            path: 'learn/:courseId',
+            path: 'learn/:courseSlug',
             element: (
                <LearnLayout>
                   <CourseLearn />

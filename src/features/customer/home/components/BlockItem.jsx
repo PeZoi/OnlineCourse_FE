@@ -2,16 +2,15 @@ import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import { GroupUser } from '../../../../public/icons';
 
+import { calculatePriceDiscount, formatNumber } from 'src/utils/common';
+import { Rating } from 'primereact/rating';
+
 // Gộp Blog Item và Course Item vào 1 (để có tính tái sử dụng)
-export default function BlockItem({ type, className }) {
+export default function BlockItem({ type, className, data }) {
    return (
       <div className={className}>
-         <Link to={'/'} className="relative block rounded-xl overflow-hidden group">
-            <img
-               src="https://files.fullstack.edu.vn/f8-prod/courses/7.png"
-               alt=""
-               className="w-full h-full object-cover"
-            />
+         <Link to={`/course/${data?.slug}`} className="relative block rounded-xl overflow-hidden group">
+            <img src={data?.thumbnail} alt={data?.title} className="w-full h-full max-h-[170px] object-cover" />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out bg-[#00000080] bg-opacity-50">
                <button className="bg-white text-black py-2 px-4 rounded-lg shadow-lg translate-y-6 group-hover:translate-y-0 transition-transform duration-300 ease-in-out font-semibold">
                   Xem chi tiết
@@ -20,15 +19,49 @@ export default function BlockItem({ type, className }) {
          </Link>
 
          <Link to={'/'} className="text-base my-2 block font-semibold ">
-            <Tippy content={<span>Kiến Thức Nhập Môn IT</span>} placement="bottom">
-               <div className="truncate">Kiến Thức Nhập Môn IT</div>
+            <Tippy content={<span>{data?.title}</span>} placement="bottom">
+               <div className="truncate">{data?.title}</div>
             </Tippy>
          </Link>
+
          {type === 'course' ? (
-            <p className="flex items-center text-gray">
-               <GroupUser className="size-4" />
-               <span className="ml-2">124.296</span>
-            </p>
+            <>
+               <div className="mb-2 flex items-end">
+                  <span className="font-semibold text-sm">(4.6)</span>
+                  <Rating
+                     value={3}
+                     readOnly
+                     cancel={false}
+                     pt={{
+                        onIcon: { className: 'text-primary' },
+                        item: { className: 'size-4' },
+                     }}
+                     className="mx-2"
+                  />
+                  <span className="font-semibold text-xs text-gray">(35)</span>
+               </div>
+
+               <p className="flex items-end justify-between mb-2">
+                  {data?.discount !== 0 ? (
+                     <span>
+                        <span className="text-primary font-bold text-xl mr-3">
+                           {calculatePriceDiscount(data?.price, data?.discount)}đ
+                        </span>
+                        <span className="line-through text-gray">{formatNumber(data?.price)}đ</span>
+                     </span>
+                  ) : (
+                     <>
+                        <span className="text-primary font-bold text-xl mr-3">
+                           {calculatePriceDiscount(data?.price, data?.discount)}đ
+                        </span>
+                     </>
+                  )}
+                  <p className="flex items-center text-gray">
+                     <GroupUser className="size-4" />
+                     <span className="ml-2">{data?.student_count}</span>
+                  </p>
+               </p>
+            </>
          ) : (
             <div className="flex items-center mt-3">
                <div>

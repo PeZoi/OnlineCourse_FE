@@ -2,8 +2,21 @@ import { Link } from 'react-router-dom';
 import BlockItem from './components/BlockItem';
 import CarouselQuote from './components/CarouselQuote';
 import { ArrowRightIcon } from '../../../public/icons';
+import { useEffect, useState } from 'react';
+import { getAllCourses } from 'src/api/courseApi';
 
 export default function Home() {
+   const [categories, setCategories] = useState([]);
+   const [courses, setCourses] = useState([]);
+   useEffect(() => {
+      const fetchCourses = async () => {
+         const res = await getAllCourses();
+         setCourses(res);
+         console.log(res);
+      };
+
+      fetchCourses();
+   }, []);
    return (
       <div>
          <CarouselQuote />
@@ -22,9 +35,23 @@ export default function Home() {
                </button>
             </div>
             <div className="mt-5 grid grid-cols-4 gap-6 min-h-96">
-               {Array.from({ length: 10 }, (_, index) => (
-                  <BlockItem type={'course'} key={index} />
-               ))}
+               {courses.map(
+                  (course) => !course.is_coming_soon && <BlockItem type={'course'} key={course.id} data={course} />,
+               )}
+            </div>
+         </div>
+         <div className="px-11">
+            <div className="flex items-center justify-between">
+               <p className="text-black text-2xl font-extrabold">Coming soon ... </p>
+               <Link to={'/'} className="flex items-center group text-base">
+                  <span className="font-semibold mr-1 hover:underline">Xem tất cả</span>
+                  <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />
+               </Link>
+            </div>
+            <div className="mt-5 grid grid-cols-4 gap-6 min-h-96">
+               {courses.map(
+                  (course) => course.is_coming_soon && <BlockItem type={'course'} key={course.id} data={course} />,
+               )}
             </div>
          </div>
          <div className="my-16 px-11">

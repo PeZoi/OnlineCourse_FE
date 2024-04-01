@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import CourseContentDetail from './CourseContentDetail';
+import { durationFormat } from 'src/utils/common';
 
-export default function CourseContent() {
-   // Khi thay vào thì nên để ở ngoài (vì có chỗ dùng chung)
-   const chapters = [{ name: 'Chapters 1' }, { name: 'Chapters 2' }, { name: 'Chapters 3' }];
-
+export default function CourseContent({ chapters, course }) {
    // Khi lấy các chapters của khoá học thì thay vào đây
-   const [isOpenCollapse, setIsOpenCollapse] = useState(Array(chapters.length).fill(false));
+   const [isOpenCollapse, setIsOpenCollapse] = useState(Array(chapters?.length).fill(false));
    const [isOpenAllCollapse, setIsOpenAllCollapse] = useState(false);
 
    const handleToggle = (index) => {
@@ -17,12 +15,12 @@ export default function CourseContent() {
 
    const handleOpenAll = () => {
       setIsOpenAllCollapse(true);
-      setIsOpenCollapse(Array(chapters.length).fill(true));
+      setIsOpenCollapse(Array(chapters?.length).fill(true));
    };
 
    const handleCloseAll = () => {
       setIsOpenAllCollapse(false);
-      setIsOpenCollapse(Array(chapters.length).fill(false));
+      setIsOpenCollapse(Array(chapters?.length).fill(false));
    };
    return (
       <div className="mt-8">
@@ -31,18 +29,18 @@ export default function CourseContent() {
             <div className="flex items-center justify-between">
                <div>
                   <span>
-                     <strong className="mr-2">6</strong>
+                     <strong className="mr-2">{course?.total_chapter}</strong>
                      chương
                   </span>
                   <span className="mx-2">•</span>
                   <span>
-                     <strong className="mr-2">40</strong>
+                     <strong className="mr-2">{course?.total_lesson}</strong>
                      bài học
                   </span>
                   <span className="mx-2">•</span>
                   <span>
                      Thời lượng
-                     <strong className="ml-2">05 giờ 02 phút</strong>
+                     <strong className="ml-2">{durationFormat(course?.total_time)}</strong>
                   </span>
                </div>
                {!isOpenAllCollapse ? (
@@ -63,7 +61,7 @@ export default function CourseContent() {
             </div>
          </div>
          <div className="mt-3">
-            {chapters.map((chapter, index) => (
+            {chapters?.map((chapter, index) => (
                <CourseContentDetail
                   isOpen={isOpenCollapse[index]}
                   handleToggle={handleToggle}
