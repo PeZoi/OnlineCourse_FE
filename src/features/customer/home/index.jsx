@@ -4,19 +4,30 @@ import CarouselQuote from './components/CarouselQuote';
 import { ArrowRightIcon } from '../../../public/icons';
 import { useEffect, useState } from 'react';
 import { getAllCourses } from 'src/api/courseApi';
+import { useAxios } from 'src/hooks/useAxios';
+import { getAllCategories } from 'src/api/categoryApi';
 
 export default function Home() {
    const [categories, setCategories] = useState([]);
    const [courses, setCourses] = useState([]);
-   useEffect(() => {
-      const fetchCourses = async () => {
-         const res = await getAllCourses();
-         setCourses(res);
-         console.log(res);
-      };
 
-      fetchCourses();
-   }, []);
+   // Xử lý danh sách course dựa theo categoriry
+   const urlParams = new URLSearchParams(window.location.search);
+   let categoryId = urlParams.get('categoryId');
+
+   // Load dữ liệu lên
+   const axiosCourses = useAxios(() => getAllCourses(categoryId), categoryId);
+   const axiosCategories = useAxios(getAllCategories);
+   useEffect(() => {
+      setCourses(axiosCourses.response);
+      setCategories(axiosCategories.response);
+   }, [axiosCategories.response, axiosCourses.response]);
+
+   // Handle button categories
+   const onClickBtnCategories = (categoryId) => {
+      console.log(categoryId);
+   };
+
    return (
       <div>
          <CarouselQuote />
@@ -29,13 +40,35 @@ export default function Home() {
                </Link>
             </div>
             <div className="my-5">
-               <button className="rounded-2xl px-3 py-1 bg-primary text-white mx-1 font-semibold">Tất cả</button>
-               <button className="rounded-2xl px-3 py-1 bg-[#ccc8] text-black mx-1 font-semibold opacity-80 hover:opacity-100 hover:-translate-y-1 transition-all ease-linear">
-                  Frontend
-               </button>
+               <Link to={'/'}>
+                  <button
+                     className={`rounded-2xl px-3 py-1 mx-1 font-semibold  ${
+                        !categoryId
+                           ? 'bg-primary text-white'
+                           : 'bg-[#ccc8] text-black opacity-80 hover:opacity-100 hover:-translate-y-1 transition-all ease-linear'
+                     }`}
+                  >
+                     Tất cả
+                  </button>
+               </Link>
+
+               {categories?.content?.map((category) => (
+                  <Link to={`/?categoryId=${category.id}`} key={category.id}>
+                     <button
+                        key={category.id}
+                        className={`rounded-2xl px-3 py-1 mx-1 font-semibold ${
+                           category.id == categoryId
+                              ? 'bg-primary text-white'
+                              : 'bg-[#ccc8] text-black opacity-80 hover:opacity-100 hover:-translate-y-1 transition-all ease-linear'
+                        }`}
+                     >
+                        {category.name}
+                     </button>
+                  </Link>
+               ))}
             </div>
             <div className="mt-5 grid grid-cols-4 gap-6 min-h-96">
-               {courses.map(
+               {courses?.map(
                   (course) => !course.is_coming_soon && <BlockItem type={'course'} key={course.id} data={course} />,
                )}
             </div>
@@ -49,7 +82,7 @@ export default function Home() {
                </Link>
             </div>
             <div className="mt-5 grid grid-cols-4 gap-6 min-h-96">
-               {courses.map(
+               {courses?.map(
                   (course) => course.is_coming_soon && <BlockItem type={'course'} key={course.id} data={course} />,
                )}
             </div>

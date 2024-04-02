@@ -1,8 +1,8 @@
 import axios from 'src/utils/axios';
 
-export const getAllCourses = async () => {
+export const getAllCourses = async (categoryId) => {
    const res = await axios
-      .get('/api/courses/home-page')
+      .get(`/api/courses/home-page?categoryId=${categoryId || ''}`)
       .then((response) => {
          return response;
       })
