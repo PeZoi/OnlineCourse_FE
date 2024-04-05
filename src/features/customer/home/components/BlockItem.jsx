@@ -18,7 +18,7 @@ export default function BlockItem({ type, className, data }) {
             </div>
          </Link>
 
-         <Link to={'/'} className="text-base my-2 block font-semibold ">
+         <Link to={`/course/${data?.slug}`} className="text-base my-2 block font-semibold ">
             <Tippy content={<span>{data?.title}</span>} placement="bottom">
                <div className="truncate">{data?.title}</div>
             </Tippy>
@@ -41,14 +41,14 @@ export default function BlockItem({ type, className, data }) {
                   <span className="font-semibold text-xs text-gray">(35)</span>
                </div>
 
-               <p className="flex items-end justify-between mb-2">
+               <div className="flex items-end justify-between mb-2">
                   {data?.discount !== 0 ? (
-                     <span>
+                     <p>
                         <span className="text-primary font-bold text-xl mr-3">
                            {calculatePriceDiscount(data?.price, data?.discount)}đ
                         </span>
                         <span className="line-through text-gray">{formatNumber(data?.price)}đ</span>
-                     </span>
+                     </p>
                   ) : (
                      <>
                         <span className="text-primary font-bold text-xl mr-3">
@@ -60,7 +60,7 @@ export default function BlockItem({ type, className, data }) {
                      <GroupUser className="size-4" />
                      <span className="ml-2">{data?.student_count}</span>
                   </p>
-               </p>
+               </div>
             </>
          ) : (
             <div className="flex items-center mt-3">

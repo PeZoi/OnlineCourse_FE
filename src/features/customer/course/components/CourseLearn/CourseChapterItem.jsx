@@ -1,4 +1,4 @@
-import { ArrowRightIcon, CheckIcon, CreateIcon, HyphenIcon, LockIcon } from '../../../../../public/icons';
+import { ArrowRightIcon, LockIcon } from '../../../../../public/icons';
 import Collapse from 'react-collapse';
 import { CirclePlayIcon } from '../../../../../public/icons';
 

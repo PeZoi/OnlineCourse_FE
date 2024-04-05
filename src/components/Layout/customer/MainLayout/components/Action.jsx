@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 import NotificationIcon from '../../../../../public/icons/NotificationIcon';
 import TippyModal from '../../../../TippyModal';
 import Tippy from '@tippyjs/react';
+import SignInPage from 'src/features/auth/AuthPage';
+import AuthPage from 'src/features/auth/AuthPage';
 
 export default function Action() {
-   const useData = useState(true);
+   const [useData, setUserData] = useState(false);
 
    const [showMyCourses, setShowMyCourses] = useState(false);
    const [showMyNotifications, setShowMyNotifications] = useState(false);
    const [showMyActions, setShowMyActions] = useState(false);
+   const [showModalSignIn, setShowModalSignIn] = useState(false);
+   const [showModalSignUp, setShowModalSignUp] = useState(false);
 
    return (
       <div className="flex items-center justify-end">
@@ -189,17 +193,7 @@ export default function Action() {
             </>
          ) : (
             <>
-               <Link to={'/'}>
-                  <button className="text-black font-medium mr-6">Đăng nhập</button>
-               </Link>
-               <Link to={'/'}>
-                  <button
-                     className="text-white rounded-full font-medium hover:opacity-90 transition-all ease-linear px-5 py-2"
-                     style={{ background: 'linear-gradient(90deg, rgba(36,48,63,1) 47%, rgba(49,60,75,1) 61%)' }}
-                  >
-                     Đăng ký
-                  </button>
-               </Link>
+               <AuthPage></AuthPage>
             </>
          )}
       </div>

@@ -13,6 +13,12 @@ export const getAllCourses = async (categoryId) => {
    return res;
 };
 
+export const getAllCoursesByComingSoon = async () => {
+   const res = await getAllCourses();
+   const coursesComingSoon = res.filter((courses) => courses.is_coming_soon);
+   return coursesComingSoon;
+};
+
 export const getCourse = async (slug) => {
    const res = await axios
       .get(`/api/courses/get-detail/${slug}`)

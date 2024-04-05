@@ -8,14 +8,15 @@ export const useAxios = (axiosFunction, dependencies) => {
    useEffect(() => {
       const fetchData = async () => {
          try {
-            const result = await axiosFunction();
-            setResponse(result);
+            const res = await axiosFunction();
+            setResponse(res);
          } catch (error) {
             setError(error);
          } finally {
             setLoading(false);
          }
       };
+
       fetchData();
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, dependencies);

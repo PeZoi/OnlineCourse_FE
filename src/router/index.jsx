@@ -3,6 +3,9 @@ import LearnLayout from 'src/components/Layout/customer/LearnLayout';
 import LearnQuizLayout from 'src/components/Layout/customer/LearnQuizLayout';
 import MainLayout from 'src/components/Layout/customer/MainLayout';
 import SettingLayout from 'src/components/Layout/customer/SettingLayout';
+import Auth from 'src/features/auth';
+import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
+import VerifyPage from 'src/features/auth/pages/VerifyPage';
 import Blog from 'src/features/customer/blog';
 import BlogsList from 'src/features/customer/blog/pages/BlogsList';
 import Course from 'src/features/customer/course';
@@ -151,6 +154,24 @@ export const router = createBrowserRouter([
          {
             path: '',
             element: <BlogsList />,
+         },
+      ],
+   },
+   {
+      path: '/auth',
+      element: (
+         <MainLayout>
+            <Auth />
+         </MainLayout>
+      ),
+      children: [
+         {
+            path: 'reset-password',
+            element: <ResetPasswordPage />,
+         },
+         {
+            path: 'verify',
+            element: <VerifyPage />,
          },
       ],
    },

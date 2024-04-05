@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CommentIcon } from '../../../../public/icons';
 import CourseComment from '../components/CourseComment';
 import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
 import LearnTypeQuiz from '../components/CourseLearn/LearnTypeQuiz';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getCourse } from 'src/api/courseApi';
 
 export default function CourseLearn() {
    const [isShowComment, setIsShowComment] = useState(false);
+   const [course, setCourse] = useState();
+   const { courseSlug } = useParams();
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      const fetchCourse = async () => {
+         const res = await getCourse(courseSlug);
+         if (res === 404) {
+            navigate('/not-found');
+         }
+         setCourse(res);
+      };
+      fetchCourse();
+   }, [courseSlug, navigate]);
 
    // ========= HANDLE CHAPTERS =========
    // Khi thay vào thì nên để ở ngoài (vì có chỗ dùng chung)
@@ -31,7 +47,7 @@ export default function CourseLearn() {
    ];
 
    // Khi lấy các chapters của khoá học thì thay vào đây
-   const [isOpenCollapse, setIsOpenCollapse] = useState(Array(chapters.length).fill(false));
+   const [isOpenCollapse, setIsOpenCollapse] = useState(Array(course?.chapter_list.length).fill(false));
    const handleToggle = (index) => {
       const newIsOpenArray = [...isOpenCollapse];
       newIsOpenArray[index] = !newIsOpenArray[index];
@@ -62,7 +78,7 @@ export default function CourseLearn() {
             <div className="pb-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
                <div className="text-lg font-semibold px-3 bg-white select-none py-3 w-full">Nội dung khoá học</div>
                <div>
-                  {chapters.map((chapter, index) => (
+                  {course?.chapter_list.map((chapter, index) => (
                      <CourseChapterItem
                         key={index}
                         chapter={chapter}

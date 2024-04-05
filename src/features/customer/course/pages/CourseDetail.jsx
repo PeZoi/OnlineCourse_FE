@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { CheckIcon, BatteryFullIcon, ClockIcon, FilmIcon, GaugeIcon } from '../../../../public/icons';
 import CourseContent from '../components/CourseContent';
 import CourseFeedback from '../components/CourseFeedback';
 import { getCourse } from 'src/api/courseApi';
 import { calculatePriceDiscount, durationFormat, formatNumber } from 'src/utils/common';
 
-const TYPE_INFO = ['TARGET', 'DETAIL', 'REQUIREMENT'];
+const TYPE_INFO = ['TARGET', 'REQUIREMENT'];
 
 export default function CourseDetail() {
    const { courseSlug } = useParams();
@@ -55,7 +55,7 @@ export default function CourseDetail() {
                   <ul className="grid gap-4 mt-5">
                      {course?.info_list.map((info) => {
                         return (
-                           info.type === TYPE_INFO[2] && (
+                           info.type === TYPE_INFO[1] && (
                               <li className="flex items-center" key={info.id}>
                                  <CheckIcon className="size-[14px] text-primary" />
                                  <span className="ml-3">{info.value}</span>
@@ -93,9 +93,16 @@ export default function CourseDetail() {
                         </>
                      )}
                   </p>
-                  <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
-                     MUA NGAY
-                  </button>
+                  <Link to={`/course/learn/${course?.slug}`}>
+                     <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
+                        HỌC NGAY
+                     </button>
+                  </Link>
+                  {/* <Link to={'/'}>
+                     <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
+                        MUA NGAY
+                     </button>
+                  </Link> */}
                   <div className="grid gap-3 my-5 text-[#494949]">
                      <div className="flex items-center">
                         <GaugeIcon className="size-[14px]" />

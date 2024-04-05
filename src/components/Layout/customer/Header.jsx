@@ -5,7 +5,7 @@ import Logo from '../../../public/images/logo.png';
 
 export default function Header() {
    return (
-      <div className="relative w-full h-full " style={{ zIndex: '10000' }}>
+      <div className="relative w-full h-full " style={{ zIndex: '5000' }}>
          <div className="fixed z-10 w-full">
             <div className="flex items-center h-[66px] px-[28px]  bg-white">
                <div className="flex justify-between items-center flex-1">
