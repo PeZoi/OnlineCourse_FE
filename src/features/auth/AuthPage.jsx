@@ -13,7 +13,7 @@ export default function AuthPage() {
    const [resetModal, setResetModal] = useState(false);
 
    return (
-      <div className="card flex justify-content-center">
+      <div className="card flex justify-content-center relative">
          <button
             className="text-black font-medium mr-6 outline-none"
             onClick={() => {
@@ -35,9 +35,11 @@ export default function AuthPage() {
             Đăng ký
          </button>
          <ModalMiddle isShow={showModal} setIsShow={setShowModal} setResetModal={setResetModal} className={'w-[540px]'}>
-            <div className="flex flex-col items-center select-none px-10" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="flex flex-col items-center select-none px-10 " style={{ maxHeight: 'calc(100vh - 200px)' }}>
                <img className="h-[38px] rounded-lg" src={Logo} alt="F8" />
-               {types === 'SIGNIN' && <SignIn setTypes={setTypes} resetModal={resetModal} />}
+               {types === 'SIGNIN' && (
+                  <SignIn setTypes={setTypes} resetModal={resetModal} setShowModal={setShowModal} />
+               )}
                {types === 'SIGNUP' && <SignUp setTypes={setTypes} resetModal={resetModal} />}
                {types === 'FORGOT-PASSWORD' && <ForgotPassword setTypes={setTypes} resetModal={resetModal} />}
             </div>

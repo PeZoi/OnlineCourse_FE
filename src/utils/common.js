@@ -64,3 +64,22 @@ export const calculatePriceDiscount = (price, discount) => {
    const priceDiscount = price - price * discount;
    return formatNumber(priceDiscount);
 };
+
+// Hàm lấy thông tin user ở localstorage
+export const getUserDataByLocalStorage = () => {
+   const user = JSON.parse(localStorage.getItem('user'));
+   return user;
+};
+
+// Hàm lấy ra token ở localstorage
+export const getTokenByLocalStorage = () => {
+   const token = localStorage.getItem('token');
+   return token;
+};
+
+// Hàm check token hết hạn hay chưa
+export const isExpiredToken = (tokenExp) => {
+   const currentTimeInSeconds = Math.floor(Date.now() / 1000); // Thời gian hiện tại
+
+   return currentTimeInSeconds >= tokenExp;
+};

@@ -3,9 +3,14 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { submitSignInAPI } from 'src/api/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAsync } from './authSlice';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 export default function SignIn({ setTypes, resetModal }) {
+   const dispatch = useDispatch();
+   const { loading } = useSelector((state) => state.auth);
+
    const schema = yup.object().shape({
       email: yup.string().email('Email không hợp lệ').required('Email không được để trống'),
       password: yup.string().required('Mật khẩu không được để trống'),
@@ -20,6 +25,7 @@ export default function SignIn({ setTypes, resetModal }) {
       resolver: yupResolver(schema),
    });
 
+   // Để fix bug khi tắt đi mở lại modal nó không còn lưu validatate nữa
    useEffect(() => {
       if (resetModal) {
          reset();
@@ -28,21 +34,7 @@ export default function SignIn({ setTypes, resetModal }) {
    }, [resetModal]);
 
    const onSubmit = (data) => {
-      submitSignInAPI(data)
-         .then((response) => {
-            console.log(response);
-            if (response !== 500) {
-               toast.success('Đăng nhập thành công!');
-
-               reset();
-            } else {
-               toast.error('Email hoặc mật khẩu không đúng!');
-            }
-         })
-         .catch((error) => {
-            toast.error('Lỗi khi đăng nhập!');
-            console.log(error);
-         });
+      dispatch(loginAsync(data));
    };
 
    function MessageTemplate({ message }) {
@@ -50,6 +42,16 @@ export default function SignIn({ setTypes, resetModal }) {
    }
    return (
       <div className="w-full">
+         {loading && (
+            <div className="absolute top-0 right-0 w-full h-full bg-[#00000041]" style={{ zIndex: '100' }}>
+               <ProgressSpinner
+                  className="top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  style={{ width: '50px', height: '50px', zIndex: '200' }}
+                  strokeWidth="8"
+                  animationDuration=".5s"
+               />
+            </div>
+         )}
          <form onSubmit={handleSubmit(onSubmit)}>
             <h3 className="text-2xl font-bold mt-5 text-gray-dark text-center">Đăng nhập vào Online Course</h3>
             <div className="grid gap-3 text-base mt-5">

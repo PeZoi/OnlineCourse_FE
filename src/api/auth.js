@@ -29,7 +29,7 @@ export const submitSignUpAPI = async (data) => {
 
 export const submitSignInAPI = async (data) => {
    const res = await axios
-      .post('/api/auth/login', data, { headers: 'Content-Type: application/json' })
+      .post('/api/auth/login', data)
       .then((response) => {
          return response;
       })

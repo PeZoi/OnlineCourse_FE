@@ -3,21 +3,22 @@ import { Link } from 'react-router-dom';
 import NotificationIcon from '../../../../../public/icons/NotificationIcon';
 import TippyModal from '../../../../TippyModal';
 import Tippy from '@tippyjs/react';
-import SignInPage from 'src/features/auth/AuthPage';
 import AuthPage from 'src/features/auth/AuthPage';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from 'src/features/auth/authSlice';
+import { Avatar } from 'primereact/avatar';
 
 export default function Action() {
-   const [useData, setUserData] = useState(false);
+   const dispatch = useDispatch();
+   const { user, isLogged } = useSelector((state) => state.auth);
 
    const [showMyCourses, setShowMyCourses] = useState(false);
    const [showMyNotifications, setShowMyNotifications] = useState(false);
    const [showMyActions, setShowMyActions] = useState(false);
-   const [showModalSignIn, setShowModalSignIn] = useState(false);
-   const [showModalSignUp, setShowModalSignUp] = useState(false);
 
    return (
       <div className="flex items-center justify-end">
-         {useData ? (
+         {isLogged ? (
             <>
                {/* Khoá học của tôi */}
                <div>
@@ -141,14 +142,10 @@ export default function Action() {
                   ModalChildren={
                      <div className="animate-fade w-[230px] h-[370px] rounded-lg px-6 py-3 shadow-base bg-white">
                         <div className="flex items-center justify-start">
-                           <img
-                              className="w-12 h-12 rounded-full my-2"
-                              src="	https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg"
-                              alt="Avatar"
-                           ></img>
-                           <div className="flex items-center flex-col justify-end ml-3">
-                              <span className="text-black font-bold text-base">Viễn Đông</span>
-                              <span className="text-gray text-sm">@vien-dong</span>
+                           <Avatar image={user.thumbnail} size="large" shape="circle" className="my-2" />
+                           <div className="flex items-start flex-col justify-end ml-3">
+                              <p className="text-black font-bold text-base">{user.full_name}</p>
+                              <p className="text-gray text-sm">@{user.username}</p>
                            </div>
                         </div>
                         <hr />
@@ -170,9 +167,12 @@ export default function Action() {
                         <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">
                            Cài đặt
                         </Link>
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
+                        <button
+                           className="block text-gray text-sm py-2 hover:text-black"
+                           onClick={() => dispatch(logout())}
+                        >
                            Đăng xuất
-                        </Link>
+                        </button>
                      </div>
                   }
                   TriggerChildren={
@@ -182,11 +182,7 @@ export default function Action() {
                            setShowMyActions(!showMyActions);
                         }}
                      >
-                        <img
-                           className="w-7 h-7"
-                           src="	https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg"
-                           alt="Avatar"
-                        ></img>
+                        <Avatar image={user.thumbnail} size="normal" shape="circle" />
                      </div>
                   }
                />
