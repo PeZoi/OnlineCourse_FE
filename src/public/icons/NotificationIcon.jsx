@@ -1,11 +1,11 @@
-export default function NotificationIcon() {
+export default function NotificationIcon({ className }) {
    return (
       <svg
          aria-hidden="true"
          focusable="false"
          data-prefix="fas"
          data-icon="bell"
-         className="svg-inline--fa fa-bell NavBar_action-icon__l9MxX"
+         className={'svg-inline--fa fa-bell ' + className}
          role="img"
          xmlns="http://www.w3.org/2000/svg"
          viewBox="0 0 448 512"

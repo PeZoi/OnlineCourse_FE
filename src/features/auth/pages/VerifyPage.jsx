@@ -1,9 +1,32 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { verifyAccountByCode } from 'src/api/auth';
 export default function VerifyPage() {
-   const { code } = useParams();
+   const [searchParams, setSearchParams] = useSearchParams();
+   const navigate = useNavigate();
+   const { isLogged } = useSelector((state) => state.auth);
    useEffect(() => {
-      console.log(code);
-   }, [code]);
-   return <div>VerifyPage</div>;
+      if (isLogged) {
+         navigate('/');
+         return;
+      } else {
+         const code = searchParams.get('code');
+         verifyAccountByCode(code)
+            .then((res) => {
+               if (res === 'Kích hoạt tài khoản thành công.') {
+                  toast.success(res);
+                  navigate('/');
+               } else {
+                  toast.error(res);
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+               toast.error(err);
+            });
+      }
+   }, [isLogged, navigate, searchParams]);
+   return <div></div>;
 }

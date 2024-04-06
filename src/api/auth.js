@@ -80,3 +80,16 @@ export const submitForgotPasswordAPI = async (token, password) => {
       });
    return res;
 };
+
+export const verifyAccountByCode = async (code) => {
+   const res = await axios
+      .post(`/api/auth/verify?code=${code}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+   return res;
+};

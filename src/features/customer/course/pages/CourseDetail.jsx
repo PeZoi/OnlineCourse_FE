@@ -35,7 +35,7 @@ export default function CourseDetail() {
                <div className="mt-8">
                   <h2 className="text-xl font-bold">Bạn sẽ học được gì?</h2>
                   <ul className="grid grid-cols-2 mt-3">
-                     {course?.info_list.map((info) => {
+                     {course?.info_list?.map((info) => {
                         return (
                            info.type === TYPE_INFO[0] && (
                               <li className="flex items-center my-2" key={info.id}>
@@ -53,7 +53,7 @@ export default function CourseDetail() {
                <div className="mt-8">
                   <h2 className="text-xl font-bold">Yêu cầu</h2>
                   <ul className="grid gap-4 mt-5">
-                     {course?.info_list.map((info) => {
+                     {course?.info_list?.map((info) => {
                         return (
                            info.type === TYPE_INFO[1] && (
                               <li className="flex items-center" key={info.id}>

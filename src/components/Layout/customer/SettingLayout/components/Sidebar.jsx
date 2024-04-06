@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { CourseIcon, ShieldIcon, UserIcon } from '../../../../../public/icons';
+import { FaBook } from 'react-icons/fa';
+import { ShieldIcon, UserIcon } from 'src/public/icons';
 
 export default function Sidebar({ children }) {
    const NavList = [
@@ -15,7 +16,7 @@ export default function Sidebar({ children }) {
       },
       {
          path: '/settings/my-courses',
-         icon: <CourseIcon className="size-5 text-primary" />,
+         icon: <FaBook className="size-5 text-primary" />,
          title: 'Khoá học của tôi',
       },
    ];

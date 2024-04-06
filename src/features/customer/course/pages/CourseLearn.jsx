@@ -4,7 +4,7 @@ import CourseComment from '../components/CourseComment';
 import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
 import LearnTypeQuiz from '../components/CourseLearn/LearnTypeQuiz';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getCourse } from 'src/api/courseApi';
+import { getCourseLearnAPI } from 'src/api/courseApi';
 
 export default function CourseLearn() {
    const [isShowComment, setIsShowComment] = useState(false);
@@ -14,7 +14,7 @@ export default function CourseLearn() {
 
    useEffect(() => {
       const fetchCourse = async () => {
-         const res = await getCourse(courseSlug);
+         const res = await getCourseLearnAPI(courseSlug);
          if (res === 404) {
             navigate('/not-found');
          }

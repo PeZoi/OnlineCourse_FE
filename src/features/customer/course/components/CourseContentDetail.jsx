@@ -1,6 +1,6 @@
-import { CreateIcon, HyphenIcon } from '../../../../public/icons';
 import Collapse from 'react-collapse';
-import { CirclePlayIcon, CircleQuestion } from '../../../../public/icons';
+import { GrSubtract } from 'react-icons/gr';
+import { CirclePlayIcon, CircleQuestion, CreateIcon } from 'src/public/icons';
 
 export default function CourseContentDetail({ isOpen, handleToggle, index, chapter }) {
    return (
@@ -14,7 +14,7 @@ export default function CourseContentDetail({ isOpen, handleToggle, index, chapt
             onClick={() => handleToggle(index)}
          >
             <div className="flex items-center">
-               {isOpen ? <HyphenIcon className="size-[14px] font-thin" /> : <CreateIcon className="size-4 font-thin" />}
+               {isOpen ? <GrSubtract className="size-4 font-thin" /> : <CreateIcon className="size-4 font-thin" />}
 
                <span className="font-medium ml-4 text-base">{chapter.name}</span>
             </div>

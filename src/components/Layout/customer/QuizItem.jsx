@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import { ClockBorderIcon, UserIcon } from '../../../public/icons';
+import { AiOutlineClockCircle } from 'react-icons/ai';
+import { UserIcon } from '../../../public/icons';
 
 export default function QuizItem() {
    return (
@@ -9,7 +10,7 @@ export default function QuizItem() {
                <h1 className="text-lg font-semibold">Lập trình Java</h1>
                <div className="flex items-center text-gray mt-1">
                   <div className="flex items-center">
-                     <ClockBorderIcon className="size-[13px]" />
+                     <AiOutlineClockCircle className="size-[13px] text-black" />
                      <span className="ml-1 font-semibold ">40 phút</span>
                   </div>
                   <span className="mx-3">|</span>

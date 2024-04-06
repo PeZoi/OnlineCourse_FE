@@ -44,7 +44,9 @@ const authSlice = createSlice({
          state.isLogged = false;
          localStorage.removeItem('user');
          localStorage.removeItem('token');
+         window.location = '/';
       },
+      // Lấy thông tin từ localstorage
       getInformations: (state) => {
          const token = getTokenByLocalStorage();
 

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import TippyModal from '../../../../TippyModal';
 import { Link, NavLink } from 'react-router-dom';
-import { CreateIcon, BlogIcon, HomeIcon, QuizIcon, RoadMapIcon, PenIcon } from '../../../../../public/icons';
+import { MdQuiz } from 'react-icons/md';
+import { BlogIcon, CreateIcon, HomeIcon, PenIcon, RoadMapIcon } from 'src/public/icons';
 
 export default function Sidebar({ children }) {
    const [isShowModalCreateBtn, setIsShowModalCreateBtn] = useState(false);
@@ -17,7 +18,7 @@ export default function Sidebar({ children }) {
          path: '/',
       },
       {
-         icon: <QuizIcon />,
+         icon: <MdQuiz className="size-5" />,
          name: 'Quiz',
          path: '/quiz',
       },

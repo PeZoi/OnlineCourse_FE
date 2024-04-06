@@ -32,3 +32,18 @@ export const getCourse = async (slug) => {
    // console.log(res);
    return res;
 };
+
+// Lấy ra khoá học chứa chapters và lessons
+export const getCourseLearnAPI = async (slug) => {
+   const res = await axios
+      .get(`/api/learning/courses/${slug}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+   // console.log(res);
+   return res;
+};

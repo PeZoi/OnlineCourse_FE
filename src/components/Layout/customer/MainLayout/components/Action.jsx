@@ -168,7 +168,7 @@ export default function Action() {
                            Cài đặt
                         </Link>
                         <button
-                           className="block text-gray text-sm py-2 hover:text-black"
+                           className="block text-gray text-sm py-2 hover:text-black w-full text-start"
                            onClick={() => dispatch(logout())}
                         >
                            Đăng xuất
