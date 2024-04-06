@@ -7,10 +7,10 @@ export default function VerifyPage() {
    const [searchParams, setSearchParams] = useSearchParams();
    const navigate = useNavigate();
    const { isLogged } = useSelector((state) => state.auth);
+
    useEffect(() => {
       if (isLogged) {
          navigate('/');
-         return;
       } else {
          const code = searchParams.get('code');
          verifyAccountByCode(code)

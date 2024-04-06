@@ -23,7 +23,7 @@ export default function CourseComment({ isShow, setIsShow }) {
             <div className="mt-5">
                {Array(5)
                   .fill()
-                  .map((index) => (
+                  .map((_, index) => (
                      <div className="flex mt-3" key={index}>
                         <img
                            className="size-9 rounded-full my-2"

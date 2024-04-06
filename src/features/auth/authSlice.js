@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
 import toast from 'react-hot-toast';
 import { submitSignInAPI } from 'src/api/auth';
-import { getTokenByLocalStorage, getUserDataByLocalStorage, isExpiredToken } from 'src/utils/common';
 
 export const loginAsync = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
    try {
@@ -45,22 +43,6 @@ const authSlice = createSlice({
          localStorage.removeItem('user');
          localStorage.removeItem('token');
          window.location = '/';
-      },
-      // Lấy thông tin từ localstorage
-      getInformations: (state) => {
-         const token = getTokenByLocalStorage();
-
-         if (token) {
-            const decoded = jwtDecode(token);
-            if (isExpiredToken(decoded.exp)) {
-               logout(state);
-            } else {
-               const user = getUserDataByLocalStorage();
-               state.user = user;
-               state.token = token;
-               state.isLogged = true;
-            }
-         }
       },
    },
    extraReducers: (builder) => {
