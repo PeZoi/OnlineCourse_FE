@@ -166,7 +166,7 @@ export const router = createBrowserRouter([
       ),
       children: [
          {
-            path: 'reset-password',
+            path: 'request-password',
             element: <ResetPasswordPage />,
          },
          {

@@ -58,6 +58,10 @@ export default function ResetPasswordPage() {
       return <span className="italic text-xs ml-1 text-red">{message}</span>;
    }
 
+   if (isValidToken === -1) {
+      return <div></div>;
+   }
+
    if (!isValidToken) {
       return (
          <div className="flex flex-col items-center justify-center">

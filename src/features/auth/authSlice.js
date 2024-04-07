@@ -8,13 +8,9 @@ export const loginAsync = createAsyncThunk('auth/login', async (payload, thunkAP
          .then((res) => res)
          .catch((err) => console.log(err));
 
-      if (res !== 500) {
+      if (res !== 401) {
          const token = res.access_token;
-         const user = {
-            username: res.username,
-            full_name: res.full_name,
-            thumbnail: res.thumbnail,
-         };
+         const user = res.user;
          return { token, user };
       }
       return res;

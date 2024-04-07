@@ -81,9 +81,9 @@ export const submitForgotPasswordAPI = async (token, password) => {
    return res;
 };
 
-export const verifyAccountByCode = async (code) => {
+export const verifyAccountByCode = async (code, email) => {
    const res = await axios
-      .post(`/api/auth/verify?code=${code}`)
+      .post(`/api/auth/verify?code=${code}&email=${email}`)
       .then((response) => {
          return response;
       })

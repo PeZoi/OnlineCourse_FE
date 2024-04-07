@@ -182,7 +182,7 @@ export default function Action() {
                            setShowMyActions(!showMyActions);
                         }}
                      >
-                        <Avatar image={user.thumbnail} size="normal" shape="circle" />
+                        <Avatar image={user.photo} size="normal" shape="circle" />
                      </div>
                   }
                />

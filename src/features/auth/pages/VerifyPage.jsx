@@ -13,14 +13,15 @@ export default function VerifyPage() {
          navigate('/');
       } else {
          const code = searchParams.get('code');
-         verifyAccountByCode(code)
+         const email = searchParams.get('email');
+         verifyAccountByCode(code, email)
             .then((res) => {
-               if (res === 'Kích hoạt tài khoản thành công.') {
-                  toast.success(res);
-                  navigate('/');
+               if (res.is_process) {
+                  toast.success(res.content);
                } else {
-                  toast.error(res);
+                  toast.error(res.content);
                }
+               navigate('/');
             })
             .catch((err) => {
                console.log(err);
