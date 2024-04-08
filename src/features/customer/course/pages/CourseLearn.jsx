@@ -5,6 +5,7 @@ import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
 import LearnTypeQuiz from '../components/CourseLearn/LearnTypeQuiz';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCourseLearnAPI } from 'src/api/courseApi';
+import LearnTypeVideo from '../components/CourseLearn/LearnTypeVideo';
 
 export default function CourseLearn() {
    const [isShowComment, setIsShowComment] = useState(false);
@@ -36,9 +37,9 @@ export default function CourseLearn() {
          <div className="col-span-9 relative">
             <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pb-10">
                {/* Loại video */}
-               {/* <LearnTypeVideo /> */}
+               <LearnTypeVideo />
                {/* <LearnTypeText /> */}
-               <LearnTypeQuiz />
+               {/* <LearnTypeQuiz /> */}
             </div>
 
             <div

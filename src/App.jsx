@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import { PrimeReactProvider } from 'primereact/api';
 import { router } from './router';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
+import 'react-quill/dist/quill.snow.css';
 
 function App() {
    return (

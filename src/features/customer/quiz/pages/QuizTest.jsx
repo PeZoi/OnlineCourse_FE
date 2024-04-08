@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import HoleQuestion from '../components/HoleQuestion';
 import MultiQuestion from '../components/MultiQuestion';
 import SigleQuestion from '../components/SigleQuestion';

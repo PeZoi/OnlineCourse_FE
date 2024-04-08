@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { secondsConvert } from '../../../../../utils/common';
 import { CreateIcon } from '../../../../../public/icons';
+import Editor from 'src/components/Editor';
 
 export default function CreateNote({ videoRef, currentTimeVideo }) {
    const [isShowCreateNote, setIsShowCreateNote] = useState(false);
+   const [note, setNote] = useState('');
    return (
       <div>
          <button
@@ -26,16 +28,15 @@ export default function CreateNote({ videoRef, currentTimeVideo }) {
                isShowCreateNote ? 'translate-y-0 opacity-100 visible' : 'translate-y-72 opacity-0 invisible'
             }`}
          >
-            <div className="flex flex-col px-24">
+            <div className="flex flex-col justify-between px-20 h-full">
                <div className="flex items-center text-xl">
                   <h3 className="font-semibold">Thêm ghi chú tại</h3>
                   <span className="text-white px-2 py-1 rounded-lg bg-primary ml-3">
                      {secondsConvert(Math.floor(currentTimeVideo))}
                   </span>
                </div>
-               <div className="flex-1 ">
-                  <div className="h-36">Bỏ input vào đây</div>
-               </div>
+               <Editor value={note} setValue={setNote} className="w-full h-20 mb-5" />
+               <div></div>
                <div className="flex items-center justify-end font-semibold">
                   <button
                      className="mr-3 text-gray hover:text-black px-4 py-2"
