@@ -142,7 +142,7 @@ export default function Action() {
                   ModalChildren={
                      <div className="animate-fade w-[230px] h-[370px] rounded-lg px-6 py-3 shadow-base bg-white">
                         <div className="flex items-center justify-start">
-                           <Avatar image={user.thumbnail} size="large" shape="circle" className="my-2" />
+                           <Avatar image={user.photo} size="xlarge" shape="circle" />
                            <div className="flex items-start flex-col justify-end ml-3">
                               <p className="text-black font-bold text-base">{user.full_name}</p>
                               <p className="text-gray text-sm">@{user.username}</p>
@@ -150,18 +150,10 @@ export default function Action() {
                         </div>
                         <hr />
                         <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
-                           Trang cá nhân
-                        </Link>
-                        <hr />
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
                            Viết blog
                         </Link>
                         <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
                            Bài viết của tôi
-                        </Link>
-                        <hr />
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
-                           Bài viết đã lưu
                         </Link>
                         <hr />
                         <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">

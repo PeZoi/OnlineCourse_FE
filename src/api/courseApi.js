@@ -1,10 +1,11 @@
 import axios from 'src/utils/axios';
+import { getUserDataByLocalStorage } from 'src/utils/common';
 
 export const getAllCourses = async (categoryId) => {
    const res = await axios
       .get(`/api/courses/home-page?categoryId=${categoryId || ''}`)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -23,6 +24,22 @@ export const getCourse = async (slug) => {
    const res = await axios
       .get(`/api/courses/get-detail/${slug}`)
       .then((response) => {
+         return response.data;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+   // console.log(res);
+   return res;
+};
+
+// Lấy ra khoá học của user đăng nhập
+export const getMyCourseAPI = async () => {
+   const user = getUserDataByLocalStorage();
+   const res = await axios
+      .get(`/api/learning/my/course/list-all?email=${user?.email}`)
+      .then((response) => {
          return response;
       })
       .catch((error) => {
@@ -33,10 +50,12 @@ export const getCourse = async (slug) => {
    return res;
 };
 
-// Lấy ra khoá học chứa chapters và lessons
-export const getCourseLearnAPI = async (slug) => {
+// Kiểm tra xem user có khoá học này không
+
+export const isExistCourseAPI = async (slug) => {
+   const user = getUserDataByLocalStorage();
    const res = await axios
-      .get(`/api/learning/courses/${slug}`)
+      .get(`/api/learning/check/exist-course/${slug}?email=${user?.email}`)
       .then((response) => {
          return response;
       })

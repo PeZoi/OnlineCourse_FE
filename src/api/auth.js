@@ -5,7 +5,7 @@ export const signUpCheckExistsAPI = async (dataCheck) => {
    const res = await axios
       .post('/api/auth/validate', dataCheck)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -18,7 +18,7 @@ export const submitSignUpAPI = async (data) => {
    const res = await axios
       .post('/api/auth/register', data)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -31,7 +31,7 @@ export const submitSignInAPI = async (data) => {
    const res = await axios
       .post('/api/auth/login', data)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -45,7 +45,7 @@ export const forgotPasswordAPI = async (data) => {
    const res = await axios
       .post(`/api/auth/forgot-password?email=${data.email}`)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -59,7 +59,7 @@ export const checkTokenForgotPassworddAPI = async (token) => {
    const res = await axios
       .post(`/api/auth/handle/reset-password?token=${token}`)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -72,7 +72,7 @@ export const submitForgotPasswordAPI = async (token, password) => {
    const res = await axios
       .post(`/api/auth/reset-password?token=${token}&password=${password}`)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
@@ -85,7 +85,7 @@ export const verifyAccountByCode = async (code, email) => {
    const res = await axios
       .post(`/api/auth/verify?code=${code}&email=${email}`)
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);

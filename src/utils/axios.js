@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
    function (response) {
-      return response.data;
+      return response;
    },
    function (error) {
       // Trả về status

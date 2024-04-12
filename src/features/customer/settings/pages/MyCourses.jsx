@@ -1,23 +1,35 @@
 import { Link } from 'react-router-dom';
 import MyCourseItem from '../components/MyCourseItem';
 import CirclePlus from '../../../../public/icons/CirclePlus';
+import { useEffect, useState } from 'react';
+import { getMyCourseAPI } from 'src/api/courseApi';
 
 export default function MyCourses() {
+   const [myCourses, setMyCourses] = useState([]);
+
+   useEffect(() => {
+      getMyCourseAPI()
+         .then((res) => {
+            if (res.status === 200) {
+               setMyCourses(res.data || []);
+            }
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }, []);
+
    return (
       <div className="ml-20 mt-16 min-h-screen">
          <h2 className="text-[22px] font-semibold">Khoá học của tôi</h2>
          <hr />
          <p>
-            Bạn đang có <span className="font-semibold">5</span> khoá học
+            Bạn đang có <span className="font-semibold">{myCourses.length}</span> khoá học
          </p>
          <div className="mt-5 grid grid-cols-3 gap-6">
-            {Array(5)
-               .fill()
-               .map((index) => (
-                  <Link to={'/'} key={index}>
-                     <MyCourseItem />
-                  </Link>
-               ))}
+            {myCourses?.map((course) => (
+               <MyCourseItem course={course} key={course.id} />
+            ))}
             <Link
                to={'/'}
                className="border-[3px] border-[#e8e8e8] border-dashed rounded-xl relative flex flex-col items-center justify-between pb-10 pt-20 text-[#767676] hover:border-primary hover:text-primary transition-all ease-linear duration-300 group "

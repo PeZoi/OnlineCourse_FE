@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-export default function CircleProgressbar() {
-   const [percentage, setPercentage] = useState(90);
+export default function CircleProgressbar({ value }) {
    return (
       <div className="size-[34px] font-semibold">
          <CircularProgressbar
@@ -18,8 +16,8 @@ export default function CircleProgressbar() {
                textColor: '#fff',
                trailColor: '#d6d6d6',
             })}
-            value={percentage}
-            text={`${percentage}%`}
+            value={value}
+            text={`${value}%`}
          />
       </div>
    );

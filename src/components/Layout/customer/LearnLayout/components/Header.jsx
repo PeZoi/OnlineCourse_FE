@@ -4,9 +4,12 @@ import { ArrowRightIcon, CircleQuestion, FileIcon } from '../../../../../public/
 import CircleProgressbar from './CircleProgressbar';
 import MyNote from './MyNote';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Header() {
+   const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
    const [isShowMyNote, setIsShowMyNote] = useState(false);
+
    return (
       <div className="relative w-full h-full">
          <div className="fixed z-10 w-full">
@@ -31,9 +34,12 @@ export default function Header() {
                   {/* RIGHT */}
                   <div className="flex items-center text-white px-6">
                      <div className="flex items-center ">
-                        <CircleProgressbar />
+                        <CircleProgressbar value={myCourseSelected?.percent_achieved} />
                         <span className="text-[13px] ml-2">
-                           <strong>6/12</strong> bài học
+                           <strong>
+                              {myCourseSelected?.total_lesson_learned}/{courseSelected?.total_lesson}
+                           </strong>{' '}
+                           bài học
                         </span>
                      </div>
                      <button

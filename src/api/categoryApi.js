@@ -4,7 +4,7 @@ export const getAllCategories = async () => {
    const res = await axios
       .get('/api/categories/list-all')
       .then((response) => {
-         return response;
+         return response.data;
       })
       .catch((error) => {
          console.log(error);
