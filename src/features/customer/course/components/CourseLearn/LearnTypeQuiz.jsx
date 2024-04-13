@@ -1,4 +1,4 @@
-export default function LearnTypeQuiz() {
+export default function LearnTypeQuiz({ lesson }) {
    return (
       <div className="my-12 max-w-[760px] mx-auto relative">
          <h1 className="font-semibold text-[28px] flex-1">Ôn tập</h1>

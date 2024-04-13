@@ -140,7 +140,7 @@ export default function Action() {
                   isShow={showMyActions}
                   setIsShow={setShowMyActions}
                   ModalChildren={
-                     <div className="animate-fade w-[230px] h-[370px] rounded-lg px-6 py-3 shadow-base bg-white">
+                     <div className="animate-fade w-[230px] h-fit rounded-lg px-6 py-3 shadow-base bg-white">
                         <div className="flex items-center justify-start">
                            <Avatar image={user.photo} size="xlarge" shape="circle" />
                            <div className="flex items-start flex-col justify-end ml-3">
@@ -159,6 +159,7 @@ export default function Action() {
                         <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">
                            Cài đặt
                         </Link>
+                        <hr />
                         <button
                            className="block text-gray text-sm py-2 hover:text-black w-full text-start"
                            onClick={() => dispatch(logout())}

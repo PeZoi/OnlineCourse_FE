@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { FaFileAlt } from 'react-icons/fa';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CheckIcon, CirclePlayIcon, LockIcon } from 'src/public/icons';
+import { CheckIcon, CirclePlayIcon, CircleQuestion, LockIcon } from 'src/public/icons';
 
 export default function LessonItem({ myLesson }) {
    const [searchParams, setSearchParams] = useSearchParams();
@@ -16,7 +17,7 @@ export default function LessonItem({ myLesson }) {
       navigate(`/course/learn/spring-boot-microservices-with-spring-cloud-beginner-to-guru?id=${id}`);
    };
    return (
-      <div onClick={myLesson.is_unlock && (() => handleClickLesson(myLesson.id))} key={myLesson.id}>
+      <div onClick={myLesson?.is_unlock && (() => handleClickLesson(myLesson.id))} key={myLesson.id}>
          <div
             className={`px-5 py-3 flex items-center justify-between transition-all ${
                myLesson.id !== lessonId &&
@@ -30,7 +31,13 @@ export default function LessonItem({ myLesson }) {
                   {myLesson.name}
                </div>
                <div className="flex items-center justify-start text-gray mt-2">
-                  <CirclePlayIcon className="size-[10px] mr-2" />
+                  {myLesson?.lesson_type === 'VIDEO' ? (
+                     <CirclePlayIcon className="size-[10px] mr-2" />
+                  ) : myLesson?.lesson_type === 'QUIZ' ? (
+                     <CircleQuestion className="size-[10px] mr-2" />
+                  ) : (
+                     <FaFileAlt className="size-[10px] mr-2" />
+                  )}
                   <span className="text-xs">{myLesson.duration}</span>
                </div>
             </div>

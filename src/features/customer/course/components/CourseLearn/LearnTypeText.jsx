@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from '../../../../../public/icons';
 
-export default function LearnTypeText() {
+export default function LearnTypeText({ lesson }) {
    return (
       <div className="my-12 max-w-[860px] min-h-screen mx-auto">
          <h1 className="font-semibold text-[28px] flex-1">Tại sao nên học trên website này hơn là học trên Youtube?</h1>

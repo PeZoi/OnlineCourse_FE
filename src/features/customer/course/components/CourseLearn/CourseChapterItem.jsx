@@ -42,7 +42,7 @@ export default function CourseChapterItem({ isOpen, handleToggle, index, chapter
                   const myLesson = {
                      ...lesson,
                      is_completed: trackLesson?.is_completed,
-                     is_unlock: trackLesson?.is_unblock,
+                     is_unlock: trackLesson?.is_unlock,
                   };
                   return <LessonItem key={myLesson.id} myLesson={myLesson} />;
                })}

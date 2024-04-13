@@ -8,7 +8,7 @@ import { checkTokenForgotPassworddAPI, submitForgotPasswordAPI } from 'src/api/a
 import { useNavigate } from 'react-router-dom';
 
 export default function ResetPasswordPage() {
-   const [searchParams, setSearchParams] = useSearchParams();
+   const [searchParams] = useSearchParams();
    const navigate = useNavigate();
    // -1: để không hiện 2 component kia, 0: sai token, 1: đúng token
    const [isValidToken, setIsValidToken] = useState(-1);
@@ -23,6 +23,7 @@ export default function ResetPasswordPage() {
             }
          })
          .catch((err) => console.log(err));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [searchParams]);
 
    // Xử lý form

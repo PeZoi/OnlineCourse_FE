@@ -1,42 +1,76 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CreateNote from './CreateNote';
+import toast from 'react-hot-toast';
+import { confirmLessonCompletedAPI, getLessonOfUserAPI } from 'src/api/lessonApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMyCourseSelected } from '../../courseSlice';
 
-export default function LearnTypeVideo() {
+export default function LearnTypeVideo({ lesson }) {
+   const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
+   const dispatch = useDispatch();
    const videoRef = useRef();
    const [currentTimeVideo, setCurrentTimeVideo] = useState(0);
+   // State này để kiểm tra xem người dùng có đang học nhanh không
+   const countRef = useRef(0);
 
    useEffect(() => {
       const video = videoRef.current;
+      let intervalId;
+      const checkLessonIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
+
       const handleTimeUpdate = () => {
+         const percent = 30;
+         // Tính toán thời gian chênh lệch của video đó
+         const countCheck = (video.duration * percent) / 100;
+         // So sánh xem nếu người dùng học quá thời gian countCheck đó so với bộ đếm
+         if (video.currentTime - countRef.current > countCheck && !checkLessonIsCompleted.is_completed) {
+            toast('Bạn đang học quá nhanh! Đừng tua video');
+            video.currentTime = countRef.current;
+            video.pause();
+         }
+
+         if ((video.currentTime / video.duration) * 100 >= 80 && !checkLessonIsCompleted.is_completed) {
+            confirmLessonCompleted();
+            clearInterval(intervalId);
+         }
+         countRef.current++;
          setCurrentTimeVideo(video.currentTime);
       };
 
-      video.addEventListener('timeupdate', handleTimeUpdate);
+      // Gọi handleTimeUpdate mỗi giây
+      intervalId = setInterval(handleTimeUpdate, 1000);
 
       return () => {
-         video.removeEventListener('timeupdate', handleTimeUpdate);
+         clearInterval(intervalId);
       };
-   }, []);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [lesson]);
+
+   const confirmLessonCompleted = async () => {
+      const res = await confirmLessonCompletedAPI(lesson?.id);
+      if (res.status === 200) {
+         getLessonOfUserAPI(courseSelected.slug)
+            .then((res) => {
+               if (res.status === 200) {
+                  dispatch(getMyCourseSelected(res.data));
+               }
+            })
+            .catch((err) => console.log(err));
+      }
+   };
 
    return (
       <div>
          <div className="flex items-center justify-center bg-black px-24">
-            <video
-               ref={videoRef}
-               src="https://res.cloudinary.com/dz8vpmcub/video/upload/v1710604967/T%E1%BA%A1i_Sao_N%C3%AAn_H%E1%BB%8Dc_T%E1%BA%A1i_Trang_Web_fullstack.edu.vn_tggwhd.mp4"
-               controls={true}
-            />
+            <video ref={videoRef} src={lesson?.video.url} controls={true} width={970} height={550} />
          </div>
 
          <div className="px-24">
             <div className="flex items-center justify-between mt-7 ">
-               <h1 className="font-semibold text-[28px] flex-1">
-                  Tại sao nên học trên website này hơn là học trên Youtube?
-               </h1>
+               <h1 className="font-semibold text-[28px] flex-1">{lesson?.name}</h1>
 
                <CreateNote videoRef={videoRef} currentTimeVideo={currentTimeVideo} />
             </div>
-            <p className="text-xs mt-1 ">Cập nhật tháng 11 năm 2022</p>
             <p className="text-base my-7">
                Tham gia các cộng đồng để cùng học hỏi, chia sẻ và &quot;thám thính&quot; xem F8 sắp có gì mới nhé!
             </p>

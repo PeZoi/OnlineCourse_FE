@@ -13,7 +13,7 @@ export default function Home() {
    const [coursesByComingSoon, setCoursesByComingSoon] = useState([]);
 
    // Lấy id category ở trên url
-   const [searchParams, setSearchParams] = useSearchParams();
+   const [searchParams] = useSearchParams();
    const [categoryId, setCategoryId] = useState(searchParams.get('categoryId'));
 
    // Load dữ liệu lên

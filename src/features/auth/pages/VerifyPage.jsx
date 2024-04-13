@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { verifyAccountByCode } from 'src/api/auth';
 export default function VerifyPage() {
-   const [searchParams, setSearchParams] = useSearchParams();
+   const [searchParams] = useSearchParams();
    const navigate = useNavigate();
    const { isLogged } = useSelector((state) => state.auth);
 
