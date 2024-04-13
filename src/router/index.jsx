@@ -1,8 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
+import MainLayoutAdmin from 'src/components/Layout/admin/MainLayout';
 import LearnLayout from 'src/components/Layout/customer/LearnLayout';
 import LearnQuizLayout from 'src/components/Layout/customer/LearnQuizLayout';
 import MainLayout from 'src/components/Layout/customer/MainLayout';
 import SettingLayout from 'src/components/Layout/customer/SettingLayout';
+import AdminPage from 'src/features/admin';
+import Dashboard from 'src/features/admin/dashboard/Dashboard';
+import ManageUsers from 'src/features/admin/user/ManageUsers';
 import Auth from 'src/features/auth';
 import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
 import VerifyPage from 'src/features/auth/pages/VerifyPage';
@@ -177,4 +181,22 @@ export const router = createBrowserRouter([
    },
 
    // ADMIN
+   {
+      path: 'admin',
+      element: (
+         <MainLayoutAdmin>
+            <AdminPage />
+         </MainLayoutAdmin>
+      ),
+      children: [
+         {
+            path: '',
+            element: <Dashboard />,
+         },
+         {
+            path: 'manage-users',
+            element: <ManageUsers />,
+         },
+      ],
+   },
 ]);
