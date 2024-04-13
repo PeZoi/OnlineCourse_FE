@@ -3,6 +3,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import { router } from './router';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import 'react-quill/dist/quill.snow.css';
+import 'primereact/resources/primereact.min.css';
 
 function App() {
    return (
