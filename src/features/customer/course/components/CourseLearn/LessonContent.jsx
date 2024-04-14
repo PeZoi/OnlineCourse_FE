@@ -23,6 +23,7 @@ export default function LessonContent() {
          getLessonByIdAPI(lessonId)
             .then((res) => {
                if (res.status === 200) {
+                  console.log(res.data);
                   setLesson(res.data);
                }
             })
@@ -45,7 +46,7 @@ export default function LessonContent() {
                </div>
 
                <div
-                  className="absolute right-8 bottom-5 shadow-base rounded-3xl bg-white px-4 py-2 text-primary flex items-center justify-center cursor-pointer select-none hover:opacity-80"
+                  className="absolute right-8 bottom-5 shadow-base rounded-3xl bg-white px-4 py-2 text-primary flex items-center justify-center cursor-pointer select-none"
                   onClick={() => setIsShowComment(!isShowComment)}
                >
                   <CommentIcon className="size-5" />

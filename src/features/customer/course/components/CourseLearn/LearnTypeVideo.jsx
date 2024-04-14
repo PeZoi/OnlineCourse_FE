@@ -52,6 +52,7 @@ export default function LearnTypeVideo({ lesson }) {
          getLessonOfUserAPI(courseSelected.slug)
             .then((res) => {
                if (res.status === 200) {
+                  toast.success('Bạn đã mở khoá bài mới');
                   dispatch(getMyCourseSelected(res.data));
                }
             })

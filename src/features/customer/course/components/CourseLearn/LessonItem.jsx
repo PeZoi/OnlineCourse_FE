@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { FaFileAlt } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckIcon, CirclePlayIcon, CircleQuestion, LockIcon } from 'src/public/icons';
 
 export default function LessonItem({ myLesson }) {
-   const [searchParams, setSearchParams] = useSearchParams();
+   const [searchParams] = useSearchParams();
    const navigate = useNavigate();
    const [lessonId, setLessonId] = useState();
+
+   const { courseSelected } = useSelector((state) => state.course);
 
    useEffect(() => {
       const id = parseInt(searchParams.get('id'));
@@ -14,7 +17,7 @@ export default function LessonItem({ myLesson }) {
    }, [searchParams]);
 
    const handleClickLesson = (id) => {
-      navigate(`/course/learn/spring-boot-microservices-with-spring-cloud-beginner-to-guru?id=${id}`);
+      navigate(`/course/learn/${courseSelected.slug}?id=${id}`);
    };
    return (
       <div onClick={myLesson?.is_unlock && (() => handleClickLesson(myLesson.id))} key={myLesson.id}>

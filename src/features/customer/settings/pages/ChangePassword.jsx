@@ -1,5 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { changePasswordAPI } from 'src/api/userApi';
+import { getUserDataByLocalStorage } from 'src/utils/common';
 import * as yup from 'yup';
 export default function ChangePassword() {
    // Xử lý form
@@ -19,7 +22,29 @@ export default function ChangePassword() {
       mode: 'onBlur',
       resolver: yupResolver(schema),
    });
-   const onSubmit = (data) => {};
+   const onSubmit = (data) => {
+      const user = getUserDataByLocalStorage();
+      const formData = new FormData();
+      formData.append('email', user?.email);
+      formData.append('password', data.password);
+
+      toast.promise(
+         changePasswordAPI(formData)
+            .then((res) => {
+               if (res.status === 200) {
+                  reset();
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+            }),
+         {
+            loading: 'Đang xử lý ...',
+            success: 'Đổi mật khẩu thành công',
+            error: 'Đổi mật khẩu thất bại',
+         },
+      );
+   };
    function MessageTemplate({ message }) {
       return <span className="italic text-xs ml-1 text-red">{message}</span>;
    }

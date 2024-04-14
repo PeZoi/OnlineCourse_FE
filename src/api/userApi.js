@@ -60,3 +60,27 @@ export const createUserAPI = (formData) => {
          return err;
       });
 };
+
+// Thay đổi thông tin client
+export const updateInformationUserAPI = (formData) => {
+   return axios
+      .post('/api/users/change-info', formData)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
+// Đổi mật khẩu
+export const changePasswordAPI = (formData) => {
+   return axios
+      .post('/api/users/change-password', formData)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};

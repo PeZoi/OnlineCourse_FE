@@ -1,6 +1,6 @@
-import HoleQuestion from '../components/HoleQuestion';
-import MultiQuestion from '../components/MultiQuestion';
-import SigleQuestion from '../components/SigleQuestion';
+import HoleQuestion from 'src/components/QuizType/HoleQuestion';
+import MultiQuestion from 'src/components/QuizType/MultiQuestion';
+import SingleQuestion from 'src/components/QuizType/SingleQuestion';
 
 export default function QuizTest() {
    return (
@@ -8,7 +8,7 @@ export default function QuizTest() {
          <div className="col-span-13 mr-5">
             <div className="bg-white w-full py-5 px-10 rounded-md shadow-md">
                <div>
-                  <SigleQuestion />
+                  <SingleQuestion />
                   <MultiQuestion />
                   <HoleQuestion />
                </div>

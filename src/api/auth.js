@@ -81,6 +81,7 @@ export const submitForgotPasswordAPI = async (token, password) => {
    return res;
 };
 
+// Xác nhận để kích hoạt tài khoản
 export const verifyAccountByCode = async (code, email) => {
    const res = await axios
       .post(`/api/auth/verify?code=${code}&email=${email}`)

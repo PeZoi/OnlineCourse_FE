@@ -1,4 +1,5 @@
 import Collapse from 'react-collapse';
+import { FaFileAlt } from 'react-icons/fa';
 import { GrSubtract } from 'react-icons/gr';
 import { CirclePlayIcon, CircleQuestion, CreateIcon } from 'src/public/icons';
 
@@ -29,10 +30,9 @@ export default function CourseContentDetail({ isOpen, handleToggle, index, chapt
                      <div className="px-7 flex items-center justify-between mt-2" key={lesson.id}>
                         <div className="flex items-center">
                            <div className="opacity-50" style={{ zIndex: '20' }}>
-                              {lesson.lesson_type === 'VIDEO' && (
-                                 <CirclePlayIcon className="size-[14px] text-primary " />
-                              )}
+                              {lesson.lesson_type === 'VIDEO' && <CirclePlayIcon className="size-[14px] text-gray " />}
                               {lesson.lesson_type === 'QUIZ' && <CircleQuestion className="size-[14px] text-gray " />}
+                              {lesson.lesson_type === 'TEXT' && <FaFileAlt className="size-[14px] text-gray  " />}
                            </div>
                            <div className="text-sm ml-4 leading-[48px]">{lesson.name}</div>
                         </div>

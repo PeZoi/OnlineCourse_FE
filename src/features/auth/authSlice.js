@@ -40,6 +40,12 @@ const authSlice = createSlice({
          localStorage.removeItem('token');
          window.location = '/';
       },
+
+      updateInformationUser: (state, actions) => {
+         const user = actions.payload;
+         localStorage.setItem('user', JSON.stringify(user));
+         state.user = actions.payload;
+      },
    },
    extraReducers: (builder) => {
       builder.addCase(loginAsync.pending, (state) => {
@@ -69,6 +75,6 @@ const authSlice = createSlice({
    },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, updateInformationUser } = authSlice.actions;
 
 export default authSlice.reducer;
