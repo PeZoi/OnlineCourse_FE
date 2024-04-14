@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { getLessonOfCourseAPI, getLessonOfUserAPI } from 'src/api/lessonApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCourseSelected, getMyCourseSelected } from '../courseSlice';
@@ -10,15 +10,17 @@ import LessonContent from '../components/CourseLearn/LessonContent';
 
 export default function CourseLearn() {
    const { courseSlug } = useParams();
+   const [searchParams] = useSearchParams();
 
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
 
    // Xử lý đóng mở chapters
-   const [isOpenCollapse, setIsOpenCollapse] = useState(Array(courseSelected?.chapter_list.length).fill(false));
+   const [openCollapses, setOpenCollapses] = useState(Array(courseSelected?.chapter_list?.length).fill(false));
 
    useEffect(() => {
+      // Kiểm tra xem người dùng đã mua khoá học này chưa
       isExistCourseAPI(courseSlug).then((res) => {
          if (res.status === 200) {
             if (!res.data) {
@@ -28,6 +30,7 @@ export default function CourseLearn() {
          }
       });
 
+      // Lấy dữ liêu lesson của course đó lên
       getLessonOfCourseAPI(courseSlug)
          .then((res) => {
             if (res.status === 200) {
@@ -40,6 +43,7 @@ export default function CourseLearn() {
             console.log(err);
          });
 
+      // Lấy dữ liệu lesson là các trạng thái bài học của người dùng
       getLessonOfUserAPI(courseSlug)
          .then((res) => {
             if (res.status === 200) {
@@ -49,11 +53,29 @@ export default function CourseLearn() {
          .catch((err) => console.log(err));
    }, [courseSlug, dispatch, navigate]);
 
-   // Khi lấy các chapters của khoá học thì thay vào đây
+   // Xử lý khi học khoá học mà trên url không truyền id thì load bài đang học lên
+   useEffect(() => {
+      const id = parseInt(searchParams.get('id'));
+      let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);
+      myCourseSelected?.list_tracks.forEach((track) => {
+         // Xử lý khi bài học đó chưa unlock mà người dùng vẫn cố vào
+         if (track?.lesson_id === id) {
+            !track?.is_unlock && navigate(`/course/learn/${courseSelected.slug}?id=${currentLesson.lesson_id}`);
+         }
+
+         // Nếu trên thanh url không có id thì load bài đang học
+         if (track.is_current && !id) {
+            navigate(`/course/learn/${courseSelected.slug}?id=${track.lesson_id}`);
+         }
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [myCourseSelected, searchParams]);
+
+   // Xử lý đóng/mở chapters
    const handleToggle = (index) => {
-      const newIsOpenArray = [...isOpenCollapse];
+      const newIsOpenArray = [...openCollapses];
       newIsOpenArray[index] = !newIsOpenArray[index];
-      setIsOpenCollapse(newIsOpenArray);
+      setOpenCollapses(newIsOpenArray);
    };
 
    return (
@@ -73,10 +95,10 @@ export default function CourseLearn() {
                         key={index}
                         chapter={chapter}
                         myCourseSelected={myCourseSelected}
-                        courseSelected={courseSelected}
                         handleToggle={handleToggle}
                         index={index}
-                        isOpen={isOpenCollapse[index]}
+                        isOpen={openCollapses[index]}
+                        openCollapses={openCollapses}
                      />
                   ))}
                </div>

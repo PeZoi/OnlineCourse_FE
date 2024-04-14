@@ -1,8 +1,22 @@
 import { ArrowRightIcon } from '../../../../../public/icons';
 import Collapse from 'react-collapse';
 import LessonItem from './LessonItem';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function CourseChapterItem({ isOpen, handleToggle, index, chapter, myCourseSelected }) {
+   const [searchParams] = useSearchParams();
+   // Xử lý khi đang active bài nào thì chapter sẽ mở ra
+   useEffect(() => {
+      const lessonId = parseInt(searchParams.get('id'));
+      chapter?.lesson_list?.forEach((l) => {
+         if (lessonId === l.id) {
+            handleToggle(index);
+         }
+      });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [searchParams]);
+
    const calculateTotalChapterIsCompleted = () => {
       let sum = 0;
       chapter.lesson_list.forEach((l) => {

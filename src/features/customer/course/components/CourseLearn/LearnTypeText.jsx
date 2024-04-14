@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { ArrowRightIcon } from '../../../../../public/icons';
 
 export default function LearnTypeText({ lesson }) {
-   console.log(lesson);
    useEffect(() => {
       document.getElementById('lesson-content').innerHTML = lesson?.text.content;
    }, [lesson]);

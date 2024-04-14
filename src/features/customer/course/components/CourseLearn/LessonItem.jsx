@@ -31,7 +31,7 @@ export default function LessonItem({ myLesson }) {
          >
             <div className="flex items-start flex-col">
                <div className={`${myLesson.id === lessonId && ' font-semibold '} text-sm select-none`}>
-                  {myLesson.name}
+                  {myLesson.orders}. {myLesson.name}
                </div>
                <div className="flex items-center justify-start text-gray mt-2">
                   {myLesson?.lesson_type === 'VIDEO' ? (

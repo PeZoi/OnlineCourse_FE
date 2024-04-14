@@ -1,6 +1,6 @@
 // import React from 'react'
 import { FaEllipsisV, FaRegCalendarMinus } from 'react-icons/fa';
-import { Progress } from 'antd';
+// import { Progress } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import PieComponent from './PieComponent';
 
@@ -140,23 +140,23 @@ const Dashboard = () => {
                <div className="px-[25px] space-y-[15px] py-[15px]">
                   <div>
                      <h2>Server Migration</h2>
-                     <Progress percent={30} strokeColor="#E74A3B" />
+                     {/* <Progress percent={30} strokeColor="#E74A3B" /> */}
                   </div>
                   <div>
                      <h2>Sales Tracking</h2>
-                     <Progress percent={50} status="active" strokeColor="#F6C23E" />
+                     {/* <Progress percent={50} status="active" strokeColor="#F6C23E" /> */}
                   </div>
                   <div>
                      <h2>Customer Database</h2>
-                     <Progress percent={70} status="active" strokeColor="#4E73DF" />
+                     {/* <Progress percent={70} status="active" strokeColor="#4E73DF" /> */}
                   </div>
                   <div>
                      <h2>Payout Details</h2>
-                     <Progress percent={100} status="active" strokeColor="#36B9CC" />
+                     {/* <Progress percent={100} status="active" strokeColor="#36B9CC" /> */}
                   </div>
                   <div>
                      <h2>Customer Database</h2>
-                     <Progress percent={50} status="exception" strokeColor="#1CC88A" />
+                     {/* <Progress percent={50} status="exception" strokeColor="#1CC88A" /> */}
                   </div>
                </div>
             </div>

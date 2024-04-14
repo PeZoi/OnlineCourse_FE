@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getLessonByIdAPI } from 'src/api/lessonApi';
 import LearnTypeText from './LearnTypeText';
 import LearnTypeVideo from './LearnTypeVideo';
 import LearnTypeQuiz from './LearnTypeQuiz';
 import { CommentIcon } from 'src/public/icons';
 import CourseComment from '../CourseComment';
+import { useSelector } from 'react-redux';
 
 export default function LessonContent() {
    const [isShowComment, setIsShowComment] = useState(false);
    const [searchParams] = useSearchParams();
    const [lesson, setLesson] = useState();
    const [lessonId, setLessonId] = useState(null);
+
+   const navigate = useNavigate();
+   const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
 
    useEffect(() => {
       const id = searchParams.get('id');
@@ -23,13 +27,15 @@ export default function LessonContent() {
          getLessonByIdAPI(lessonId)
             .then((res) => {
                if (res.status === 200) {
-                  console.log(res.data);
                   setLesson(res.data);
+               } else if (res === 404) {
+                  let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);
+                  navigate(`/course/learn/${courseSelected?.slug}?id=${currentLesson?.lesson_id}`);
                }
             })
             .catch((err) => console.log(err));
       }
-   }, [lessonId]);
+   }, [lessonId, myCourseSelected, courseSelected, navigate]);
    return (
       <div>
          {lesson && (
