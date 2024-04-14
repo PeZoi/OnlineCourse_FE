@@ -6,7 +6,7 @@ const Sidebar = ({ children }) => {
    return (
       <div className="grid grid-cols-12 min-h-screen">
          <div className="col-span-2">
-            <div className="bg-[#4E73DF] h-full px-[25px]">
+            <div className="bg-primary h-full px-[25px]">
                <div className="px-[15px] py-[30px] flex items-center justify-center border-b-[1px] border-[#EDEDED]/[0.3]">
                   <h1 className="text-white text-[16px] leading-[24px] font-extrabold cursor-pointer">Admin panel</h1>
                </div>
