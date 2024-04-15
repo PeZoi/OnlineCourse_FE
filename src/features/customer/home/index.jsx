@@ -5,7 +5,7 @@ import { ArrowRightIcon } from '../../../public/icons';
 import { useEffect, useState } from 'react';
 import { getAllCourses, getAllCoursesByComingSoon } from 'src/api/courseApi';
 import { useAxios } from 'src/hooks/useAxios';
-import { getAllCategories } from 'src/api/categoryApi';
+import { getAllCategoriesAPI } from 'src/api/categoryApi';
 
 export default function Home() {
    const [categories, setCategories] = useState([]);
@@ -19,7 +19,7 @@ export default function Home() {
    // Load dữ liệu lên
    const axiosCourses = useAxios(() => getAllCourses(categoryId), [categoryId]);
    const axiosCoursesByComingsoon = useAxios(getAllCoursesByComingSoon, []);
-   const axiosCategories = useAxios(getAllCategories, []);
+   const axiosCategories = useAxios(getAllCategoriesAPI, []);
    useEffect(() => {
       setCourses(axiosCourses.response);
    }, [axiosCourses.response]);

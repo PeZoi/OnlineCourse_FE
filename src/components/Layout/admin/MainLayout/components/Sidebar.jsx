@@ -1,47 +1,68 @@
-import { FaTachometerAlt, FaChevronRight, FaRegChartBar, FaRegUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaTachometerAlt, FaRegChartBar, FaRegUser, FaBook } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 import Header from './Header';
 
 const Sidebar = ({ children }) => {
+   const navList = [
+      {
+         path: '/admin/manage-users',
+         icon: <FaRegUser />,
+         title: 'Người dùng',
+      },
+      {
+         path: '/admin/manage-categories',
+         icon: <FaRegChartBar />,
+         title: 'Danh mục',
+      },
+      {
+         path: '/admin/manage-courses',
+         icon: <FaBook />,
+         title: 'Khoá học',
+      },
+   ];
+
    return (
       <div className="grid grid-cols-12 min-h-screen">
          <div className="col-span-2">
-            <div className="bg-primary h-full px-[25px]">
-               <div className="px-[15px] py-[30px] flex items-center justify-center border-b-[1px] border-[#EDEDED]/[0.3]">
-                  <h1 className="text-white text-[16px] leading-[24px] font-extrabold cursor-pointer">Admin panel</h1>
+            <div className="bg-white h-full px-[25px] border-r-4 border-[#EDEDED]">
+               <div className="px-[15px] py-[30px] flex items-center justify-center ">
+                  <h1 className="text-black text-[16px] leading-[24px] font-extrabold cursor-pointer">Admin panel</h1>
                </div>
-               <div className="flex items-center gap-[15px] py-[20px] border-b-[1px] border-[#EDEDED]/[0.3]">
-                  <FaTachometerAlt color="white" />
-                  <Link to="/admin">
-                     <p className="text-[14px] leading-[20px] font-bold text-white">Dashboard</p>
-                  </Link>
+               <hr className="m-0" />
+               <div className="mt-3">
+                  <p className="text-[10px] font-extrabold leading-[16px] text-gray mb-3">TRANG CHỦ</p>
+                  <NavLink
+                     to={'/admin/dashboard'}
+                     className="flex items-center justify-between p-3 my-2 cursor-pointer text-black font-medium hover:bg-gray-light rounded-lg transition-all"
+                  >
+                     <div className="flex items-center gap-[10px]">
+                        <FaTachometerAlt />
+                        <p className="text-base">Dashboard</p>
+                     </div>
+                  </NavLink>
                </div>
-               <div className="pt-[15px] border-b-[1px] border-[#EDEDED]/[0.3]">
-                  <p className="text-[10px] font-extrabold leading-[16px] text-white/[0.4]">INTERFACE</p>
-                  <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
-                     <div className="flex items-center gap-[10px]">
-                        <FaRegUser color="white" />
-                        <Link to="/admin/manage-users">
-                           <p className="text-[14px] leading-[20px] font-normal text-white">Users</p>
-                        </Link>
-                     </div>
-                     <FaChevronRight color="white" />
-                  </div>
-                  <div className="flex items-center justify-between gap-[10px] py-[15px] cursor-pointer">
-                     <div className="flex items-center gap-[10px]">
-                        <FaRegChartBar color="white" />
-                        <Link to="/category">
-                           <p className="text-[14px] leading-[20px] font-normal text-white">Category</p>
-                        </Link>
-                     </div>
-                     <FaChevronRight color="white" />
-                  </div>
+               <hr className="m-0" />
+               <div className="mt-3">
+                  <p className="text-[10px] font-extrabold leading-[16px] text-gray mb-3">QUẢN LÝ</p>
+
+                  {navList.map((nav) => (
+                     <NavLink
+                        to={nav.path}
+                        key={nav.title}
+                        className="flex items-center justify-between p-3 my-2 cursor-pointer text-black font-medium hover:bg-gray-light rounded-lg transition-all"
+                     >
+                        <div className="flex items-center gap-[10px]">
+                           {nav.icon}
+                           <p className="text-base">{nav.title}</p>
+                        </div>
+                     </NavLink>
+                  ))}
                </div>
             </div>
          </div>
          <div className="col-span-10">
             <Header />
-            <div className="mt-6">{children}</div>
+            <div className="mt-6 px-10">{children}</div>
          </div>
       </div>
    );

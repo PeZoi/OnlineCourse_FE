@@ -1,6 +1,6 @@
 import axios from 'src/utils/axios';
 
-export const getAllCategories = async () => {
+export const getAllCategoriesAPI = async () => {
    const res = await axios
       .get('/api/categories/list-all')
       .then((response) => {

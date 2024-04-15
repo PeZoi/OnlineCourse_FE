@@ -1,6 +1,31 @@
 import axios from 'src/utils/axios';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 
+// get all courses dành cho admin
+export const getAllCoursesAPI_a = () => {
+   return axios
+      .get(`/api/courses/list-all`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         return error;
+      });
+};
+
+// Tạo khoá học
+export const createCourseAPI = (formData) => {
+   return axios
+      .post(`/api/courses/create`, formData)
+      .then((response) => {
+         console.log(response);
+         return response;
+      })
+      .catch((error) => {
+         return error;
+      });
+};
+
 export const getAllCourses = async (categoryId) => {
    const res = await axios
       .get(`/api/courses/home-page?categoryId=${categoryId || ''}`)
@@ -51,7 +76,6 @@ export const getMyCourseAPI = async () => {
 };
 
 // Kiểm tra xem user có khoá học này không
-
 export const isExistCourseAPI = async (slug) => {
    const user = getUserDataByLocalStorage();
    const res = await axios

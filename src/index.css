@@ -44,3 +44,9 @@ hr {
 .active {
    background-color: #e8ebed;
 }
+
+.p-inputtext:enabled:focus,
+.p-button:focus {
+   box-shadow: none !important;
+   border-color: unset !important;
+}

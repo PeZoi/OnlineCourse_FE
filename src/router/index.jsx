@@ -1,10 +1,12 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import MainLayoutAdmin from 'src/components/Layout/admin/MainLayout';
 import LearnLayout from 'src/components/Layout/customer/LearnLayout';
 import LearnQuizLayout from 'src/components/Layout/customer/LearnQuizLayout';
 import MainLayout from 'src/components/Layout/customer/MainLayout';
 import SettingLayout from 'src/components/Layout/customer/SettingLayout';
 import AdminPage from 'src/features/admin';
+import ManageCourses from 'src/features/admin/course/ManageCourses';
+import DetailCourse from 'src/features/admin/course/pages/DetailCourse';
 import Dashboard from 'src/features/admin/dashboard/Dashboard';
 import ManageUsers from 'src/features/admin/user/ManageUsers';
 import Auth from 'src/features/auth';
@@ -191,11 +193,23 @@ export const router = createBrowserRouter([
       children: [
          {
             path: '',
+            element: <Navigate to="dashboard" replace />,
+         },
+         {
+            path: 'dashboard',
             element: <Dashboard />,
          },
          {
             path: 'manage-users',
             element: <ManageUsers />,
+         },
+         {
+            path: 'manage-courses',
+            element: <ManageCourses />,
+         },
+         {
+            path: 'manage-courses/:courseId',
+            element: <DetailCourse />,
          },
       ],
    },

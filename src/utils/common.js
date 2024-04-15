@@ -59,10 +59,17 @@ export const formatNumber = (number) => {
    return string.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
+// Format lại giá
+export const formatCurrency = (value) => {
+   return value.toLocaleString('vi', {
+      currency: 'VND',
+   });
+};
+
 // Hàm tính toán tiền discount
 export const calculatePriceDiscount = (price, discount) => {
    const priceDiscount = price - price * discount;
-   return formatNumber(priceDiscount);
+   return formatCurrency(priceDiscount);
 };
 
 // Hàm lấy thông tin user ở localstorage

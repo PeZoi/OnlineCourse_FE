@@ -19,7 +19,9 @@ export default function ModalMiddle({ isShow, setIsShow, setResetModal, children
                      className="size-3 opacity-60 hover:opacity-100 transition-all ease-in-out cursor-pointer"
                      onClick={() => {
                         setIsShow(false);
-                        setResetModal(true);
+                        if (setResetModal) {
+                           setResetModal(true);
+                        }
                      }}
                   >
                      <XMark className="text-black " />
@@ -34,7 +36,9 @@ export default function ModalMiddle({ isShow, setIsShow, setResetModal, children
             }`}
             onClick={() => {
                setIsShow(false);
-               setResetModal(true);
+               if (setResetModal) {
+                  setResetModal(true);
+               }
             }}
          ></div>
       </div>
