@@ -34,7 +34,12 @@ export default function AuthPage() {
          >
             Đăng ký
          </button>
-         <ModalMiddle isShow={showModal} setIsShow={setShowModal} setResetModal={setResetModal} className={'w-[540px]'}>
+         <ModalMiddle
+            isShow={showModal}
+            setIsShow={setShowModal}
+            setResetModal={setResetModal}
+            className={'w-[540px] mx-auto'}
+         >
             <div className="flex flex-col items-center select-none px-10 " style={{ maxHeight: 'calc(100vh - 200px)' }}>
                <img className="h-[38px] rounded-lg" src={Logo} alt="F8" />
                {types === 'SIGNIN' && (

@@ -1,9 +1,8 @@
 import Tippy from '@tippyjs/react';
-import Column from 'antd/es/table/Column';
+import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Image } from 'primereact/image';
 import { InputSwitch } from 'primereact/inputswitch';
-import { useState } from 'react';
 
 export default function TableCourse({ courses, setSelectedCourse, selectedCourse, searchKeyWord }) {
    const handleClickSwitchPublish = (idCourse) => {};

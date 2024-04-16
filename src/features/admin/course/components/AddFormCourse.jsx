@@ -1,6 +1,6 @@
 import { InputTextarea } from 'primereact/inputtextarea';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { BsFillTrash3Fill } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
 import * as yup from 'yup';
@@ -12,13 +12,6 @@ import { createCourseAPI } from 'src/api/courseApi';
 import { Button } from 'primereact/button';
 
 export default function AddFormCourse({ categories, setOpenModal, setRerender, resetModal }) {
-   const [infosTarget, setInfosTarget] = useState([]);
-   const [infosRequirement, setInfosRequirement] = useState([]);
-   const [errorInfosTarget, setErrorInfosTarget] = useState(null);
-   const [errorInfosRequirement, setErrorInfosRequirement] = useState(null);
-
-   const [thumbnail, setThumbnail] = useState(null);
-   const [errorThumbnail, setErrorThumbnail] = useState('');
    const [reviewThumbnail, setReviewThumbnail] = useState('');
 
    const [loadingSubmit, setLoadingSubmit] = useState(false);
@@ -32,140 +25,136 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
       description: yup.string().required('Mô tả không được để trống').min(10, 'Mô tả phải có ít nhất 10 ký tự'),
       price: yup
          .number()
+         .typeError('Giá phải là một con số')
          .required('Giá không được để trống')
          .positive('Giá không được âm')
          .integer('Giá phải là số nguyên')
          .min(1000, 'Giá phải lớn hơn 1000'),
-      discount: yup.number().min(0, 'Hãy nhập đúng định dạng').max(1, 'Hãy nhập đúng định dạng'),
+      discount: yup
+         .number()
+         .typeError('Giảm giá phải là một con số')
+         .min(0, 'Hãy nhập đúng định dạng')
+         .max(1, 'Hãy nhập đúng định dạng'),
       category_id: yup.string().test('is-not-zero', 'Danh mục không được để trống', (value) => {
          return value !== undefined && value !== '0';
       }),
+      thumbnail: yup
+         .mixed()
+         .test('required', 'Thumbnail không được để trống', (value) => {
+            return value && value.length > 0;
+         })
+         .test('fileSize', 'Ảnh quá lớn (< 2MB)', (value) => {
+            if (!value || !value.length) return true;
+            if (value[0] > 2000000) {
+               return false; // Kích thước lớn hơn 2MB
+            }
+            return true; // Tất cả các file đều hợp lệ
+         }),
+      target_infos: yup.array().of(
+         yup.object().shape({
+            content: yup.string().min(10, 'Tối thiểu là 10 ký tự').max(255, 'Tối đa là 255 ký tự'),
+         }),
+      ),
+      requirement_infos: yup.array().of(
+         yup.object().shape({
+            content: yup.string().min(10, 'Tối thiểu là 10 ký tự').max(255, 'Tối đa là 255 ký tự'),
+         }),
+      ),
    });
 
+   const defaultValues = {
+      target_infos: [{ content: '' }],
+      requirement_infos: [{ content: '' }],
+   };
+
    const {
+      control,
       register,
       handleSubmit,
       reset,
       formState: { errors },
-   } = useForm({ mode: 'onBlur', resolver: yupResolver(schema) });
+   } = useForm({
+      mode: 'onChange',
+      resolver: yupResolver(schema),
+      defaultValues,
+   });
+
+   const {
+      fields: targetFields,
+      append: appendTarget,
+      remove: removeTarget,
+   } = useFieldArray({
+      control,
+      name: 'target_infos',
+   });
+
+   const {
+      fields: requirementFields,
+      append: appendRequirement,
+      remove: removeRequirement,
+   } = useFieldArray({
+      control,
+      name: 'requirement_infos',
+   });
+
+   const onErrors = (err) => {
+      console.log(err);
+   };
 
    const onSubmit = async (data) => {
-      let isError = false;
-      if (infosTarget.length === 0) {
-         setErrorInfosTarget('Hãy nhập thêm thông tin khoá học');
-         isError = true;
-      } else {
-         setErrorInfosTarget('');
-      }
-      if (infosRequirement.length === 0) {
-         isError = true;
-         setErrorInfosRequirement('Hãy nhập thêm thông tin khoá học');
-      } else {
-         setErrorInfosRequirement('');
-      }
-      if (!thumbnail) {
-         isError = true;
-         setErrorThumbnail('Thumbnail không được để trống');
-      } else {
-         setErrorThumbnail('');
-      }
-      if (!isError) {
-         const formattedInfosTarget = infosTarget.map((info) => ({ value: info.content, type: 'TARGET' }));
-         const formattedInfosRequirement = infosRequirement.map((info) => ({
-            value: info.content,
-            type: 'REQUIREMENT',
-         }));
-         const formattedData = {
-            ...data,
-            category_id: +data.category_id,
-            is_comming_soon: true,
-            is_published: false,
-            info_list: [...formattedInfosTarget, ...formattedInfosRequirement],
-         };
-
-         const formData = new FormData();
-         formData.append('course', new Blob([JSON.stringify(formattedData)], { type: 'application/json' }));
-         formData.append('img', thumbnail[0]);
-
-         setLoadingSubmit(true);
+      const formattedData = {
+         ...data,
+         category_id: +data.category_id,
+         is_comming_soon: true,
+         is_published: false,
+         info_list: [
+            ...data.target_infos.map((info) => ({ type: 'TARGET', value: info.content })),
+            ...data.requirement_infos.map((info) => ({ type: 'REQUIREMENT', value: info.content })),
+         ],
+      };
+      const formData = new FormData();
+      formData.append('course', new Blob([JSON.stringify(formattedData)], { type: 'application/json' }));
+      formData.append('img', data.thumbnail[0]);
+      setLoadingSubmit(true);
+      toast.promise(
          createCourseAPI(formData)
             .then((res) => {
                console.log(res);
                if (res.status === 201) {
-                  toast.success('Tạo khoá học thành công');
-                  setRerender(Math.random() * 1000);
-                  reset();
-                  setThumbnail(null);
-                  setInfosTarget([]);
-                  setInfosRequirement([]);
                   setReviewThumbnail('');
-
                   setOpenModal(false);
                   setLoadingSubmit(false);
-               } else if (res.status === 400) {
-                  toast.error(res.data.message);
+                  setRerender(Math.random() * 1000);
+                  reset();
+               } else {
                   setLoadingSubmit(false);
+                  const error = new Error(`Lỗi: ${res.data.message}`);
+                  return Promise.reject(error);
                }
             })
             .catch((err) => {
                console.log(err);
-               toast.error('Tạo khoá học thất bại');
                setLoadingSubmit(false);
-            });
-      }
+               throw err;
+            }),
+         {
+            loading: 'Đang xử lý ...',
+            success: 'Tạo khoá học thành công',
+            error: (err) => `${err.message}`,
+         },
+      );
    };
 
    useEffect(() => {
       if (resetModal) {
+         setReviewThumbnail('');
          reset();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [resetModal]);
 
-   const handleChangeInfosTarget = (e, info) => {
-      setErrorInfosTarget('');
-      const arrTemp = [...infosTarget];
-      const newArr = arrTemp.map((i) => {
-         if (i.content?.length <= 10) {
-            setErrorInfosTarget('Ít nhất phải 10 ký tự');
-         }
-         if (i.id === info.id) {
-            return { id: i.id, content: e.target.value };
-         }
-         return i;
-      });
-      setInfosTarget(newArr);
-   };
-   const handleChangeInfosRequirement = (e, info) => {
-      setErrorInfosRequirement('');
-      const arrTemp = [...infosRequirement];
-      const newArr = arrTemp.map((i) => {
-         if (i.content?.length <= 10) {
-            setErrorInfosRequirement('Ít nhất phải 10 ký tự');
-         }
-         if (i.id === info.id) {
-            return { id: i.id, content: e.target.value };
-         }
-         return i;
-      });
-      setInfosRequirement(newArr);
-   };
-
-   const handleDeleteInfoTarget = (info) => {
-      const arrTemp = [...infosTarget];
-      const newArr = arrTemp.filter((i) => i.id !== info.id);
-      setInfosTarget(newArr);
-   };
-   const handleDeleteInfoRequirement = (info) => {
-      const arrTemp = [...infosRequirement];
-      const newArr = arrTemp.filter((i) => i.id !== info.id);
-      setInfosRequirement(newArr);
-   };
-
    const handleUploadFile = (e) => {
-      setErrorThumbnail('');
       const urlPreview = uploadPreviewImage(e);
-      setThumbnail(e.target.files);
       if (urlPreview) {
          setReviewThumbnail(urlPreview);
       } else {
@@ -179,7 +168,7 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
 
    return (
       <div className="max-h-popper overflow-y-auto">
-         <form onSubmit={handleSubmit(onSubmit)}>
+         <form onSubmit={handleSubmit(onSubmit, onErrors)}>
             <h1 className="font-bold text-2xl">Thêm khoá học mới</h1>
             <hr />
             <div className="grid grid-cols-4 gap-4 mt-5">
@@ -276,13 +265,14 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
                            Thumbnail:
                         </label>
                         <input
+                           {...register('thumbnail')}
                            id="thumbnail"
                            type="file"
                            accept="image/jpg, image/jpeg, image/png"
-                           className={`h-fit w-full mt-3 ${errorThumbnail && ' border-2 border-red outline-none'}`}
+                           className={`h-fit w-full mt-3 ${errors?.thumbnail && ' border-2 border-red outline-none'}`}
                            onChange={(e) => handleUploadFile(e)}
                         />
-                        {errorThumbnail && <MessageTemplate message={errorThumbnail} />}
+                        {errors?.thumbnail && <MessageTemplate message={errors?.thumbnail.message} />}
                      </div>
                      <div className="p-5">
                         {reviewThumbnail && (
@@ -304,31 +294,40 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
                         <button
                            type="button"
                            className="px-4 py-2 rounded-md bg-orange text-white font-semibold flex items-center gap-2"
-                           onClick={() => setInfosTarget([...infosTarget, { id: Date.now(), content: undefined }])}
+                           onClick={() => appendTarget({ content: '' })}
                         >
                            <FaPlus />
                            Thêm mục tiêu
                         </button>
                      </div>
-                     {infosTarget.map((info, index) => (
-                        <div key={index} className="flex items-center gap-2 my-2 col-span-2">
-                           <input
-                              type="text"
-                              className="px-3 py-2 border border-[#ccc] outline-[#aaa] rounded-md flex-1"
-                              placeholder="Nhập mục tiêu đạt được sau khi học"
-                              onChange={(e) => handleChangeInfosTarget(e, info)}
-                              value={info.content}
-                           />
-                           <button
-                              className="hover:opacity-80"
-                              type="button"
-                              onClick={() => handleDeleteInfoTarget(info)}
-                           >
-                              <BsFillTrash3Fill className="text-red size-6" />
-                           </button>
+                     {targetFields.map((_, index) => (
+                        <div key={index} className="my-2 col-span-2 group">
+                           <div className="flex items-center gap-2 ">
+                              <input
+                                 {...register(`target_infos.${index}.content`)}
+                                 type="text"
+                                 className={`px-3 py-2 border rounded-md flex-1 ${
+                                    errors.target_infos?.[index]?.content.message
+                                       ? ' border-2 border-red outline-none'
+                                       : 'border-[#ccc] outline-[#aaa]'
+                                 }`}
+                                 placeholder="Nhập mục tiêu đạt được sau khi học"
+                              />
+                              {targetFields.length > 1 && (
+                                 <button
+                                    className="transition-all ease-linear opacity-0 group-hover:opacity-100"
+                                    type="button"
+                                    onClick={() => removeTarget(index)}
+                                 >
+                                    <BsFillTrash3Fill className="text-red size-4" />
+                                 </button>
+                              )}
+                           </div>
+                           {errors.target_infos && (
+                              <MessageTemplate message={errors.target_infos?.[index]?.content.message} />
+                           )}
                         </div>
                      ))}
-                     {errorInfosTarget && <MessageTemplate message={errorInfosTarget} />}
                   </div>
                </div>
                <div className="col-span-2">
@@ -337,40 +336,47 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
                         <button
                            type="button"
                            className="px-4 py-2 rounded-md bg-purple text-white font-semibold flex items-center gap-2"
-                           onClick={() =>
-                              setInfosRequirement([...infosRequirement, { id: Date.now(), content: undefined }])
-                           }
+                           onClick={() => appendRequirement({ content: '' })}
                         >
                            <FaPlus />
                            Thêm yêu cầu
                         </button>
                      </div>
-                     {infosRequirement.map((info, index) => (
-                        <div key={index} className="flex items-center gap-2 my-2 col-span-2">
-                           <input
-                              type="text"
-                              className="px-3 py-2 border border-[#ccc] outline-[#aaa] rounded-md flex-1"
-                              placeholder="Nhập yêu cầu trước khi học khoá học"
-                              onChange={(e) => handleChangeInfosRequirement(e, info)}
-                              value={info.content}
-                           />
-                           <button
-                              className="hover:opacity-80"
-                              type="button"
-                              onClick={() => handleDeleteInfoRequirement(info)}
-                           >
-                              <BsFillTrash3Fill className="text-red size-6" />
-                           </button>
+                     {requirementFields.map((_, index) => (
+                        <div key={index} className="my-2 col-span-2 group">
+                           <div className="flex items-center gap-2 ">
+                              <input
+                                 {...register(`requirement_infos.${index}.content`)}
+                                 type="text"
+                                 className={`px-3 py-2 border rounded-md flex-1 ${
+                                    errors.requirement_infos?.[index]?.content.message
+                                       ? ' border-2 border-red outline-none'
+                                       : 'border-[#ccc] outline-[#aaa]'
+                                 }`}
+                                 placeholder="Nhập yêu cầu trước khi học khoá học"
+                              />
+                              {requirementFields.length > 1 && (
+                                 <button
+                                    className="transition ease-linear opacity-0 group-hover:opacity-100"
+                                    type="button"
+                                    onClick={() => removeRequirement(index)}
+                                 >
+                                    <BsFillTrash3Fill className="text-red size-4" />
+                                 </button>
+                              )}
+                           </div>
+                           {errors.requirement_infos && (
+                              <MessageTemplate message={errors.requirement_infos?.[index]?.content.message} />
+                           )}
                         </div>
                      ))}
-                     {errorInfosRequirement && <MessageTemplate message={errorInfosRequirement} />}
                   </div>
                </div>
             </div>
-            <div className="flex justify-end mx-10 mt-10">
+            <div className="flex justify-end mx-10 mt-10 py-10">
                <Button
-                  label="Submit"
-                  className="px-4 py-2 rounded-md bg-green font-bold text-white inline-flex items-center gap-2 "
+                  label="Tạo khoá học"
+                  className="px-4 py-2 rounded-md bg-green font-bold text-white inline-flex items-center gap-2 hover:opacity-80"
                   loading={loadingSubmit}
                />
             </div>
