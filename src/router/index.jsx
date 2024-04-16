@@ -5,6 +5,7 @@ import LearnQuizLayout from 'src/components/Layout/customer/LearnQuizLayout';
 import MainLayout from 'src/components/Layout/customer/MainLayout';
 import SettingLayout from 'src/components/Layout/customer/SettingLayout';
 import AdminPage from 'src/features/admin';
+import ManageCategories from 'src/features/admin/category/ManageCategories';
 import ManageCourses from 'src/features/admin/course/ManageCourses';
 import DetailCourse from 'src/features/admin/course/pages/DetailCourse';
 import Dashboard from 'src/features/admin/dashboard/Dashboard';
@@ -202,6 +203,10 @@ export const router = createBrowserRouter([
          {
             path: 'manage-users',
             element: <ManageUsers />,
+         },
+         {
+            path: 'manage-categories',
+            element: <ManageCategories />,
          },
          {
             path: 'manage-courses',
