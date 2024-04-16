@@ -1,3 +1,6 @@
+import { useParams } from 'react-router-dom';
+
 export default function DetailCourse() {
-   return <div>DetailCourse</div>;
+   const { courseId } = useParams();
+   return <div>ID Course: {courseId}</div>;
 }

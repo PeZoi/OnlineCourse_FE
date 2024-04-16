@@ -11,7 +11,7 @@ import { Image } from 'primereact/image';
 import { createCourseAPI } from 'src/api/courseApi';
 import { Button } from 'primereact/button';
 
-export default function AddFormCourse({ categories, setOpenModal }) {
+export default function AddFormCourse({ categories, setOpenModal, setRerender, resetModal }) {
    const [infosTarget, setInfosTarget] = useState([]);
    const [infosRequirement, setInfosRequirement] = useState([]);
    const [errorInfosTarget, setErrorInfosTarget] = useState(null);
@@ -93,14 +93,17 @@ export default function AddFormCourse({ categories, setOpenModal }) {
                console.log(res);
                if (res.status === 201) {
                   toast.success('Tạo khoá học thành công');
-                  reset({ price: 1000, discount: 0 });
+                  setRerender(Math.random() * 1000);
+                  reset();
+                  setThumbnail(null);
+                  setInfosTarget([]);
+                  setInfosRequirement([]);
+                  setReviewThumbnail('');
+
                   setOpenModal(false);
                   setLoadingSubmit(false);
-               } else if (res === 400) {
-                  toast.error('Tên khoá học đã tồn tại');
-                  setLoadingSubmit(false);
-               } else {
-                  toast.error('Tạo khoá học thất bại');
+               } else if (res.status === 400) {
+                  toast.error(res.data.message);
                   setLoadingSubmit(false);
                }
             })
@@ -113,8 +116,11 @@ export default function AddFormCourse({ categories, setOpenModal }) {
    };
 
    useEffect(() => {
-      reset({ price: 1000, discount: 0 });
-   }, [reset]);
+      if (resetModal) {
+         reset();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [resetModal]);
 
    const handleChangeInfosTarget = (e, info) => {
       setErrorInfosTarget('');

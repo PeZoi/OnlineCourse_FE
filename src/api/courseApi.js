@@ -17,9 +17,8 @@ export const getAllCoursesAPI_a = () => {
 export const createCourseAPI = (formData) => {
    return axios
       .post(`/api/courses/create`, formData)
-      .then((response) => {
-         console.log(response);
-         return response;
+      .then((res) => {
+         return res;
       })
       .catch((error) => {
          return error;

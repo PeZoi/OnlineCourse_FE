@@ -9,7 +9,7 @@ export default function ModalMiddle({ isShow, setIsShow, setResetModal, children
          style={{ zIndex: 999 }}
       >
          <div
-            className={`relative rounded-2xl bg-white px-12 z-20 pb-14 text-black overflow-y-auto transition-all ease-in-out duration-500 transform mx-auto h-fit top-1/2 -translate-y-1/2 ${
+            className={`relative rounded-2xl bg-white px-12 mx-auto z-20 pb-14 text-black overflow-y-auto transition-all ease-in-out duration-500 transform h-fit top-1/2 -translate-y-1/2 ${
                isShow ? ' scale-100 opacity-100 ' : ' scale-0 opacity-0 '
             } ${className}`}
          >
