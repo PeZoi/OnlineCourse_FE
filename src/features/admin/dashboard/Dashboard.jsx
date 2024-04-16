@@ -1,8 +1,8 @@
-// import React from 'react'
 import { FaEllipsisV, FaRegCalendarMinus } from 'react-icons/fa';
 // import { Progress } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import PieComponent from './PieComponent';
+import { ProgressBar } from 'primereact/progressbar';
 
 const data = [
    {
@@ -140,23 +140,23 @@ const Dashboard = () => {
                <div className="px-[25px] space-y-[15px] py-[15px]">
                   <div>
                      <h2>Server Migration</h2>
-                     {/* <Progress percent={30} strokeColor="#E74A3B" /> */}
+                     <ProgressBar value={50}></ProgressBar>
                   </div>
                   <div>
                      <h2>Sales Tracking</h2>
-                     {/* <Progress percent={50} status="active" strokeColor="#F6C23E" /> */}
+                     <ProgressBar value={70}></ProgressBar>
                   </div>
                   <div>
                      <h2>Customer Database</h2>
-                     {/* <Progress percent={70} status="active" strokeColor="#4E73DF" /> */}
+                     <ProgressBar value={80}></ProgressBar>
                   </div>
                   <div>
                      <h2>Payout Details</h2>
-                     {/* <Progress percent={100} status="active" strokeColor="#36B9CC" /> */}
+                     <ProgressBar value={90}></ProgressBar>
                   </div>
                   <div>
                      <h2>Customer Database</h2>
-                     {/* <Progress percent={50} status="exception" strokeColor="#1CC88A" /> */}
+                     <ProgressBar value={100}></ProgressBar>
                   </div>
                </div>
             </div>
