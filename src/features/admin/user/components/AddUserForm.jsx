@@ -111,7 +111,6 @@ const AddUserForm = ({ onClose, setRerender }) => {
          );
          if (photo) {
             formData.append('img', photo[0]);
-            console.log(photo[0]);
          }
 
          //Post dữ liệu lên api

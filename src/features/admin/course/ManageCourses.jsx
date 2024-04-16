@@ -7,8 +7,11 @@ import TableCourse from './components/TableCourse';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
 import ModalMiddle from 'src/components/ModalMiddle';
 import AddFormCourse from './components/AddFormCourse';
+import { useNavigate } from 'react-router-dom';
 
 export default function ManageCourses() {
+   const navigate = useNavigate();
+
    const [selectedCourse, setSelectedCourse] = useState(null);
    const [searchKeyWord, setSearchKeyWord] = useState('');
 
@@ -16,6 +19,10 @@ export default function ManageCourses() {
 
    const [courses, setCourses] = useState();
    const [categories, setCategories] = useState();
+
+   // Reset modal này để reset lại tất cả các lỗi validate trong form trước đó, để khi mở lại modal sẽ reset lại form đó
+   const [resetModal, setResetModal] = useState(false);
+   const [rerender, setRerender] = useState(0);
 
    useEffect(() => {
       getAllCoursesAPI_a()
@@ -37,7 +44,7 @@ export default function ManageCourses() {
             setCategories(res.content);
          })
          .catch((err) => console.log(err));
-   }, []);
+   }, [rerender]);
 
    return (
       <div>
@@ -45,7 +52,10 @@ export default function ManageCourses() {
             <div className="flex items-center gap-3">
                <button
                   className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white hover:opacity-80"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                     setOpenModal(true);
+                     setResetModal(false);
+                  }}
                >
                   <FaPlus />
                </button>
@@ -54,7 +64,9 @@ export default function ManageCourses() {
                   className={`py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white ${
                      !selectedCourse ? 'opacity-40' : 'opacity-100 hover:opacity-80'
                   }`}
-                  onClick={() => alert(selectedCourse)}
+                  onClick={() => {
+                     navigate(`/admin/manage-courses/${selectedCourse.id}`);
+                  }}
                >
                   <FaPen />
                </button>
@@ -94,8 +106,18 @@ export default function ManageCourses() {
          </div>
 
          {/* Modal */}
-         <ModalMiddle isShow={openModal} setIsShow={setOpenModal} className={'w-fit px-10'}>
-            <AddFormCourse categories={categories} setOpenModal={setOpenModal} />
+         <ModalMiddle
+            isShow={openModal}
+            setIsShow={setOpenModal}
+            setResetModal={setResetModal}
+            className={'w-fit px-10 mx-24'}
+         >
+            <AddFormCourse
+               categories={categories}
+               setOpenModal={setOpenModal}
+               setRerender={setRerender}
+               resetModal={resetModal}
+            />
          </ModalMiddle>
       </div>
    );

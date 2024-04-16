@@ -3,8 +3,11 @@ import Column from 'antd/es/table/Column';
 import { DataTable } from 'primereact/datatable';
 import { Image } from 'primereact/image';
 import { InputSwitch } from 'primereact/inputswitch';
+import { useState } from 'react';
 
 export default function TableCourse({ courses, setSelectedCourse, selectedCourse, searchKeyWord }) {
+   const handleClickSwitchPublish = (idCourse) => {};
+
    const thumbnailTemplate = (rowData) => {
       return (
          <Image

@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
    },
    function (error) {
       // Trả về status
-      return error.response.status;
+      return error.response;
    },
 );
 
