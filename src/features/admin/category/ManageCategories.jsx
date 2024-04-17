@@ -12,6 +12,7 @@ import { deleteCategoryAPI, getAllCategoriesAPI } from 'src/api/categoryApi';
 import { FaPen, FaPlus } from 'react-icons/fa';
 import { BiSearch } from 'react-icons/bi';
 import { BsFillTrashFill } from 'react-icons/bs';
+import toast from 'react-hot-toast';
 
 const ManageCategories = () => {
    const [categories, setCategories] = useState([]);
@@ -20,7 +21,6 @@ const ManageCategories = () => {
    const [selectedCategories, setSelectedCategories] = useState([]);
    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-   const toast = useRef(null);
    //Để cập nhật lại mỗi khi cần render lại trạng thái
    const [rerender, setRerender] = useState(0);
 
