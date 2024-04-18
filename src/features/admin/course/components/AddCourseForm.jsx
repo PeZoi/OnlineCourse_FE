@@ -105,7 +105,7 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
       const formattedData = {
          ...data,
          category_id: +data.category_id,
-         is_comming_soon: true,
+         is_enabled: false,
          is_published: false,
          info_list: [
             ...data.target_infos.map((info) => ({ type: 'TARGET', value: info.content })),

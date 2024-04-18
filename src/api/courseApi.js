@@ -2,7 +2,7 @@ import axios from 'src/utils/axios';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 
 // get all courses dành cho admin
-export const getAllCoursesAPI_a = () => {
+export const getAllCoursesAdminAPI = () => {
    return axios
       .get(`/api/courses/list-all`)
       .then((response) => {
@@ -36,12 +36,6 @@ export const getAllCourses = async (categoryId) => {
          return null;
       });
    return res;
-};
-
-export const getAllCoursesByComingSoon = async () => {
-   const res = await getAllCourses();
-   const coursesComingSoon = res.filter((courses) => courses.is_coming_soon);
-   return coursesComingSoon;
 };
 
 export const getCourse = async (slug) => {
@@ -87,5 +81,33 @@ export const isExistCourseAPI = async (slug) => {
          return null;
       });
    // console.log(res);
+   return res;
+};
+
+// Ẩn/hiện khoá học
+export const toggleCourseEnable = async (formData) => {
+   const res = await axios
+      .post(`/api/courses/switch-enabled`, formData)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+   return res;
+};
+
+// toggle phát hành khoá học
+export const toggleCoursePublish = async (formData) => {
+   const res = await axios
+      .post(`/api/courses/switch-published`, formData)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
    return res;
 };

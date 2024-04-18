@@ -3,7 +3,7 @@ import BlockItem from './components/BlockItem';
 import CarouselQuote from './components/CarouselQuote';
 import { ArrowRightIcon } from '../../../public/icons';
 import { useEffect, useState } from 'react';
-import { getAllCourses, getAllCoursesByComingSoon } from 'src/api/courseApi';
+import { getAllCourses } from 'src/api/courseApi';
 import { useAxios } from 'src/hooks/useAxios';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
 
@@ -18,18 +18,20 @@ export default function Home() {
 
    // Load dữ liệu lên
    const axiosCourses = useAxios(() => getAllCourses(categoryId), [categoryId]);
-   const axiosCoursesByComingsoon = useAxios(getAllCoursesByComingSoon, []);
    const axiosCategories = useAxios(getAllCategoriesAPI, []);
    useEffect(() => {
-      setCourses(axiosCourses.response);
+      const coursesPublished = axiosCourses?.response?.filter((course) => course.is_published && course.is_enabled);
+      const coursesCommingSoon = axiosCourses?.response?.filter((course) => !course.is_published && course.is_enabled);
+      setCoursesByComingSoon(coursesCommingSoon);
+      setCourses(coursesPublished);
    }, [axiosCourses.response]);
-   useEffect(() => {
-      setCoursesByComingSoon(axiosCoursesByComingsoon.response);
-   }, [axiosCoursesByComingsoon.response]);
    useEffect(() => {
       setCategories(axiosCategories.response);
    }, [axiosCategories.response]);
 
+   if (axiosCourses.loading) {
+      return <div>Loading...</div>;
+   }
    return (
       <div>
          <CarouselQuote />

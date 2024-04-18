@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { FaPen, FaPlus } from 'react-icons/fa';
 import { BsFillTrashFill } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
-import { getAllCoursesAPI_a } from 'src/api/courseApi';
+import { getAllCoursesAdminAPI } from 'src/api/courseApi';
 import TableCourse from './components/TableCourse';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
 import ModalMiddle from 'src/components/ModalMiddle';
-import AddFormCourse from './components/AddFormCourse';
+import AddCourseForm from './components/AddCourseForm';
 import { useNavigate } from 'react-router-dom';
 
 export default function ManageCourses() {
@@ -25,7 +25,7 @@ export default function ManageCourses() {
    const [rerender, setRerender] = useState(0);
 
    useEffect(() => {
-      getAllCoursesAPI_a()
+      getAllCoursesAdminAPI()
          .then((res) => {
             if (res.status === 200) {
                setCourses(
@@ -100,6 +100,7 @@ export default function ManageCourses() {
             <TableCourse
                courses={courses}
                selectedCourse={selectedCourse}
+               setRerender={setRerender}
                setSelectedCourse={setSelectedCourse}
                searchKeyWord={searchKeyWord}
             />
@@ -112,7 +113,7 @@ export default function ManageCourses() {
             setResetModal={setResetModal}
             className={'w-fit px-10 mx-24'}
          >
-            <AddFormCourse
+            <AddCourseForm
                categories={categories}
                setOpenModal={setOpenModal}
                setRerender={setRerender}
