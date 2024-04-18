@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-// import EditUserForm from "./EditUserForm";
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -10,7 +9,10 @@ import { Dialog } from 'primereact/dialog';
 import AddCategoryForm from './components/AddCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
 import { deleteCategoryAPI, getAllCategoriesAPI } from 'src/api/categoryApi';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaPen, FaPlus } from 'react-icons/fa';
+import { BiSearch } from 'react-icons/bi';
+import { BsFillTrashFill } from 'react-icons/bs';
+import toast from 'react-hot-toast';
 
 const ManageCategories = () => {
    const [categories, setCategories] = useState([]);
@@ -19,7 +21,6 @@ const ManageCategories = () => {
    const [selectedCategories, setSelectedCategories] = useState([]);
    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
-   const toast = useRef(null);
    //Để cập nhật lại mỗi khi cần render lại trạng thái
    const [rerender, setRerender] = useState(0);
 
@@ -49,7 +50,6 @@ const ManageCategories = () => {
       const fetchCategories = async () => {
          try {
             const categories = await getAllCategoriesAPI(); //Lấy dữu liệu api câtegories
-            console.log(categories);
             setCategories(categories.content);
          } catch (error) {
             console.error(error);
@@ -77,7 +77,7 @@ const ManageCategories = () => {
             </div>
             <div className="flex justify-end ml-[16px]">
                <span className="p-input-icon-right">
-                  <i className="pi pi-search" />
+                  <BiSearch className="absolute right-2  text-2xl text-gray " />
                   <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
                </span>
             </div>
@@ -110,23 +110,25 @@ const ManageCategories = () => {
    const actionDeleteTemplate = (rowData) => {
       return (
          <button
-            className="hover:opacity-60"
-            onClick={() => setSelectedCategoryId(rowData.id)} // Truyền mảng gồm một người dùng để xóa
+            className="hover:opacity-60 py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white"
+            onClick={() => setSelectedCategoryId(rowData.id)} // Truyền mảng gồm một danh mục để xóa
          >
-            <FaRegTrashAlt />
+            <BsFillTrashFill />
          </button>
       );
    };
 
    const actionUpdateTemplate = (rowData) => {
       return (
-         <Button
+         <button
             label="Edit"
             onClick={() => {
                openEditCategoryModal(rowData.id);
             }}
-            className="p-button-info"
-         />
+            className="py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white "
+         >
+            <FaPen />
+         </button>
       );
    };
 
@@ -137,7 +139,13 @@ const ManageCategories = () => {
          {/* Đoạn này để render ra cái modal thêm user */}
          <div className="relative">
             <div className="mb-[16px]   cursor-pointer ">
-               <Button label="+ Add Category" onClick={openAddCategoryModal} />
+               <button
+                  label="Add Category"
+                  onClick={openAddCategoryModal}
+                  className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white "
+               >
+                  <FaPlus />
+               </button>
             </div>
             {visible && <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>}
          </div>
@@ -176,18 +184,18 @@ const ManageCategories = () => {
          {/* Xác nhận xóa category có muốn xóa hay không */}
          {selectedCategoryId && (
             <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-center">
-               <div className="bg-white p-4 rounded shadow-md">
+               <div className="bg-white p-8 rounded shadow-md">
                   <p>Are you sure you want to delete this category?</p>
                   <div className="flex justify-end mt-4">
                      <Button
                         label="Confirm Delete"
                         onClick={() => deleteCategory(selectedCategoryId)}
-                        className="p-button-danger bg-[red] mr-2"
+                        className="p-button-danger bg-[red] mr-2 text-white mt-5"
                      />
                      <Button
                         label="Cancel"
                         onClick={() => setSelectedCategoryId(null)}
-                        className="p-button-secondary bg-[gray]"
+                        className="p-button-secondary bg-[gray] text-white mt-5"
                      />
                   </div>
                </div>

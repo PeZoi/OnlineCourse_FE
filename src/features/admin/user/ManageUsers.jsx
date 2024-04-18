@@ -10,7 +10,9 @@ import toast from 'react-hot-toast';
 import AddUserForm from './components/AddUserForm';
 import EditUserForm from './components/EditUserForm';
 import { deleteUserAPI, getAllUsersAPI, getUserByIdAPI, updateUserAPI } from 'src/api/userApi';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaPen, FaPlus, FaRegTrashAlt } from 'react-icons/fa';
+import { BiSearch } from 'react-icons/bi';
+import { BsFillTrashFill } from 'react-icons/bs';
 
 export default function ManageUsers() {
    const [users, setUsers] = useState([]);
@@ -83,9 +85,9 @@ export default function ManageUsers() {
             <div className="flex ">
                <h4 className="m-0">Users</h4>
             </div>
-            <div className="flex justify-end ml-[16px]">
+            <div className="flex justify-end ml-[16px] ">
                <span className="p-input-icon-right">
-                  <i className="pi pi-search" />
+                  <BiSearch className="absolute right-2  text-2xl text-gray " />
                   <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
                </span>
             </div>
@@ -178,23 +180,25 @@ export default function ManageUsers() {
    const actionDeleteTemplate = (rowData) => {
       return (
          <button
-            className="hover:opacity-60"
+            className="hover:opacity-60 py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white"
             onClick={() => setSelectedUserId(rowData.id)} // Truyền mảng gồm một người dùng để xóa
          >
-            <FaRegTrashAlt />
+            <BsFillTrashFill />
          </button>
       );
    };
 
    const actionUpdateTemplate = (rowData) => {
       return (
-         <Button
+         <button
             label="Edit"
             onClick={() => {
                openEditUserModal(rowData.id);
             }}
-            className="p-button-info"
-         />
+            className="py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white "
+         >
+            <FaPen />
+         </button>
       );
    };
 
@@ -205,7 +209,13 @@ export default function ManageUsers() {
          {/* Đoạn này để render ra cái modal thêm user */}
          <div className="relative">
             <div className="mb-[16px]   cursor-pointer ">
-               <Button label="+ Add User" icon="PrimeIcons.PLUS" onClick={openAddUserModal} />
+               <button
+                  label="Add User"
+                  onClick={openAddUserModal}
+                  className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white "
+               >
+                  <FaPlus />
+               </button>
             </div>
             {visible && <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>}
          </div>
@@ -236,8 +246,8 @@ export default function ManageUsers() {
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
          >
             <Column field="id" header="Id" sortable />
-            <Column field="email" header="Email" sortable />
             <Column field="photo" body={photoTemplate} header="Photo" sortable />
+            <Column field="email" header="Email" sortable />
             <Column field="enabled" body={actionEnabled} header="Enabled" sortable />
             <Column field="full_name" header="Full_name" sortable />
 
@@ -255,18 +265,18 @@ export default function ManageUsers() {
          {/* Xác nhận xóa người dùng có muốn xóa hay không */}
          {selectedUserId && (
             <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-center">
-               <div className="bg-white p-4 rounded shadow-md">
+               <div className="bg-white p-8 rounded shadow-md">
                   <p>Are you sure you want to delete this user?</p>
                   <div className="flex justify-end mt-4">
                      <Button
                         label="Confirm Delete"
                         onClick={() => deleteUser(selectedUserId)}
-                        className="p-button-danger bg-[red] mr-2"
+                        className="p-button-danger bg-[red] mr-2  text-white mt-5"
                      />
                      <Button
                         label="Cancel"
                         onClick={() => setSelectedUserId(null)}
-                        className="p-button-secondary bg-[gray]"
+                        className="p-button-secondary bg-[gray] text-white mt-5"
                      />
                   </div>
                </div>

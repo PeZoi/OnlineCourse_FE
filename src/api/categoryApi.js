@@ -14,11 +14,11 @@ export const getAllCategoriesAPI = async () => {
 };
 
 //Thêm category
-export const createCategoryAPI = async () => {
+export const createCategoryAPI = async (formData) => {
    const res = await axios
-      .get('/api/categories/create')
+      .post(`/api/categories/create`, formData)
       .then((response) => {
-         return response.data;
+         return response;
       })
       .catch((error) => {
          console.log(error);
