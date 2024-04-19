@@ -72,38 +72,43 @@ export default function LearnTypeVideo({ lesson }) {
 
                <CreateNote videoRef={videoRef} currentTimeVideo={currentTimeVideo} />
             </div>
-            <p className="text-base my-7">
-               Tham gia các cộng đồng để cùng học hỏi, chia sẻ và &quot;thám thính&quot; xem F8 sắp có gì mới nhé!
-            </p>
-            <ul className="text-base list-disc grid gap-2 ml-5">
-               <li>
-                  Fanpage:{' '}
-                  <a href="https://www.facebook.com/f8vnofficial" className="underline font-medium text-primary">
-                     https://www.facebook.com/f8vnofficial
-                  </a>
-               </li>
-               <li>
-                  Group:{' '}
-                  <a
-                     href="https://www.facebook.com/groups/649972919142215"
-                     className="underline font-medium text-primary"
-                  >
-                     https://www.facebook.com/groups/649972919142215
-                  </a>
-               </li>
-               <li>
-                  Youtube:{' '}
-                  <a href="https://www.youtube.com/F8VNOfficial" className="underline font-medium text-primary">
-                     https://www.youtube.com/F8VNOfficial
-                  </a>
-               </li>
-               <li>
-                  Sơn Đặng:{' '}
-                  <a href="https://www.facebook.com/sondnf8" className="underline font-medium text-primary">
-                     https://www.facebook.com/sondnf8
-                  </a>
-               </li>
-            </ul>
+            <div className="mt-5">
+               <p>{lesson?.video.description}</p>
+            </div>
+            <div>
+               <p className="text-base my-7">
+                  Tham gia các cộng đồng để cùng học hỏi, chia sẻ và &quot;thám thính&quot; xem F8 sắp có gì mới nhé!
+               </p>
+               <ul className="text-base list-disc grid gap-2 ml-5">
+                  <li>
+                     Fanpage:{' '}
+                     <a href="https://www.facebook.com/f8vnofficial" className="underline font-medium text-primary">
+                        https://www.facebook.com/f8vnofficial
+                     </a>
+                  </li>
+                  <li>
+                     Group:{' '}
+                     <a
+                        href="https://www.facebook.com/groups/649972919142215"
+                        className="underline font-medium text-primary"
+                     >
+                        https://www.facebook.com/groups/649972919142215
+                     </a>
+                  </li>
+                  <li>
+                     Youtube:{' '}
+                     <a href="https://www.youtube.com/F8VNOfficial" className="underline font-medium text-primary">
+                        https://www.youtube.com/F8VNOfficial
+                     </a>
+                  </li>
+                  <li>
+                     Sơn Đặng:{' '}
+                     <a href="https://www.facebook.com/sondnf8" className="underline font-medium text-primary">
+                        https://www.facebook.com/sondnf8
+                     </a>
+                  </li>
+               </ul>
+            </div>
          </div>
       </div>
    );

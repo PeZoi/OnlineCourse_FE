@@ -58,18 +58,18 @@ export default function CourseLearn() {
       const id = parseInt(searchParams.get('id'));
       let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);
       myCourseSelected?.list_tracks.forEach((track) => {
-         // Xử lý khi bài học đó chưa unlock mà người dùng vẫn cố vào
-         if (track?.lesson_id === id) {
-            !track?.is_unlock && navigate(`/course/learn/${courseSelected.slug}?id=${currentLesson.lesson_id}`);
-         }
-
          // Nếu trên thanh url không có id thì load bài đang học
          if (track.is_current && !id) {
-            navigate(`/course/learn/${courseSelected.slug}?id=${track.lesson_id}`);
+            navigate(`/course/learn/${courseSlug}?id=${track.lesson_id}`);
+         }
+
+         // Xử lý khi bài học đó chưa unlock mà người dùng vẫn cố vào
+         if (track?.lesson_id === id) {
+            !track?.is_unlock && navigate(`/course/learn/${courseSlug}?id=${currentLesson.lesson_id}`);
          }
       });
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [myCourseSelected, searchParams]);
+   }, [myCourseSelected]);
 
    // Xử lý đóng/mở chapters
    const handleToggle = (index) => {
@@ -80,12 +80,12 @@ export default function CourseLearn() {
 
    return (
       <div className="grid grid-cols-12">
-         {/* RIGHT */}
+         {/* LEFT */}
          <div className="col-span-9 relative">
             <LessonContent />
          </div>
 
-         {/* LEFT */}
+         {/* RIGHT */}
          <div className="col-span-3">
             <div className="pb-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
                <div className="text-lg font-semibold px-3 bg-white select-none py-3 w-full">Nội dung khoá học</div>

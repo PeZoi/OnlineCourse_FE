@@ -31,7 +31,7 @@ export const submitSignInAPI = async (data) => {
    const res = await axios
       .post('/api/auth/login', data)
       .then((response) => {
-         return response.data;
+         return response;
       })
       .catch((error) => {
          console.log(error);

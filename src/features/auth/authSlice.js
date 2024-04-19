@@ -8,10 +8,11 @@ export const loginAsync = createAsyncThunk('auth/login', async (payload, thunkAP
          .then((res) => res)
          .catch((err) => console.log(err));
 
-      if (res !== 401) {
-         const token = res.access_token;
-         const user = res.user;
-         return { token, user };
+      if (res.status === 200) {
+         const status = res.status;
+         const token = res.data.access_token;
+         const user = res.data.user;
+         return { token, user, status };
       }
       return res;
    } catch (error) {
@@ -53,7 +54,7 @@ const authSlice = createSlice({
          state.loading = true;
       }),
          builder.addCase(loginAsync.fulfilled, (state, action) => {
-            if (action.payload === 500) {
+            if (action.payload.status !== 200) {
                state.error = 'Email hoặc mật khẩu không đúng';
                state.loading = false;
                toast.error('Email hoặc mật khẩu không đúng');

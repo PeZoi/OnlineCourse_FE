@@ -6,11 +6,12 @@ import { useSearchParams } from 'react-router-dom';
 
 export default function CourseChapterItem({ isOpen, handleToggle, index, chapter, myCourseSelected }) {
    const [searchParams] = useSearchParams();
+
    // Xử lý khi đang active bài nào thì chapter sẽ mở ra
    useEffect(() => {
       const lessonId = parseInt(searchParams.get('id'));
       chapter?.lesson_list?.forEach((l) => {
-         if (lessonId === l.id) {
+         if (lessonId === l.id && !isOpen) {
             handleToggle(index);
          }
       });

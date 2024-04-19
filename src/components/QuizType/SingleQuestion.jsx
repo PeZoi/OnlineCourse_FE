@@ -1,21 +1,17 @@
-import { useState } from 'react';
-
 export default function SingleQuestion({ quiz, onAnswerChange }) {
    const handleRadioChange = (event) => {
       onAnswerChange(parseInt(event.target.value));
    };
    return (
       <div>
-         <div className="my-5 select-none">{quiz?.question}</div>
+         <div className="my-5 font-bold select-none">
+            Câu hỏi {quiz?.order}: {quiz?.question}
+         </div>
          {quiz?.answer_list.map((ans) => (
             <div key={ans.id}>
                <label
                   htmlFor={`${ans.id}`}
-                  className={
-                     'flex items-center py-2 px-5 cursor-pointer bg-gray-light rounded-lg my-5 '
-                     // + 'bg-[#4bfe4e52] border-2 border-green'
-                     // + 'bg-[#ce000036] border-2 border-red'
-                  }
+                  className={'flex items-center py-2 px-5 cursor-pointer bg-gray-light rounded-lg my-5 '}
                >
                   <input
                      id={`${ans.id}`}

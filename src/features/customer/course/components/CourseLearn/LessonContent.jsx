@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getLessonByIdAPI } from 'src/api/lessonApi';
+import { getLessonByIdAdminAPI, getLessonByIdAPI } from 'src/api/lessonApi';
 import LearnTypeText from './LearnTypeText';
 import LearnTypeVideo from './LearnTypeVideo';
 import LearnTypeQuiz from './LearnTypeQuiz';
@@ -28,14 +28,15 @@ export default function LessonContent() {
             .then((res) => {
                if (res.status === 200) {
                   setLesson(res.data);
-               } else if (res === 404) {
+               } else {
                   let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);
                   navigate(`/course/learn/${courseSelected?.slug}?id=${currentLesson?.lesson_id}`);
                }
             })
             .catch((err) => console.log(err));
       }
-   }, [lessonId, myCourseSelected, courseSelected, navigate]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [lessonId, navigate]);
    return (
       <div>
          {lesson && (

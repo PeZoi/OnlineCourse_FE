@@ -31,10 +31,23 @@ export const getLessonOfUserAPI = async (slug) => {
    return res;
 };
 
-// Lấy ra lesson theo id
-export const getLessonByIdAPI = async (id) => {
+// Lấy ra lesson theo id của admin
+export const getLessonByIdAdminAPI = async (id) => {
    const res = await axios
       .get(`/api/lessons/get/${id}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return error;
+      });
+   return res;
+};
+
+export const getLessonByIdAPI = async (id) => {
+   const res = await axios
+      .get(`/api/track-course/get-lesson?lesson=${id}`)
       .then((response) => {
          return response;
       })

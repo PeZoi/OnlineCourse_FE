@@ -11,7 +11,9 @@ export default function HoleQuestion({ quiz, onAnswerChange }) {
 
    return (
       <div className="my-10">
-         <div className="my-5">{quiz?.question}</div>
+         <div className="my-5 font-bold select-none">
+            Câu hỏi {quiz?.order}: {quiz?.question}
+         </div>
          <div className="text-base flex items-center">
             <span className="font-semibold mr-3">Trả lời: </span>
             <input
