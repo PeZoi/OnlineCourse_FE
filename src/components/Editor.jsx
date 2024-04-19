@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { useCallback, useRef } from 'react';
+import toast from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 
-export default function Editor({ value, setValue, className }) {
+export default function Editor({ value, setValue, className, type }) {
    const editorRef = useRef(null);
 
    const onChange = (content) => {
@@ -20,7 +21,10 @@ export default function Editor({ value, setValue, className }) {
          if (input.files && input.files[0]) {
             const file = input.files[0];
             try {
-               const url = await uploadToCloudinary(file);
+               const url = await toast.promise(
+                  uploadToCloudinary(file).then((res) => res),
+                  { loading: 'Đang xử lý ...', success: 'Tải ảnh thành công', error: 'Tải ảnh thất bại' },
+               );
                const range = editor.getSelection();
                editor.insertEmbed(range.index, 'image', url);
             } catch (error) {
@@ -46,7 +50,7 @@ export default function Editor({ value, setValue, className }) {
       }
    };
 
-   const modules = {
+   const modulesAdvance = {
       toolbar: {
          container: [
             [{ header: '1' }, { header: '2' }, { font: [] }],
@@ -66,7 +70,23 @@ export default function Editor({ value, setValue, className }) {
       },
    };
 
-   const formats = [
+   const modulesBasic = {
+      toolbar: {
+         container: [
+            [{ header: '1' }, { header: '2' }, { font: [] }],
+            [{ size: [] }],
+            ['bold', 'italic', 'underline'],
+            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+            ['code-block'],
+            ['clean'],
+         ],
+      },
+      clipboard: {
+         matchVisual: false,
+      },
+   };
+
+   const formatsAdvance = [
       'header',
       'font',
       'size',
@@ -84,12 +104,14 @@ export default function Editor({ value, setValue, className }) {
       'code-block',
    ];
 
+   const formatsBasic = ['header', 'font', 'size', 'bold', 'italic', 'underline', 'list', 'bullet', 'indent'];
+
    return (
       <div className={className}>
          <ReactQuill
             ref={editorRef}
-            modules={modules}
-            formats={formats}
+            modules={type === 'basic' ? modulesBasic : modulesAdvance}
+            formats={type === 'basic' ? formatsBasic : formatsAdvance}
             value={value}
             onChange={onChange}
             className="w-full h-full"

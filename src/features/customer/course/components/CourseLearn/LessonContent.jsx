@@ -60,7 +60,7 @@ export default function LessonContent() {
                   <span className="font-bold ml-2">Hỏi đáp</span>
                </div>
 
-               <CourseComment isShow={isShowComment} setIsShow={setIsShowComment} />
+               <CourseComment isShow={isShowComment} setIsShow={setIsShowComment} lessonId={lessonId} />
             </>
          )}
       </div>

@@ -24,7 +24,7 @@ export default function CreateNote({ videoRef, currentTimeVideo }) {
          </button>
 
          <div
-            className={`fixed bottom-0 left-0 right-1/4 h-72 bg-white border-t border-[#ccc] pt-8 pb-7 z-10 will-change-auto transition-all ease-in-out duration-700 transform ${
+            className={`fixed bottom-0 left-0 right-1/4 min-h-72 max-h-[700px] overflow-y-auto bg-white border-t border-[#ccc] pt-8 pb-7 z-10 will-change-auto transition-all ease-in-out duration-700 transform ${
                isShowCreateNote ? 'translate-y-0 opacity-100 visible' : 'translate-y-72 opacity-0 invisible'
             }`}
          >
@@ -35,7 +35,7 @@ export default function CreateNote({ videoRef, currentTimeVideo }) {
                      {secondsConvert(Math.floor(currentTimeVideo))}
                   </span>
                </div>
-               <Editor value={note} setValue={setNote} className="w-full h-20 mb-5" />
+               <Editor value={note} setValue={setNote} type={'basic'} className="w-full h-fit my-5" />
                <div></div>
                <div className="flex items-center justify-end font-semibold">
                   <button
