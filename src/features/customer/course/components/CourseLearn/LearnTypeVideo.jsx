@@ -16,6 +16,8 @@ export default function LearnTypeVideo({ lesson }) {
    useEffect(() => {
       const video = videoRef.current;
       let intervalId;
+
+      // Kiểm tra nếu lesson đó complete rồi thì không cần chạy các logic ở dưới
       const checkLessonIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
 
       const handleTimeUpdate = () => {
@@ -70,7 +72,7 @@ export default function LearnTypeVideo({ lesson }) {
             <div className="flex items-center justify-between mt-7 ">
                <h1 className="font-semibold text-[28px] flex-1">{lesson?.name}</h1>
 
-               <CreateNote videoRef={videoRef} currentTimeVideo={currentTimeVideo} />
+               <CreateNote videoRef={videoRef} currentTimeVideo={currentTimeVideo} lesson={lesson} />
             </div>
             <div className="mt-5">
                <p>{lesson?.video.description}</p>

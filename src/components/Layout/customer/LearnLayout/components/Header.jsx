@@ -49,7 +49,7 @@ export default function Header() {
                         <FileIcon className="size-[14px]" /> <span className="ml-1">Ghi chú</span>
                      </button>
 
-                     <MyNote isShow={isShowMyNote} setIsShow={setIsShowMyNote} />
+                     <MyNote isShow={isShowMyNote} setIsShow={setIsShowMyNote} courseSelected={courseSelected} />
 
                      <button className="text-sm flex items-center opacity-80 hover:opacity-100">
                         <CircleQuestion className="size-[14px]" /> <span className="ml-1">Hướng dẫn</span>

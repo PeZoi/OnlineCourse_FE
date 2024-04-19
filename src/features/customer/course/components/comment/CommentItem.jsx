@@ -3,7 +3,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
-import { createQAAPI, deleteQAAPI, updateQAAPI } from 'src/api/qa';
+import { createQAAPI, deleteQAAPI, updateQAAPI } from 'src/api/qaApi';
 import Editor from 'src/components/Editor';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 const Comment = ({ comment, isParent, isNested, setRerender }) => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ModalRight from '../../../../components/ModalRight';
-import { createQAAPI, getAllQAAPI } from 'src/api/qa';
+import { createQAAPI, getAllQAAPI } from 'src/api/qaApi';
 import Comment from './comment/CommentItem';
 import Editor from 'src/components/Editor';
 import { getUserDataByLocalStorage } from 'src/utils/common';

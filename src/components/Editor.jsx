@@ -104,7 +104,18 @@ export default function Editor({ value, setValue, className, type }) {
       'code-block',
    ];
 
-   const formatsBasic = ['header', 'font', 'size', 'bold', 'italic', 'underline', 'list', 'bullet', 'indent'];
+   const formatsBasic = [
+      'header',
+      'font',
+      'size',
+      'bold',
+      'italic',
+      'underline',
+      'list',
+      'bullet',
+      'indent',
+      'code-block',
+   ];
 
    return (
       <div className={className}>

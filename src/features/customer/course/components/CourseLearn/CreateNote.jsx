@@ -1,11 +1,38 @@
 import { useState } from 'react';
-import { secondsConvert } from '../../../../../utils/common';
+import { getUserDataByLocalStorage, secondsConvert } from '../../../../../utils/common';
 import { CreateIcon } from '../../../../../public/icons';
 import Editor from 'src/components/Editor';
+import { createNoteAPI } from 'src/api/noteApi';
+import toast from 'react-hot-toast';
 
-export default function CreateNote({ videoRef, currentTimeVideo }) {
+export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
    const [isShowCreateNote, setIsShowCreateNote] = useState(false);
-   const [note, setNote] = useState('');
+   const [noteContent, setNoteContent] = useState('');
+
+   const handleCreateNote = () => {
+      const user = getUserDataByLocalStorage();
+      const data = {
+         user_id: user.user_id,
+         lesson_id: lesson.id,
+         current_time: secondsConvert(currentTimeVideo),
+         content: noteContent,
+      };
+
+      createNoteAPI(data)
+         .then((res) => {
+            if (res.status === 201) {
+               setNoteContent('');
+               setIsShowCreateNote(false);
+               toast.success('Để xem ghi chú nhấn vào biểu tượng góc trên bên phải');
+            } else {
+               toast.error('Thêm ghi chú thất bại');
+            }
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   };
+
    return (
       <div>
          <button
@@ -35,7 +62,7 @@ export default function CreateNote({ videoRef, currentTimeVideo }) {
                      {secondsConvert(Math.floor(currentTimeVideo))}
                   </span>
                </div>
-               <Editor value={note} setValue={setNote} type={'basic'} className="w-full h-fit my-5" />
+               <Editor value={noteContent} setValue={setNoteContent} type={'basic'} className="w-full h-fit my-5" />
                <div></div>
                <div className="flex items-center justify-end font-semibold">
                   <button
@@ -48,7 +75,13 @@ export default function CreateNote({ videoRef, currentTimeVideo }) {
                   >
                      Huỷ bỏ
                   </button>
-                  <button className="text-white bg-primary rounded-3xl px-4 py-2 hover:opacity-80 transition-all ">
+                  <button
+                     className={`px-3 py-2  rounded-full text-white transition-all ${
+                        noteContent ? 'bg-primary' : 'bg-[#ccc] cursor-default'
+                     }`}
+                     disabled={!noteContent}
+                     onClick={handleCreateNote}
+                  >
                      Tạo ghi chú
                   </button>
                </div>

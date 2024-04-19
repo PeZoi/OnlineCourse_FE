@@ -1,13 +1,30 @@
-// Đổi giây thành 00:00 (ví dụ: 78 giây => 01:18)
+// Đổi giây thành 00:00 (ví dụ: 78 giây => 00:01:18)
 export const secondsConvert = (second) => {
    if (second === 0) {
-      return '00:00';
+      return '00:00:00';
    }
 
-   const minutes = Math.floor(second / 60);
-   const seconds = Math.floor(second % 60);
+   const hours = Math.floor(second / 3600); // Số giờ
+   const remainingSeconds = second % 3600; // Số giây còn lại sau khi lấy ra số giờ
+   const minutes = Math.floor(remainingSeconds / 60); // Số phút
+   const seconds = Math.floor(remainingSeconds % 60); // Số giây còn lại
 
-   return (minutes >= 10 ? minutes : '0'.concat(minutes)) + ':' + (seconds >= 10 ? seconds : '0'.concat(seconds));
+   const formattedHours = hours >= 10 ? hours : '0'.concat(hours);
+   const formattedMinutes = minutes >= 10 ? minutes : '0'.concat(minutes);
+   const formattedSeconds = seconds >= 10 ? seconds : '0'.concat(seconds);
+
+   return formattedHours + ':' + formattedMinutes + ':' + formattedSeconds;
+};
+
+// time to seconds
+export const timeToSeconds = (timeString) => {
+   // Tách chuỗi thành các phần giờ, phút và giây
+   const [hours, minutes, seconds] = timeString.split(':').map(Number);
+
+   // Tính tổng số giây từ các phần giờ, phút và giây
+   const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+   return totalSeconds;
 };
 
 // Format "00:11:07" thành 11 phút 07 giây
