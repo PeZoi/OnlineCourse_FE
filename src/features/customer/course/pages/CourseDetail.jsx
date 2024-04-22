@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { CheckIcon, BatteryFullIcon, ClockIcon, FilmIcon, GaugeIcon } from '../../../../public/icons';
 import CourseContent from '../components/CourseContent';
 import CourseFeedback from '../components/CourseFeedback';
-import { getCourse } from 'src/api/courseApi';
+import { getCourseBySlug } from 'src/api/courseApi';
 import { calculatePriceDiscount, durationFormat, formatNumber } from 'src/utils/common';
 
 const TYPE_INFO = ['TARGET', 'REQUIREMENT'];
@@ -16,7 +16,7 @@ export default function CourseDetail() {
 
    useEffect(() => {
       const fetchCourse = async () => {
-         const res = await getCourse(courseSlug);
+         const res = await getCourseBySlug(courseSlug);
          if (res === 404) {
             navigate('/not-found');
          }
