@@ -7,8 +7,8 @@ import { CreateIcon } from 'src/public/icons';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import InfoBasicForm from '../components/Edit/InfoBasicForm';
 import InfoListForm from '../components/Edit/InfoListForm';
-import ChapterForm from '../components/Edit/ChapterForm';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
+import ChapterList from '../components/Edit/ChapterList';
 
 export default function CourseDetailAdmin() {
    const { courseId } = useParams();
@@ -121,7 +121,7 @@ export default function CourseDetailAdmin() {
                   </div>
                </button>
                <Collapse isOpened={isOpenInfoChapters}>
-                  <ChapterForm course={course} />
+                  <ChapterList course={course} setRerender={setRerender} />
                </Collapse>
             </div>
          </div>
