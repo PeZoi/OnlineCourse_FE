@@ -1,11 +1,6 @@
-import { useEffect, useState } from 'react';
 import Editor from 'src/components/Editor';
 
-export default function TextForm({ resetModal, content, setContent }) {
-   useEffect(() => {
-      setContent('');
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [resetModal]);
+export default function TextForm({ content, setContent }) {
    return (
       <div className="mb-10">
          <label className="font-bold uppercase text-xs text-gray">Nội dung bài học:</label>

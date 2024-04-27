@@ -18,11 +18,13 @@ export default function LessonForm({
    setResetModal,
    setRerender,
    setIsShow,
+   lessonMode,
 }) {
    const [lessonType, setLessonType] = useState('VIDEO');
 
    // TYPE: VIDEO
    const [description, setDescription] = useState();
+   const [previewVideo, setPreviewVideo] = useState();
    // TYPE: TEXT
    const [content, setContent] = useState();
 
@@ -53,15 +55,6 @@ export default function LessonForm({
       ),
    });
 
-   useEffect(() => {
-      if (lessonSelected) {
-         console.log();
-      } else {
-         setLessonType('VIDEO');
-         reset();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [lessonSelected, resetModal]);
    const {
       register,
       handleSubmit,
@@ -71,9 +64,55 @@ export default function LessonForm({
       getValues,
       formState: { errors },
    } = useForm({
-      mode: 'onChange',
+      mode: 'onBlur',
       resolver: yupResolver(schema),
    });
+
+   // Format dữ liệu để load lên form
+   // Khi có lessonSelected tức là đang mode EDIT
+   useEffect(() => {
+      if (lessonSelected) {
+         setLessonType(lessonSelected.lesson_type);
+         let defaultValue = { name: lessonSelected.name };
+         if (lessonSelected.lesson_type === 'VIDEO') {
+            setDescription(lessonSelected.video?.description);
+            setPreviewVideo(lessonSelected.video?.url);
+         }
+         if (lessonSelected.lesson_type === 'TEXT') {
+            setContent(lessonSelected.text?.content);
+         }
+         if (lessonSelected.lesson_type === 'QUIZ') {
+            defaultValue = {
+               ...defaultValue,
+               quizs: lessonSelected.quizList?.map((quiz) => {
+                  return {
+                     id: quiz.id,
+                     question: quiz.question,
+                     quiz_type: quiz.quiz_type,
+                     answers: quiz.answer_list?.map((answer) => {
+                        return {
+                           id: answer.id,
+                           content: answer.content,
+                           isCorrect: answer.is_correct,
+                        };
+                     }),
+                  };
+               }),
+            };
+         }
+
+         reset(defaultValue);
+      } else {
+         setDescription('');
+         setPreviewVideo('');
+         setContent('');
+         setLessonType('VIDEO');
+         reset({
+            name: '',
+         });
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [lessonSelected, resetModal]);
 
    const onSubmit = (data) => {
       const formData = new FormData();
@@ -139,7 +178,7 @@ export default function LessonForm({
                   setIsShow(false);
                   setResetModal(true);
                } else {
-                  const error = new Error(`Đã có lỗi khi thêm bài học`);
+                  const error = new Error(res.data.message || 'Đã có lỗi xảy ra');
                   return Promise.reject(error);
                }
             })
@@ -162,8 +201,13 @@ export default function LessonForm({
       <div className="max-h-popper overflow-y-auto">
          <form onSubmit={handleSubmit(onSubmit, onError)}>
             <span className="font-bold px-4 py-1 bg-primary text-white rounded-md text-lg">
-               MÃ CHƯƠNG: {chapterSelected?.id} {lessonSelected && `BÀI HỌC: ${lessonSelected?.id}`}
+               MÃ CHƯƠNG: {chapterSelected?.id}
             </span>
+            {lessonSelected && (
+               <span className="font-bold px-4 py-1 bg-primary text-white rounded-md text-lg ml-5">
+                  BÀI HỌC: {lessonSelected?.id}
+               </span>
+            )}
             <h1 className="font-bold text-2xl mt-3">{lessonSelected ? 'Cập nhật bài học' : 'Thêm bài học mới'}</h1>
 
             <hr />
@@ -183,11 +227,10 @@ export default function LessonForm({
                   <select
                      id="lessonType"
                      className="flex-1 max-h-11 mt-2 border-2 border-[#8d8d8d] outline-none rounded-lg px-3 py-1"
-                     defaultValue={lessonType}
                      onChange={(e) => setLessonType(e.target.value)}
                   >
                      {LESSON_TYPE.map((type) => (
-                        <option key={type} value={type}>
+                        <option key={type} value={type} selected={lessonType === type}>
                            {type}
                         </option>
                      ))}
@@ -199,22 +242,21 @@ export default function LessonForm({
                      <VideoForm
                         register={register}
                         errors={errors}
-                        resetModal={resetModal}
                         description={description}
                         setDescription={setDescription}
+                        previewVideo={previewVideo}
+                        setPreviewVideo={setPreviewVideo}
                      />
                   )}
-                  {lessonType === 'TEXT' && (
-                     <TextForm resetModal={resetModal} content={content} setContent={setContent} />
-                  )}
+                  {lessonType === 'TEXT' && <TextForm content={content} setContent={setContent} />}
                   {lessonType === 'QUIZ' && (
                      <QuizForm
                         control={control}
                         errors={errors}
                         register={register}
-                        resetModal={resetModal}
                         setValue={setValue}
                         getValues={getValues}
+                        quizMode={lessonMode}
                      />
                   )}
                </div>

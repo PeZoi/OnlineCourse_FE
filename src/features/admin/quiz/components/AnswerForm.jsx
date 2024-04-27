@@ -5,30 +5,54 @@ import { IoRemoveCircle } from 'react-icons/io5';
 import Tippy from '@tippyjs/react';
 import { useEffect, useState } from 'react';
 
-export default function AnswerForm({ quizIndex, control, register, errors, getValues, setValue, type }) {
+export default function AnswerForm({
+   quizIndex,
+   quiz,
+   control,
+   register,
+   errors,
+   getValues,
+   setValue,
+   type,
+   quizMode,
+}) {
    const { fields, append, remove } = useFieldArray({
       control,
       name: `quizs[${quizIndex}].answers`,
    });
 
+   const [rerender, setRerender] = useState(0);
+
+   // Mục đích để khi thay đổi type là đục lỗ thì xoá hết tất cả input trước đó đi
+   // Còn bug: khi form là EDIT và chuyển các quiz có sẵn sang type là đục lỗ thì bị bug chưa nghĩ ra được ý tưởng
    useEffect(() => {
       if (type === 'PERFORATE') {
-         append({ id: uuidv4(), content: '', isCorrect: true });
-         setRerender((pre) => !pre);
-      }
-      // Mỗi khi giá trị của 'type' thay đổi, loại bỏ tất cả các phần tử trong mảng
-      fields.forEach((_, index) => remove(index));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [type]);
+         // checkQuizAvailable để khi form là EDIT load các quiz là đục lỗ lên thì nó sẽ khôngg bị xoá
+         let checkQuizAvailable = null;
+         try {
+            // Nếu là quiz load lên thì id nó sẽ covert sang number
+            checkQuizAvailable = parseInt(quiz.id);
+            console.log({ checkQuizAvailable });
+         } catch (e) {
+            checkQuizAvailable = null;
+         }
 
-   const [rerender, setRerender] = useState(false);
+         // Nếu không convert sang number được thì nó là quiz mới tạo
+         if (!checkQuizAvailable) {
+            const answers = getValues(`quizs.${quizIndex}.answers`);
+            setValue(`quizs.${quizIndex}.answers`, []);
+            answers?.forEach((_, index) => remove(index));
+         }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [type, quizMode]);
 
    const handleOnChangeRadio = (answerIndex) => {
       fields.forEach((_, index) => {
          const checked = index === answerIndex;
          setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, checked);
       });
-      setRerender((pre) => !pre);
+      setRerender(Math.random() * 1000);
    };
 
    const handleOnChangeCheckbox = (answerIndex) => {
@@ -38,7 +62,7 @@ export default function AnswerForm({ quizIndex, control, register, errors, getVa
             setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, !checked);
          }
       });
-      setRerender((pre) => !pre);
+      setRerender(Math.random() * 1000);
    };
 
    function QuizSigleTemplate({ answerIndex }) {
@@ -105,15 +129,26 @@ export default function AnswerForm({ quizIndex, control, register, errors, getVa
    return (
       <div key={rerender}>
          <Tippy content={'Thêm câu trả lời'}>
-            {type !== 'PERFORATE' && (
-               <button
-                  className="transition ease-linear mt-3"
-                  type="button"
-                  onClick={() => append({ id: uuidv4(), content: '', isCorrect: false })}
-               >
-                  <AiFillPlusCircle className="text-green size-5" />
-               </button>
-            )}
+            <div className="inline-block">
+               {type === 'PERFORATE' && fields.length === 0 && (
+                  <button
+                     className="transition ease-linear mt-3"
+                     type="button"
+                     onClick={() => append({ id: uuidv4(), content: '', isCorrect: true })}
+                  >
+                     <AiFillPlusCircle className="text-green size-5" />
+                  </button>
+               )}
+               {type !== 'PERFORATE' && (
+                  <button
+                     className="transition ease-linear mt-3"
+                     type="button"
+                     onClick={() => append({ id: uuidv4(), content: '', isCorrect: false })}
+                  >
+                     <AiFillPlusCircle className="text-green size-5" />
+                  </button>
+               )}
+            </div>
          </Tippy>
          {fields.map((answer, answerIndex) => {
             return (
@@ -122,15 +157,17 @@ export default function AnswerForm({ quizIndex, control, register, errors, getVa
                      {type === 'ONE_CHOICE' && <QuizSigleTemplate answerIndex={answerIndex} />}
                      {type === 'MULTIPLE_CHOICE' && <QuizMultiTemplate answerIndex={answerIndex} />}
                      {type === 'PERFORATE' && <QuizPerforateTemplate answerIndex={answerIndex} />}
-                     <Tippy content={'Xoá câu trả lời'}>
-                        <button
-                           className="transition ease-linear opacity-0 group-hover:opacity-100"
-                           type="button"
-                           onClick={() => remove(answerIndex)}
-                        >
-                           <IoRemoveCircle className="text-red size-5" />
-                        </button>
-                     </Tippy>
+                     {type !== 'PERFORATE' && (
+                        <Tippy content={'Xoá câu trả lời'}>
+                           <button
+                              className="transition ease-linear opacity-0 group-hover:opacity-100"
+                              type="button"
+                              onClick={() => remove(answerIndex)}
+                           >
+                              <IoRemoveCircle className="text-red size-5" />
+                           </button>
+                        </Tippy>
+                     )}
                   </div>
                   {errors.quizs?.[quizIndex]?.answers?.[answerIndex]?.content && (
                      <span className="italic text-red text-sm">

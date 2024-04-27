@@ -3,15 +3,7 @@ import toast from 'react-hot-toast';
 import Editor from 'src/components/Editor';
 import { uploadPreviewVideo } from 'src/utils/common';
 
-export default function VideoForm({ register, errors, resetModal, description, setDescription }) {
-   const [previewVideo, setPreviewVideo] = useState();
-
-   useEffect(() => {
-      setPreviewVideo('');
-      setDescription('');
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [resetModal]);
-
+export default function VideoForm({ register, errors, description, setDescription, previewVideo, setPreviewVideo }) {
    const handleUploadFile = (e) => {
       const urlPreview = uploadPreviewVideo(e);
       if (urlPreview) {
