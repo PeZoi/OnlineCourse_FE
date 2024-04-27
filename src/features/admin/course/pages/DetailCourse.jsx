@@ -8,7 +8,7 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import InfoBasicForm from '../components/Edit/InfoBasicForm';
 import InfoListForm from '../components/Edit/InfoListForm';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
-import ChapterList from '../components/Edit/ChapterList';
+import LessonList from '../components/Edit/lesson/LessonList';
 
 export default function CourseDetailAdmin() {
    const { courseId } = useParams();
@@ -17,7 +17,7 @@ export default function CourseDetailAdmin() {
 
    const [isOpenInfoBasic, setIsOpenInfoBasic] = useState(false);
    const [isOpenInfoList, setIsOpenInfoList] = useState(false);
-   const [isOpenInfoChapters, setIsOpenInfoChapters] = useState(false);
+   const [isOpenInfoLessons, setIsOpenInfoLessons] = useState(false);
 
    const [rerender, setRerender] = useState(0);
 
@@ -108,20 +108,19 @@ export default function CourseDetailAdmin() {
                      'flex items-center justify-between py-3 px-5 bg-gray-light rounded-lg border border-[#ececee] w-full '
                   }
                   style={{ zIndex: '50' }}
-                  onClick={() => setIsOpenInfoChapters(!isOpenInfoChapters)}
+                  onClick={() => setIsOpenInfoLessons(!isOpenInfoLessons)}
                >
                   <div className="flex items-center">
-                     {isOpenInfoChapters ? (
+                     {isOpenInfoLessons ? (
                         <GrSubtract className="size-4 font-thin" />
                      ) : (
                         <CreateIcon className="size-4 font-thin" />
                      )}
-
                      <span className="font-medium ml-4 text-base uppercase">thông tin chương học/bài học</span>
                   </div>
                </button>
-               <Collapse isOpened={isOpenInfoChapters}>
-                  <ChapterList course={course} setRerender={setRerender} />
+               <Collapse isOpened={isOpenInfoLessons}>
+                  <LessonList course={course} setRerender={setRerender} />
                </Collapse>
             </div>
          </div>

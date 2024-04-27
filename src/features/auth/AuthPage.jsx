@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import ModalMiddle from 'src/components/ModalMiddle';
 import Logo from 'src/public/images/logo.png';
-import SignIn from './SignIn';
-import SignUp from './SignUp';
-import ForgotPassword from './ForgotPassword';
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import ForgotPassword from './components/ForgotPassword';
 
 export default function AuthPage() {
    const [showModal, setShowModal] = useState(false);

@@ -3,7 +3,7 @@ import { XMark } from '../public/icons';
 export default function ModalMiddle({ isShow, setIsShow, setResetModal, children, className }) {
    return (
       <div
-         className={`fixed top-0 right-0 w-screen h-screen  ${
+         className={`fixed top-0 right-0 w-screen h-screen px-14 overflow-y-auto  ${
             isShow ? 'visible pointer-events-auto' : 'invisible pointer-events-none'
          }`}
          style={{ zIndex: 999 }}

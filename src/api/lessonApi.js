@@ -52,7 +52,6 @@ export const getLessonByIdAPI = async (id) => {
          return response;
       })
       .catch((error) => {
-         console.log(error);
          return error;
       });
    return res;
@@ -62,4 +61,20 @@ export const getLessonByIdAPI = async (id) => {
 export const confirmLessonCompletedAPI = (id) => {
    const user = getUserDataByLocalStorage();
    return axios.post(`/api/track-course/confirm-done?email=${user.email}&lesson=${id}`);
+};
+
+// Tạo bài học
+export const createLessonAPI = (formData) => {
+   return axios
+      .post('/api/lessons/create', formData)
+      .then((res) => res)
+      .catch((err) => err);
+};
+
+// Xoá bài học
+export const deleteLessonAPI = (lessonId) => {
+   return axios
+      .delete(`/api/lessons/delete/${lessonId}`)
+      .then((res) => res)
+      .catch((err) => err);
 };

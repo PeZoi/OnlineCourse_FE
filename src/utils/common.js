@@ -70,6 +70,20 @@ export const uploadPreviewImage = (e) => {
    return urlPreview;
 };
 
+export const uploadPreviewVideo = (e) => {
+   var input = e.target;
+   var file = input.files[0];
+   var type = file.type;
+
+   if (!type.includes('video')) {
+      return null;
+   }
+
+   const urlPreview = URL.createObjectURL(e.target.files[0]);
+
+   return urlPreview;
+};
+
 // Format lại number 100000 => 100.000
 export const formatNumber = (number) => {
    const string = number + '';

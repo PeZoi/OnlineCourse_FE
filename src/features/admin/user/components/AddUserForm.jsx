@@ -7,7 +7,6 @@ import { signUpCheckExistsAPI } from 'src/api/auth';
 import { createUserAPI } from 'src/api/userApi';
 
 const AddUserForm = ({ onClose, setRerender }) => {
-   //Qui định validate
    const schema = yup.object().shape({
       full_name: yup
          .string()

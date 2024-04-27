@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginAsync } from './authSlice';
+import { loginAsync } from '../authSlice';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 export default function SignIn({ setTypes, resetModal }) {
