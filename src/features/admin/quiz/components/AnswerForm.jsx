@@ -21,38 +21,25 @@ export default function AnswerForm({
       name: `quizs[${quizIndex}].answers`,
    });
 
-   const [rerender, setRerender] = useState(0);
+   const [rerender, setRerender] = useState(uuidv4());
 
    // Mục đích để khi thay đổi type là đục lỗ thì xoá hết tất cả input trước đó đi
    // Còn bug: khi form là EDIT và chuyển các quiz có sẵn sang type là đục lỗ thì bị bug chưa nghĩ ra được ý tưởng
    useEffect(() => {
-      if (type === 'PERFORATE') {
-         // checkQuizAvailable để khi form là EDIT load các quiz là đục lỗ lên thì nó sẽ khôngg bị xoá
-         let checkQuizAvailable = null;
-         try {
-            // Nếu là quiz load lên thì id nó sẽ covert sang number
-            checkQuizAvailable = parseInt(quiz.id);
-            console.log({ checkQuizAvailable });
-         } catch (e) {
-            checkQuizAvailable = null;
-         }
-
-         // Nếu không convert sang number được thì nó là quiz mới tạo
-         if (!checkQuizAvailable) {
-            const answers = getValues(`quizs.${quizIndex}.answers`);
-            setValue(`quizs.${quizIndex}.answers`, []);
-            answers?.forEach((_, index) => remove(index));
-         }
+      if (quizMode === 'ADD') {
+         const answers = getValues(`quizs.${quizIndex}.answers`);
+         setValue(`quizs.${quizIndex}.answers`, []);
+         answers?.forEach((_, index) => remove(index));
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [type, quizMode]);
+   }, [type, quizIndex]);
 
    const handleOnChangeRadio = (answerIndex) => {
       fields.forEach((_, index) => {
          const checked = index === answerIndex;
          setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, checked);
       });
-      setRerender(Math.random() * 1000);
+      setRerender(uuidv4());
    };
 
    const handleOnChangeCheckbox = (answerIndex) => {
@@ -62,7 +49,7 @@ export default function AnswerForm({
             setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, !checked);
          }
       });
-      setRerender(Math.random() * 1000);
+      setRerender(uuidv4());
    };
 
    function QuizSigleTemplate({ answerIndex }) {
@@ -157,7 +144,7 @@ export default function AnswerForm({
                      {type === 'ONE_CHOICE' && <QuizSigleTemplate answerIndex={answerIndex} />}
                      {type === 'MULTIPLE_CHOICE' && <QuizMultiTemplate answerIndex={answerIndex} />}
                      {type === 'PERFORATE' && <QuizPerforateTemplate answerIndex={answerIndex} />}
-                     {type !== 'PERFORATE' && (
+                     {fields && fields.length > 1 && (
                         <Tippy content={'Xoá câu trả lời'}>
                            <button
                               className="transition ease-linear opacity-0 group-hover:opacity-100"

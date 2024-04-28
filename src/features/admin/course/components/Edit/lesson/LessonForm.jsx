@@ -117,6 +117,7 @@ export default function LessonForm({
    const onSubmit = (data) => {
       const formData = new FormData();
       const lessonData = {
+         id: lessonSelected?.id || null,
          name: data.name,
          lesson_type: lessonType,
          chapter_id: chapterSelected.id,
@@ -138,6 +139,7 @@ export default function LessonForm({
                if (data.videoFile?.[0]) {
                   formData.append('video_upload', data.videoFile?.[0]);
                }
+               // console.log({ lessonData, videoData, file: data.videoFile?.[0] });
             }
             break;
          case 'TEXT':
@@ -146,20 +148,25 @@ export default function LessonForm({
                   content,
                };
                formData.append('text', new Blob([JSON.stringify(textData)], { type: 'application/json' }));
+               // console.log({ lessonData, textData });
             }
             break;
          case 'QUIZ':
             {
-               const quizData = data.quizs?.map((quiz) => {
+               let quizData;
+               quizData = data.quizs?.map((quiz) => {
                   return {
+                     id: +quiz.id || null,
                      question: quiz.question,
                      quiz_type: quiz.quiz_type,
                      answer_list: quiz.answers.map((answer) => {
-                        return { content: answer.content, is_correct: answer.isCorrect };
+                        return { id: +answer.id || null, content: answer.content, is_correct: answer.isCorrect };
                      }),
                   };
                });
                formData.append('quizzes', new Blob([JSON.stringify(quizData)], { type: 'application/json' }));
+
+               // console.log({ lessonSelected, lessonData, quizData });
             }
             break;
 
@@ -167,30 +174,38 @@ export default function LessonForm({
             break;
       }
 
-      toast.promise(
-         createLessonAPI(formData)
-            .then((res) => {
-               if (res.status === 201) {
-                  setRerender(Math.random() * 1000);
-                  reset();
-                  setDescription('');
-                  setContent('');
-                  setIsShow(false);
-                  setResetModal(true);
-               } else {
-                  const error = new Error(res.data.message || 'Đã có lỗi xảy ra');
-                  return Promise.reject(error);
-               }
-            })
-            .catch((err) => {
-               return Promise.reject(err);
-            }),
-         {
-            loading: 'Đang xử lý ...',
-            success: 'Thêm bài học thành công',
-            error: (err) => err.message,
-         },
-      );
+      const handleReset = () => {
+         setRerender(Math.random() * 1000);
+         reset();
+         setDescription('');
+         setContent('');
+         setIsShow(false);
+         setResetModal(true);
+      };
+
+      if (lessonMode === 'ADD') {
+         toast.promise(
+            createLessonAPI(formData)
+               .then((res) => {
+                  if (res.status === 201) {
+                     handleReset();
+                  } else {
+                     const error = new Error(res.data.message || 'Đã có lỗi xảy ra');
+                     return Promise.reject(error);
+                  }
+               })
+               .catch((err) => {
+                  return Promise.reject(err);
+               }),
+            {
+               loading: 'Đang xử lý ...',
+               success: 'Thêm bài học thành công',
+               error: (err) => err.message,
+            },
+         );
+      } else {
+         alert('EDIT');
+      }
    };
 
    const onError = (err) => {

@@ -63,7 +63,6 @@ export default function QuizItem({
                className="w-fit border border-[#ccc] outline-none rounded px-3 py-1"
                onChange={(e) => {
                   setQuizType(e.target.value);
-                  // setRerender(Math.random() * 1000);
                }}
             >
                <option value="ONE_CHOICE">Một đáp án</option>
