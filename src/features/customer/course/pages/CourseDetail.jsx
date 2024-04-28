@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { CheckIcon, BatteryFullIcon, ClockIcon, FilmIcon, GaugeIcon } from '../../../../public/icons';
 import CourseContent from '../components/CourseContent';
 import CourseFeedback from '../components/CourseFeedback';
-import { getCourseBySlug } from 'src/api/courseApi';
+import { getCourseBySlug, isExistCourseAPI } from 'src/api/courseApi';
 import { calculatePriceDiscount, durationFormat, formatNumber } from 'src/utils/common';
 
 const TYPE_INFO = ['TARGET', 'REQUIREMENT'];
@@ -13,9 +13,16 @@ export default function CourseDetail() {
    const navigate = useNavigate();
 
    const [course, setCourse] = useState();
+   const [existMyCourse, setExistMyCourse] = useState();
 
    useEffect(() => {
       const fetchCourse = async () => {
+         const checkExistMyCourse = await isExistCourseAPI(courseSlug).then((res) => {
+            if (res.status === 200) {
+               return res.data;
+            }
+         });
+         setExistMyCourse(checkExistMyCourse);
          const res = await getCourseBySlug(courseSlug);
          if (res === 404) {
             navigate('/not-found');
@@ -93,16 +100,19 @@ export default function CourseDetail() {
                         </>
                      )}
                   </p>
-                  <Link to={`/course/learn/${course?.slug}`}>
-                     <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
-                        HỌC NGAY
-                     </button>
-                  </Link>
-                  {/* <Link to={'/'}>
-                     <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
-                        MUA NGAY
-                     </button>
-                  </Link> */}
+                  {existMyCourse ? (
+                     <Link to={`/course/learn/${course?.slug}`}>
+                        <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
+                           HỌC NGAY
+                        </button>
+                     </Link>
+                  ) : (
+                     <Link to={`/payment/${course?.slug}`}>
+                        <button className="px-14 py-2 rounded-3xl bg-primary text-white font-semibold hover:opacity-90 transition-opacity ease-in-out">
+                           MUA NGAY
+                        </button>
+                     </Link>
+                  )}
                   <div className="grid gap-3 my-5 text-[#494949]">
                      <div className="flex items-center">
                         <GaugeIcon className="size-[14px]" />

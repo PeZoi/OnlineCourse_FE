@@ -32,6 +32,7 @@ import ChangePassword from 'src/features/customer/settings/pages/ChangePassword'
 import MyCourses from 'src/features/customer/settings/pages/MyCourses';
 import Personal from 'src/features/customer/settings/pages/Personal';
 import NotFoundPage from 'src/features/NotFound';
+import Payment from 'src/features/payment';
 
 export const router = createBrowserRouter([
    {
@@ -181,6 +182,10 @@ export const router = createBrowserRouter([
             element: <VerifyPage />,
          },
       ],
+   },
+   {
+      path: '/payment/:courseSlug',
+      element: <Payment />,
    },
 
    // ADMIN

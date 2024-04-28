@@ -13,6 +13,18 @@ export const getAllCoursesAdminAPI = () => {
       });
 };
 
+export const getCourseByIdAdminAPI = (courseId) => {
+   return axios
+      .get(`/api/courses/get/${courseId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};
+
 // Tạo khoá học
 export const createCourseAPI = (formData) => {
    return axios
@@ -62,18 +74,6 @@ export const getCourseBySlug = async (slug) => {
       });
    // console.log(res);
    return res;
-};
-
-export const getCourseByIdAdminAPI = (courseId) => {
-   return axios
-      .get(`/api/courses/get/${courseId}`)
-      .then((response) => {
-         return response;
-      })
-      .catch((error) => {
-         console.log(error);
-         return null;
-      });
 };
 
 // Lấy ra khoá học của user đăng nhập

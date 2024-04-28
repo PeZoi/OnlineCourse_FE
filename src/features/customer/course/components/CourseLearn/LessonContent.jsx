@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getLessonByIdAdminAPI, getLessonByIdAPI } from 'src/api/lessonApi';
+import { getLessonByIdAPI } from 'src/api/lessonApi';
 import LearnTypeText from './LearnTypeText';
 import LearnTypeVideo from './LearnTypeVideo';
 import LearnTypeQuiz from './LearnTypeQuiz';
