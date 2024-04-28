@@ -23,7 +23,7 @@ export default function AnswerForm({
 
    const [rerender, setRerender] = useState(uuidv4());
 
-   // Mục đích để khi thay đổi type là đục lỗ thì xoá hết tất cả input trước đó đi
+   // Khi thay đổi dạng câu hỏi thì xoá các câu trả lời cũ đi
    // Còn bug: khi form là EDIT và chuyển các quiz có sẵn sang type là đục lỗ thì bị bug chưa nghĩ ra được ý tưởng
    useEffect(() => {
       if (quizMode === 'ADD') {

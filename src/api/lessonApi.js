@@ -71,6 +71,13 @@ export const createLessonAPI = (formData) => {
       .catch((err) => err);
 };
 
+export const updateLessonAPI = (lessonId, formData) => {
+   return axios
+      .put(`/api/lessons/update/${lessonId}`, formData)
+      .then((res) => res)
+      .catch((err) => err);
+};
+
 // Xoá bài học
 export const deleteLessonAPI = (lessonId) => {
    return axios

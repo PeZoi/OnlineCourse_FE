@@ -7,7 +7,7 @@ import VideoForm from './VideoForm';
 import TextForm from './TextForm';
 import QuizForm from 'src/features/admin/quiz/components/QuizForm';
 import toast from 'react-hot-toast';
-import { createLessonAPI } from 'src/api/lessonApi';
+import { createLessonAPI, updateLessonAPI } from 'src/api/lessonApi';
 
 const LESSON_TYPE = ['VIDEO', 'TEXT', 'QUIZ'];
 
@@ -132,6 +132,7 @@ export default function LessonForm({
          case 'VIDEO':
             {
                const videoData = {
+                  id: lessonSelected?.video?.id || null,
                   description,
                };
                formData.append('video', new Blob([JSON.stringify(videoData)], { type: 'application/json' }));
@@ -139,16 +140,17 @@ export default function LessonForm({
                if (data.videoFile?.[0]) {
                   formData.append('video_upload', data.videoFile?.[0]);
                }
-               // console.log({ lessonData, videoData, file: data.videoFile?.[0] });
+               // console.log({ lessonSelected, lessonData, videoData, file: data.videoFile?.[0] });
             }
             break;
          case 'TEXT':
             {
                const textData = {
+                  id: lessonSelected?.text?.id || null,
                   content,
                };
                formData.append('text', new Blob([JSON.stringify(textData)], { type: 'application/json' }));
-               // console.log({ lessonData, textData });
+               // console.log({ lessonSelected, lessonData, textData });
             }
             break;
          case 'QUIZ':
@@ -204,7 +206,25 @@ export default function LessonForm({
             },
          );
       } else {
-         alert('EDIT');
+         toast.promise(
+            updateLessonAPI(lessonSelected?.id, formData)
+               .then((res) => {
+                  if (res.status === 200) {
+                     handleReset();
+                  } else {
+                     const error = new Error(res.data.message || 'Đã có lỗi xảy ra');
+                     return Promise.reject(error);
+                  }
+               })
+               .catch((err) => {
+                  return Promise.reject(err);
+               }),
+            {
+               loading: 'Đang xử lý ...',
+               success: 'Cập nhật bài học thành công',
+               error: (err) => err.message,
+            },
+         );
       }
    };
 
@@ -243,6 +263,7 @@ export default function LessonForm({
                      id="lessonType"
                      className="flex-1 max-h-11 mt-2 border-2 border-[#8d8d8d] outline-none rounded-lg px-3 py-1"
                      onChange={(e) => setLessonType(e.target.value)}
+                     disabled={lessonMode === 'EDIT'}
                   >
                      {LESSON_TYPE.map((type) => (
                         <option key={type} value={type} selected={lessonType === type}>
