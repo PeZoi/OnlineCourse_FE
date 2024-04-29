@@ -53,7 +53,7 @@ export const getAllCourses = async (categoryId) => {
    const res = await axios
       .get(`/api/courses/home-page?categoryId=${categoryId || ''}`)
       .then((response) => {
-         return response.data;
+         return response;
       })
       .catch((error) => {
          console.log(error);

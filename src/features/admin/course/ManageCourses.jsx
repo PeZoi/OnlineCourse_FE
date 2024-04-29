@@ -41,7 +41,7 @@ export default function ManageCourses() {
 
       getAllCategoriesAPI()
          .then((res) => {
-            setCategories(res.content);
+            setCategories(res.data.content);
          })
          .catch((err) => console.log(err));
    }, [rerender]);

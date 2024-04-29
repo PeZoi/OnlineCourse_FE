@@ -9,7 +9,7 @@ export const useAxios = (axiosFunction, dependencies) => {
       const fetchData = async () => {
          try {
             const res = await axiosFunction();
-            setResponse(res);
+            setResponse(res.data);
          } catch (error) {
             setError(error);
          } finally {

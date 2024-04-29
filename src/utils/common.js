@@ -16,6 +16,21 @@ export const secondsConvert = (second) => {
    return formattedHours + ':' + formattedMinutes + ':' + formattedSeconds;
 };
 
+export const secondsConvertToMinutesAndSeconds = (second) => {
+   if (second === 0) {
+      return '00:00:00';
+   }
+
+   const remainingSeconds = second % 3600; // Số giây còn lại sau khi lấy ra số giờ
+   const minutes = Math.floor(remainingSeconds / 60); // Số phút
+   const seconds = Math.floor(remainingSeconds % 60); // Số giây còn lại
+
+   const formattedMinutes = minutes >= 10 ? minutes : '0'.concat(minutes);
+   const formattedSeconds = seconds >= 10 ? seconds : '0'.concat(seconds);
+
+   return formattedMinutes + ':' + formattedSeconds;
+};
+
 // time to seconds
 export const timeToSeconds = (timeString) => {
    // Tách chuỗi thành các phần giờ, phút và giây
@@ -101,6 +116,11 @@ export const formatCurrency = (value) => {
 export const calculatePriceDiscount = (price, discount) => {
    const priceDiscount = price - price * discount;
    return formatCurrency(priceDiscount);
+};
+
+export const calculatePriceDiscountNumber = (price, discount) => {
+   const priceDiscount = price - price * discount;
+   return priceDiscount;
 };
 
 // Hàm lấy thông tin user ở localstorage

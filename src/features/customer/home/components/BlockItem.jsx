@@ -27,9 +27,9 @@ export default function BlockItem({ type, className, data }) {
          {type === 'course' ? (
             <>
                <div className="mb-2 flex items-end">
-                  <span className="font-semibold text-sm">(4.6)</span>
+                  <span className="font-semibold text-sm">({data?.average_review})</span>
                   <Rating
-                     value={3}
+                     value={data?.average_review}
                      readOnly
                      cancel={false}
                      pt={{
@@ -38,7 +38,6 @@ export default function BlockItem({ type, className, data }) {
                      }}
                      className="mx-2"
                   />
-                  <span className="font-semibold text-xs text-gray">(35)</span>
                </div>
 
                <div className="flex items-end justify-between mb-2">

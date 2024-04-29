@@ -36,7 +36,7 @@ export default function CourseDetailAdmin() {
 
       getAllCategoriesAPI()
          .then((res) => {
-            setCategories(res.content);
+            setCategories(res.data.content);
          })
          .catch((err) => {
             console.log(err);
