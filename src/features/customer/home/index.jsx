@@ -85,7 +85,7 @@ export default function Home() {
          <div className="my-10 px-11">
             <hr className="mb-10" />
             <div className="flex items-center justify-between">
-               <p className="text-black text-2xl font-extrabold">Coming soon ... </p>
+               <p className="text-black text-2xl font-extrabold">Sắp ra mắt ... </p>
                <Link to={'/'} className="flex items-center group text-base">
                   <span className="font-semibold mr-1 hover:underline">Xem tất cả</span>
                   <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />

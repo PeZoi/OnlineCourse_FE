@@ -4,7 +4,7 @@ import { CheckIcon, BatteryFullIcon, ClockIcon, FilmIcon, GaugeIcon } from '../.
 import CourseContent from '../components/CourseContent';
 import CourseFeedback from '../components/CourseFeedback';
 import { getCourseBySlug, isExistCourseAPI } from 'src/api/courseApi';
-import { calculatePriceDiscount, durationFormat, formatNumber } from 'src/utils/common';
+import { calculatePriceDiscount, durationFormat, formatDate, formatNumber } from 'src/utils/common';
 
 const TYPE_INFO = ['TARGET', 'REQUIREMENT'];
 
@@ -38,6 +38,7 @@ export default function CourseDetail() {
          <div className="col-span-8">
             <div>
                <h1 className="text-4xl font-bold">{course?.title}</h1>
+               <p className="mt-5 font-medium text-gray text-sm">Xuất bản: {formatDate(course?.published_at)}</p>
                <p className="text-sm mt-5">{course?.description}</p>
                <div className="mt-8">
                   <h2 className="text-xl font-bold">Bạn sẽ học được gì?</h2>
@@ -73,7 +74,7 @@ export default function CourseDetail() {
                   </ul>
                </div>
 
-               <CourseFeedback />
+               <CourseFeedback course={course} />
             </div>
          </div>
 

@@ -19,11 +19,9 @@ export default function MyCourseItem({ course }) {
             </Tippy>
          </Link>
 
-         {/* <p className="text-gray text-xs">Học cách đây 5 tháng trước</p> */}
-
-         <Tippy content={<span>45%</span>} placement="bottom">
+         <Tippy content={<span>{course.process}%</span>} placement="bottom">
             <div className="w-full bg-[#ccc] rounded-full h-2.5 mt-3">
-               <div className="bg-primary h-2.5 rounded-full" style={{ width: '45%' }}></div>
+               <div className="bg-primary h-2.5 rounded-full" style={{ width: `${course?.process || 0}%` }}></div>
             </div>
          </Tippy>
       </div>

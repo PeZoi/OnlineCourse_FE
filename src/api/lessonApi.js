@@ -85,3 +85,11 @@ export const deleteLessonAPI = (lessonId) => {
       .then((res) => res)
       .catch((err) => err);
 };
+
+// Update thời gian học tới đâu rồi (để khi lỡ đang học dở lỡ thoát vô lại thì sẽ vẫn là tg đó)
+export const updatePeriodCurrentOfVideo = (data) => {
+   return axios
+      .post(`/api/track-course/update/track-course`, data)
+      .then((res) => res)
+      .catch((err) => err);
+};

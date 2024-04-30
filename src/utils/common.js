@@ -31,15 +31,19 @@ export const secondsConvertToMinutesAndSeconds = (second) => {
    return formattedMinutes + ':' + formattedSeconds;
 };
 
-// time to seconds
+// time to seconds hh:mm:ss => seconds
 export const timeToSeconds = (timeString) => {
-   // Tách chuỗi thành các phần giờ, phút và giây
-   const [hours, minutes, seconds] = timeString.split(':').map(Number);
+   try {
+      // Tách chuỗi thành các phần giờ, phút và giây
+      const [hours, minutes, seconds] = timeString.split(':').map(Number);
 
-   // Tính tổng số giây từ các phần giờ, phút và giây
-   const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+      // Tính tổng số giây từ các phần giờ, phút và giây
+      const totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
-   return totalSeconds;
+      return totalSeconds;
+   } catch (error) {
+      return '00:00:00';
+   }
 };
 
 // Format "00:11:07" thành 11 phút 07 giây
@@ -140,4 +144,17 @@ export const isExpiredToken = (tokenExp) => {
    const currentTimeInSeconds = Math.floor(Date.now() / 1000); // Thời gian hiện tại
 
    return currentTimeInSeconds >= tokenExp;
+};
+
+// format 2024-04-30T04:14:54.166+00:00 => 30/04/2024
+export const formatDate = (dateString) => {
+   const date = new Date(dateString);
+   var day = date.getUTCDate();
+   var month = date.getUTCMonth() + 1;
+   var year = date.getUTCFullYear();
+
+   var formattedDay = day >= 10 ? day : '0'.concat(day);
+   var formattedMonth = month >= 10 ? month : '0'.concat(month);
+   var formattedDate = formattedDay + '/' + formattedMonth + '/' + year;
+   return formattedDate;
 };

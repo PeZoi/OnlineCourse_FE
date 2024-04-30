@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { FaBook } from 'react-icons/fa';
 import { ShieldIcon, UserIcon } from 'src/public/icons';
-
+import { FaMoneyBill1Wave } from 'react-icons/fa6';
 export default function Sidebar({ children }) {
    const NavList = [
       {
@@ -19,12 +19,17 @@ export default function Sidebar({ children }) {
          icon: <FaBook className="size-5 text-primary" />,
          title: 'Khoá học của tôi',
       },
+      {
+         path: '/settings/my-transactions-history',
+         icon: <FaMoneyBill1Wave className="size-5 text-primary" />,
+         title: 'Lịch sử giao dịch',
+      },
    ];
 
    return (
       <div className="grid grid-cols-12">
          <div className="col-span-3">
-            <div>
+            <div className="sticky top-[87px]">
                <h3 className="text-3xl font-semibold my-5 opacity-90">Cài đặt</h3>
                <div>
                   {NavList.map((navItem, index) => (

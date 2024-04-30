@@ -1,7 +1,7 @@
 import axios from 'src/utils/axios';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 
-export const getInfoPayment = (courseId) => {
+export const getInfoPaymentAPI = (courseId) => {
    const user = getUserDataByLocalStorage();
    const data = {
       email: user?.email,
@@ -17,7 +17,7 @@ export const getInfoPayment = (courseId) => {
       });
 };
 
-export const checkTransaction = (data) => {
+export const checkTransactionAPI = (data) => {
    const user = getUserDataByLocalStorage();
    return axios
       .post(`/api/payment/check-transaction`, { ...data, email: user?.email })

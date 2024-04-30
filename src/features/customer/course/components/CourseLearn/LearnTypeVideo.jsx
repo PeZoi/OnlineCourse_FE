@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import CreateNote from './CreateNote';
 import toast from 'react-hot-toast';
-import { confirmLessonCompletedAPI, getLessonOfUserAPI } from 'src/api/lessonApi';
+import { confirmLessonCompletedAPI, getLessonOfUserAPI, updatePeriodCurrentOfVideo } from 'src/api/lessonApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyCourseSelected } from '../../courseSlice';
+import { getUserDataByLocalStorage, secondsConvert, timeToSeconds } from 'src/utils/common';
 
 export default function LearnTypeVideo({ lesson }) {
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
@@ -13,6 +14,7 @@ export default function LearnTypeVideo({ lesson }) {
    // State này để kiểm tra xem người dùng có đang học nhanh không
    const countRef = useRef(0);
 
+   // Xử lý video và điều kiên qua bài
    useEffect(() => {
       const video = videoRef.current;
       let intervalId;
@@ -20,8 +22,16 @@ export default function LearnTypeVideo({ lesson }) {
       // Kiểm tra nếu lesson đó complete rồi thì không cần chạy các logic ở dưới
       const checkLessonIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
 
+      // Kiểm tra xem nó học tới đâu rồi thì gán lại tới đó (Nếu bài đó chưa completed)
+      if (!checkLessonIsCompleted?.is_completed) {
+         console.log({ checkLessonIsCompleted });
+         video.currentTime = timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00');
+         countRef.current = timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00');
+         setCurrentTimeVideo(timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00'));
+      }
+
       const handleTimeUpdate = () => {
-         const percent = 30;
+         const percent = 30; // Độ chênh lệch cho phép tua chỉ là 30%
          // Tính toán thời gian chênh lệch của video đó
          const countCheck = (video.duration * percent) / 100;
          // So sánh xem nếu người dùng học quá thời gian countCheck đó so với bộ đếm
@@ -31,6 +41,7 @@ export default function LearnTypeVideo({ lesson }) {
             video.pause();
          }
 
+         // Gọi hàm xử lý mở bài mới khi đủ điều kiện
          if ((video.currentTime / video.duration) * 100 >= 80 && !checkLessonIsCompleted.is_completed) {
             confirmLessonCompleted();
             clearInterval(intervalId);
@@ -44,6 +55,38 @@ export default function LearnTypeVideo({ lesson }) {
 
       return () => {
          clearInterval(intervalId);
+      };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [lesson]);
+
+   // Xử lý lưu thời gian video đang học mỗi 10s
+   useEffect(() => {
+      const video = videoRef.current;
+      let intervalPeriodCurrent;
+      const checkLessonIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
+      // Kiểm tra xem nó đã hoàn thành chưa, nếu chưa hoàn thành thì sẽ chạy lệnh lưu thời gian video
+      const handleSavePeriodCurrent = () => {
+         if (!checkLessonIsCompleted.is_completed) {
+            const user = getUserDataByLocalStorage();
+            const currentTimeData = secondsConvert(video.currentTime);
+            console.log({ currentTimeData });
+            const data = {
+               lesson_id: lesson?.id,
+               user_id: user?.user_id,
+               period_current: currentTimeData,
+            };
+            updatePeriodCurrentOfVideo(data).catch((e) => console.log(e));
+         }
+         // Nếu hoàn thành để qua bài mời rồi thì xoá sự kiện đi
+         if ((video.currentTime / video.duration) * 100 >= 80 && !checkLessonIsCompleted.is_completed) {
+            clearInterval(intervalPeriodCurrent);
+         }
+      };
+      // Gọi hàm mỗi 10s
+      intervalPeriodCurrent = setInterval(handleSavePeriodCurrent, 10000);
+
+      return () => {
+         clearInterval(intervalPeriodCurrent);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [lesson]);

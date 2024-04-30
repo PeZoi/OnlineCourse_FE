@@ -30,6 +30,7 @@ import SearchQuizs from 'src/features/customer/search/pages/SearchQuizs';
 import Settings from 'src/features/customer/settings';
 import ChangePassword from 'src/features/customer/settings/pages/ChangePassword';
 import MyCourses from 'src/features/customer/settings/pages/MyCourses';
+import MyTransactionHistory from 'src/features/customer/settings/pages/MyTransactionHistory';
 import Personal from 'src/features/customer/settings/pages/Personal';
 import NotFoundPage from 'src/features/NotFound';
 import Payment from 'src/features/payment';
@@ -124,6 +125,14 @@ export const router = createBrowserRouter([
             element: (
                <SettingLayout>
                   <MyCourses />
+               </SettingLayout>
+            ),
+         },
+         {
+            path: 'my-transactions-history',
+            element: (
+               <SettingLayout>
+                  <MyTransactionHistory />
                </SettingLayout>
             ),
          },

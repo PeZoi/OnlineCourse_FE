@@ -14,7 +14,7 @@ import {
 import { LuCopy, LuPhone } from 'react-icons/lu';
 import { HiOutlineMail } from 'react-icons/hi';
 import { TbMap2 } from 'react-icons/tb';
-import { checkTransaction, getInfoPayment } from 'src/api/paymentApi';
+import { checkTransactionAPI, getInfoPaymentAPI } from 'src/api/paymentApi';
 import useAxios from 'src/hooks/useAxios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaCircleCheck } from 'react-icons/fa6';
@@ -34,7 +34,7 @@ export default function Payment() {
    const countRef = useRef(300); // State để xử lý time
 
    // Lấy thông tin payment ra
-   const { response: paymentInfo, loading: paymentLoading } = useAxios(() => getInfoPayment(course?.id), [course]);
+   const { response: paymentInfo, loading: paymentLoading } = useAxios(() => getInfoPaymentAPI(course?.id), [course]);
 
    // Check xem đủ điều kiện vào trang này không
    useEffect(() => {
@@ -66,7 +66,7 @@ export default function Payment() {
          setCurrentTime(countRef.current);
       };
       // Gọi handleTimeUpdate mỗi giây
-      intervalCount = setInterval(handleTimeUpdate, 1000);
+      intervalCount = setInterval(handleTimeUpdate, 15000);
 
       return () => {
          clearInterval(intervalCount);
@@ -74,6 +74,7 @@ export default function Payment() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
+   // Check lịch sử giao dịch
    useEffect(() => {
       let intervalTransaction;
       const handleCheckTransaction = () => {
@@ -82,7 +83,7 @@ export default function Payment() {
             description: paymentInfo?.content,
             totalPrice,
          };
-         checkTransaction(data).then((res) => {
+         checkTransactionAPI(data).then((res) => {
             if (res.status === 200 && res.data) {
                toast.success('Thanh toán thành công. Sẽ trở về khoá học sau 3s');
                setIsSuccessPayment(true);

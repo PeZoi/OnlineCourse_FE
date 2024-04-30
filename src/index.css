@@ -15,6 +15,7 @@
 
 * {
    box-sizing: border-box;
+   scroll-behavior: smooth;
 }
 
 html ::-webkit-scrollbar {
@@ -49,4 +50,13 @@ hr {
 .p-button:focus {
    box-shadow: none !important;
    border-color: unset !important;
+}
+
+/* Tắt outline rating */
+.p-rating:not(.p-disabled):not(.p-readonly) .p-rating-item:hover .p-rating-icon {
+   color: #f97316 !important;
+}
+
+.p-rating .p-rating-item.p-focus {
+   box-shadow: 0 0 0 !important;
 }
