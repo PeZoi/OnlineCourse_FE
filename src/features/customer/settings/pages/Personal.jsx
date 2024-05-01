@@ -8,8 +8,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
 import { updateInformationUser } from 'src/features/auth/authSlice';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function Personal() {
+   useScrollToTop();
    const dispatch = useDispatch();
 
    const [isUpdating, setIsUpdating] = useState(false);

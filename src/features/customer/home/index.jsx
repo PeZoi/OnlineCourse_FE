@@ -6,8 +6,11 @@ import { useEffect, useState } from 'react';
 import { getAllCourses } from 'src/api/courseApi';
 import { useAxios } from 'src/hooks/useAxios';
 import { getAllCategoriesAPI } from 'src/api/categoryApi';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function Home() {
+   useScrollToTop();
+
    const [categories, setCategories] = useState([]);
    const [courses, setCourses] = useState([]);
    const [coursesByComingSoon, setCoursesByComingSoon] = useState([]);

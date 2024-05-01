@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import HoleQuestion from 'src/components/QuizType/HoleQuestion';
 import MultiQuestion from 'src/components/QuizType/MultiQuestion';
 import SingleQuestion from 'src/components/QuizType/SingleQuestion';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { v4 as uuidv4 } from 'uuid';
 
 const quizList = [
@@ -68,6 +69,8 @@ const quizList = [
 ];
 
 export default function QuizTest() {
+   useScrollToTop();
+
    const { quizId } = useParams();
    const [answers, setAnswers] = useState([]);
    const [quiz, setQuiz] = useState({ id: 1 });

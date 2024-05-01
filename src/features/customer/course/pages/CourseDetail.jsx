@@ -5,10 +5,13 @@ import CourseContent from '../components/CourseContent';
 import CourseFeedback from '../components/CourseFeedback';
 import { getCourseBySlug, isExistCourseAPI } from 'src/api/courseApi';
 import { calculatePriceDiscount, durationFormat, formatDate, formatNumber } from 'src/utils/common';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 const TYPE_INFO = ['TARGET', 'REQUIREMENT'];
 
 export default function CourseDetail() {
+   useScrollToTop();
+
    const { courseSlug } = useParams();
    const navigate = useNavigate();
 

@@ -7,8 +7,11 @@ import { getCourseSelected, getMyCourseSelected } from '../courseSlice';
 import { isExistCourseAPI } from 'src/api/courseApi';
 import toast from 'react-hot-toast';
 import LessonContent from '../components/CourseLearn/LessonContent';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function CourseLearn() {
+   useScrollToTop();
+
    const { courseSlug } = useParams();
    const [searchParams] = useSearchParams();
 

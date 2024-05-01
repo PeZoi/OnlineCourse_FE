@@ -1,6 +1,9 @@
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import QuizItem from '../../../../components/Layout/customer/QuizItem';
 
 export default function QuizList() {
+   useScrollToTop();
+
    return (
       <div className="p-11">
          <h1 className="font-bold text-3xl">Thư viện đề thi</h1>

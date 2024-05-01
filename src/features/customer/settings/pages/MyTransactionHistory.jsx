@@ -2,12 +2,13 @@ import Tippy from '@tippyjs/react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { useEffect } from 'react';
 import { getAllOrdersByUserIdAPI } from 'src/api/orderApi';
 import useAxios from 'src/hooks/useAxios';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { formatDate, formatNumber } from 'src/utils/common';
 
 export default function MyTransactionHistory() {
+   useScrollToTop();
    const { response: transactions, loading: transactionsLoading } = useAxios(getAllOrdersByUserIdAPI, []);
 
    const totalPriceTemplate = (rowData) => {

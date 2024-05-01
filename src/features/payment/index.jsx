@@ -18,7 +18,9 @@ import { checkTransactionAPI, getInfoPaymentAPI } from 'src/api/paymentApi';
 import useAxios from 'src/hooks/useAxios';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaCircleCheck } from 'react-icons/fa6';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 export default function Payment() {
+   useScrollToTop();
    // Bắt bược phải login mới vào được trang này
    useRequireLogin();
 

@@ -2,10 +2,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { changePasswordAPI } from 'src/api/userApi';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 import * as yup from 'yup';
 export default function ChangePassword() {
-   // Xử lý form
+   useScrollToTop();
+
+   // Xử lý validate form
    const schema = yup.object().shape({
       password: yup.string().required('Mật khẩu không được để trống').min(8, 'Mật khẩu phải có ít nhất 8 ký tự'),
       confirmPassword: yup

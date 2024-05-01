@@ -24,7 +24,6 @@ export default function LearnTypeVideo({ lesson }) {
 
       // Kiểm tra xem nó học tới đâu rồi thì gán lại tới đó (Nếu bài đó chưa completed)
       if (!checkLessonIsCompleted?.is_completed) {
-         console.log({ checkLessonIsCompleted });
          video.currentTime = timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00');
          countRef.current = timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00');
          setCurrentTimeVideo(timeToSeconds(checkLessonIsCompleted?.duration_video || '00:00:00'));
@@ -55,21 +54,11 @@ export default function LearnTypeVideo({ lesson }) {
 
       return () => {
          clearInterval(intervalId);
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [lesson]);
 
-   // Xử lý lưu thời gian video đang học mỗi 10s
-   useEffect(() => {
-      const video = videoRef.current;
-      let intervalPeriodCurrent;
-      const checkLessonIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
-      // Kiểm tra xem nó đã hoàn thành chưa, nếu chưa hoàn thành thì sẽ chạy lệnh lưu thời gian video
-      const handleSavePeriodCurrent = () => {
+         // Khi thoát khỏi trang này thì sẽ chạy dòng này để lưu lại thời gian đang xem trước đó
          if (!checkLessonIsCompleted.is_completed) {
             const user = getUserDataByLocalStorage();
             const currentTimeData = secondsConvert(video.currentTime);
-            console.log({ currentTimeData });
             const data = {
                lesson_id: lesson?.id,
                user_id: user?.user_id,
@@ -77,16 +66,6 @@ export default function LearnTypeVideo({ lesson }) {
             };
             updatePeriodCurrentOfVideo(data).catch((e) => console.log(e));
          }
-         // Nếu hoàn thành để qua bài mời rồi thì xoá sự kiện đi
-         if ((video.currentTime / video.duration) * 100 >= 80 && !checkLessonIsCompleted.is_completed) {
-            clearInterval(intervalPeriodCurrent);
-         }
-      };
-      // Gọi hàm mỗi 10s
-      intervalPeriodCurrent = setInterval(handleSavePeriodCurrent, 10000);
-
-      return () => {
-         clearInterval(intervalPeriodCurrent);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [lesson]);

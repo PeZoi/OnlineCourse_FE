@@ -3,8 +3,11 @@ import MyCourseItem from '../components/MyCourseItem';
 import CirclePlus from '../../../../public/icons/CirclePlus';
 import { useEffect, useState } from 'react';
 import { getMyCourseAPI } from 'src/api/courseApi';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function MyCourses() {
+   useScrollToTop();
+
    const [myCourses, setMyCourses] = useState([]);
 
    useEffect(() => {

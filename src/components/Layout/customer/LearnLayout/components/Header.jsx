@@ -18,7 +18,7 @@ export default function Header() {
                   {/* LEFT */}
                   <div className="flex items-center ">
                      <Link
-                        to={'/'}
+                        to={`/course/${courseSelected?.slug}`}
                         className="-rotate-180 cursor-pointer hover:bg-[#0000001a] transition-all ease-in-out"
                      >
                         <ArrowRightIcon className="text-white size-4 mx-6 my-4 " />
