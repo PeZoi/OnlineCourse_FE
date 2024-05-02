@@ -27,7 +27,7 @@ export default function Header() {
                         <Link to={'/'}>
                            <img className="size-[30px] rounded-lg" src={Logo} alt="F8" />
                         </Link>
-                        <span className="font-bold text-white text-sm ml-4">Kiến Thức Nhập Môn IT</span>
+                        <span className="font-bold text-white text-sm ml-4">{courseSelected?.title}</span>
                      </div>
                   </div>
 

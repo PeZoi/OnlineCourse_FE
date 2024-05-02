@@ -90,16 +90,17 @@ export default function Home() {
             <div className="flex items-center justify-between">
                <p className="text-black text-2xl font-extrabold">Sắp ra mắt ... </p>
                <Link to={'/'} className="flex items-center group text-base">
-                  <span className="font-semibold mr-1 hover:underline">Xem tất cả</span>
+                  <span className="font-semibold mr-1 hover:underline">Xem lộ trình</span>
                   <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />
                </Link>
             </div>
             <div className="mt-5 grid grid-cols-4 gap-6">
                {coursesByComingSoon?.map((course) => (
-                  <BlockItem type={'course'} key={course.id} data={course} />
+                  <BlockItem type={'course'} key={course.id} data={course} isCommingSoon={true} />
                ))}
             </div>
          </div>
+
          <div className="my-16 px-11">
             <div className="flex items-center justify-between">
                <p className="text-black text-2xl font-extrabold">Bài viết nổi bật</p>

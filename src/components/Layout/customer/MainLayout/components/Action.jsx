@@ -11,6 +11,7 @@ import { Avatar } from 'primereact/avatar';
 export default function Action() {
    const dispatch = useDispatch();
    const { user, isLogged } = useSelector((state) => state.auth);
+   const { myCourses } = useSelector((state) => state.course);
 
    const [showMyCourses, setShowMyCourses] = useState(false);
    const [showMyNotifications, setShowMyNotifications] = useState(false);
@@ -37,31 +38,31 @@ export default function Action() {
                               </Link>
                            </div>
                            <div className="overflow-y-auto overscroll-contain mt-3 max-h-[60vh] px-3">
-                              <Link to={'/'}>
-                                 <div className="flex items-center my-3 p-3 rounded-lg hover:bg-gray-light">
-                                    <img
-                                       src="https://files.fullstack.edu.vn/f8-prod/courses/4/61a9e9e701506.png"
-                                       alt=""
-                                       className="w-[120px] h-[67px] rounded-lg"
-                                    />
+                              {myCourses &&
+                                 myCourses.length > 0 &&
+                                 myCourses.map((course) => (
+                                    <Link to={`/course/${course.slug}`} key={course.id}>
+                                       <div className="flex items-center my-3 p-3 rounded-lg hover:bg-gray-light">
+                                          <img
+                                             src={course.thumbnail}
+                                             alt=""
+                                             className="w-[120px] h-[67px] rounded-lg object-cover"
+                                          />
 
-                                    <div className="ml-3 flex-1">
-                                       <Link to={'/'}>
-                                          <h3 className="font-medium ">App &quot;Đừng chạm tay lên mặt&quot;</h3>
-                                       </Link>
-                                       <p className="text-gray text-xs">Học cách đây 5 tháng trước</p>
-
-                                       <Tippy content={<span>45%</span>} placement="bottom">
-                                          <div className="w-full bg-[#ccc] rounded-full h-2.5 mt-2">
-                                             <div
-                                                className="bg-primary h-2.5 rounded-full"
-                                                style={{ width: '45%' }}
-                                             ></div>
+                                          <div className="ml-3 flex-1">
+                                             <h3 className="font-medium ">{course.title}</h3>
+                                             <Tippy content={<span>{course.process}%</span>} placement="bottom">
+                                                <div className="w-full bg-[#ccc] rounded-full h-2.5 mt-2">
+                                                   <div
+                                                      className="bg-primary h-2.5 rounded-full"
+                                                      style={{ width: `${course.process}%` }}
+                                                   ></div>
+                                                </div>
+                                             </Tippy>
                                           </div>
-                                       </Tippy>
-                                    </div>
-                                 </div>
-                              </Link>
+                                       </div>
+                                    </Link>
+                                 ))}
                            </div>
                         </div>
                      }

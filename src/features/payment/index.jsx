@@ -68,7 +68,7 @@ export default function Payment() {
          setCurrentTime(countRef.current);
       };
       // Gọi handleTimeUpdate mỗi giây
-      intervalCount = setInterval(handleTimeUpdate, 15000);
+      intervalCount = setInterval(handleTimeUpdate, 1000);
 
       return () => {
          clearInterval(intervalCount);

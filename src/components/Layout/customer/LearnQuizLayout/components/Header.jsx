@@ -11,7 +11,7 @@ export default function Header() {
                   {/* LEFT */}
                   <div className="flex items-center ">
                      <Link
-                        to={'/'}
+                        to={'/quiz'}
                         className="-rotate-180 cursor-pointer hover:bg-[#0000001a] transition-all ease-in-out"
                      >
                         <ArrowRightIcon className="text-white size-4 mx-6 my-4 " />
@@ -20,7 +20,7 @@ export default function Header() {
                         <Link to={'/'}>
                            <img className="size-[30px] rounded-lg" src={Logo} alt="F8" />
                         </Link>
-                        <span className="font-bold text-white text-sm ml-4">Kiến Thức Nhập Môn IT</span>
+                        <span className="font-bold text-white text-sm ml-4">Làm kiểm tra</span>
                      </div>
                   </div>
                </div>
