@@ -9,6 +9,7 @@ import ManageCategories from 'src/features/admin/category/ManageCategories';
 import ManageCourses from 'src/features/admin/course/ManageCourses';
 import CourseDetailAdmin from 'src/features/admin/course/pages/DetailCourse';
 import Dashboard from 'src/features/admin/dashboard/Dashboard';
+import OrderAdminPage from 'src/features/admin/order/OrderAdminPage';
 import ManageUsers from 'src/features/admin/user/ManageUsers';
 import Auth from 'src/features/auth';
 import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
@@ -221,6 +222,10 @@ export const router = createBrowserRouter([
          {
             path: 'manage-courses/:courseId',
             element: <CourseDetailAdmin />,
+         },
+         {
+            path: 'manage-orders',
+            element: <OrderAdminPage />,
          },
       ],
    },

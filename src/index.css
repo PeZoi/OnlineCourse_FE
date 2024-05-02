@@ -60,3 +60,8 @@ hr {
 .p-rating .p-rating-item.p-focus {
    box-shadow: 0 0 0 !important;
 }
+
+.p-paginator-page.p-paginator-element.p-link.p-highlight {
+   background-color: #ecfeff !important;
+   text-color: #a6d2dc !important;
+}

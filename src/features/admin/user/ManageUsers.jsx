@@ -49,7 +49,6 @@ export default function ManageUsers() {
       const fetchUsers = async () => {
          try {
             const users = await getAllUsersAPI(); // Giả định getAllUsers là async và trả về data từ axios.get
-            console.log(users);
             setUsers(users.data.content); // Giả sử response trả về có dạng { data: [...] }
          } catch (error) {
             console.error(error);

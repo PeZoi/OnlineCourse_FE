@@ -30,7 +30,7 @@ export default function CourseFeedback({ course }) {
       <div className="mt-8">
          <hr />
          <h2 className="text-xl font-bold">
-            Đánh giá <span className="text-base font-medium">({reviews?.total_review} bình luận)</span>
+            Đánh giá <span className="text-base font-medium">({reviews?.total_review || 0} bình luận)</span>
          </h2>
          <div className="my-5 font-semibold">
             <label htmlFor="feedback" className="text-gray ">
