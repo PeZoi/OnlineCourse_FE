@@ -2,6 +2,7 @@ import Tippy from '@tippyjs/react';
 import { useEffect, useState } from 'react';
 import { IoRemoveCircle } from 'react-icons/io5';
 import AnswerForm from './AnswerForm';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function QuizItem({
    register,
@@ -16,6 +17,7 @@ export default function QuizItem({
    quizMode,
 }) {
    const [quizType, setQuizType] = useState('ONE_CHOICE');
+   const [rerender, setRerender] = useState(uuidv4());
 
    useEffect(() => {
       if (quizMode === 'EDIT') {
@@ -72,7 +74,7 @@ export default function QuizItem({
          </div>
 
          <AnswerForm
-            {...{ quizIndex, quiz, control, errors, register, setValue, getValues }}
+            {...{ quizIndex, quiz, control, errors, register, setValue, getValues, rerender, setRerender }}
             type={quizType}
             quizMode={quizMode}
          />

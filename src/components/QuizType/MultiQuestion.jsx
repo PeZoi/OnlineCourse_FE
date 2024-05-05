@@ -35,7 +35,7 @@ export default function MultiQuestion({ quiz, onAnswerChange }) {
                   className="w-4 h-4 accent-primary"
                   onChange={handleCheckBoxChange}
                />
-               <label htmlFor={ans.id} className="w-full py-4 ms-2 text-sm font-medium text-gray-900 cursor-pointer">
+               <label htmlFor={ans.id} className="w-fit py-4 ms-2 text-sm font-medium text-gray-900 cursor-pointer">
                   {ans.content}
                </label>
             </div>

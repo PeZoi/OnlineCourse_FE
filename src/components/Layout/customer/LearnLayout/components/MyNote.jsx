@@ -12,7 +12,7 @@ export default function MyNote({ isShow, setIsShow, courseSelected }) {
 
    useEffect(() => {
       const user = getUserDataByLocalStorage();
-      getAllNotesAPI(courseSelected?.id, user.user_id)
+      getAllNotesAPI(courseSelected?.id, user?.user_id)
          .then((res) => {
             if (res.status === 200) {
                setNotes(res.data);

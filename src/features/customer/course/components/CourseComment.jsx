@@ -16,7 +16,7 @@ export default function CourseComment({ isShow, setIsShow, lessonId }) {
    const handleCreateComment = () => {
       const user = getUserDataByLocalStorage();
       const data = {
-         user_id: user.user_id,
+         user_id: user?.user_id,
          content: commentContent,
          lesson_id: +lessonId,
       };

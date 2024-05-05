@@ -101,6 +101,7 @@ export default function QuizTest() {
 
    return (
       <div className="grid grid-cols-16 px-20 py-10 bg-gray-light">
+         {/* LEFT */}
          <div className="col-span-13 mr-5">
             <div className="bg-white w-full py-5 px-10 rounded-md shadow-md">
                <div>
@@ -139,6 +140,8 @@ export default function QuizTest() {
                </div>
             </div>
          </div>
+
+         {/* RIGHT */}
          <div className="col-span-3 ml-5">
             <div className="sticky top-[85px]">
                <div className="bg-white w-full h-full p-5 rounded-md shadow-md">
@@ -152,15 +155,30 @@ export default function QuizTest() {
                   </button>
                   <hr className="my-5" />
                   <div className="grid grid-cols-5 gap-2 mt-3">
-                     {quizList.map((quiz, index) => (
-                        <button
-                           key={quiz?.id}
-                           className="font-semibold border-2 border-gray rounded-lg hover:bg-primaryBlur hover:text-primary hover:border-primary py-1 transition-all ease-linear"
-                           onClick={() => handleClickQuestion(quiz.key)}
-                        >
-                           {index + 1}
-                        </button>
-                     ))}
+                     {quizList.map((quiz, index) => {
+                        let isActive = false; // Biến check xem đã chọn câu trả lời chưa
+                        if (quiz?.id in answers) {
+                           // Duyệt từng câu trả lời xem có khớp với id câu hỏi không
+                           if (Array.isArray(answers[quiz?.id])) {
+                              // Nếu mà là dạng multiple choices thì check phải có câu trả lời trong đó
+                              isActive = answers[quiz?.id].length > 0;
+                           } else {
+                              // Nếu không phải dạng multiple choices và đã trả lời rồi thì true
+                              isActive = Boolean(answers[quiz?.id]);
+                           }
+                        }
+                        return (
+                           <button
+                              key={quiz?.id}
+                              className={`font-semibold border-2 border-gray rounded-lg hover:bg-primaryBlur hover:text-primary hover:border-primary py-1 transition-all ease-linear ${
+                                 isActive && 'text-white bg-primary'
+                              }`}
+                              onClick={() => handleClickQuestion(quiz.key)}
+                           >
+                              {index + 1}
+                           </button>
+                        );
+                     })}
                   </div>
                </div>
             </div>

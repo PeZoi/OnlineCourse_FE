@@ -10,6 +10,9 @@ import ManageCourses from 'src/features/admin/course/ManageCourses';
 import CourseDetailAdmin from 'src/features/admin/course/pages/DetailCourse';
 import Dashboard from 'src/features/admin/dashboard/Dashboard';
 import OrderAdminPage from 'src/features/admin/order/OrderAdminPage';
+import ManageQuizs from 'src/features/admin/quiz/ManageQuizs';
+import AddQuizPage from 'src/features/admin/quiz/pages/AddQuizPage';
+import ListQuizPage from 'src/features/admin/quiz/pages/ListQuizPage';
 import ManageUsers from 'src/features/admin/user/ManageUsers';
 import Auth from 'src/features/auth';
 import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
@@ -19,7 +22,6 @@ import BlogsList from 'src/features/customer/blog/pages/BlogsList';
 import Course from 'src/features/customer/course';
 import CourseDetail from 'src/features/customer/course/pages/CourseDetail';
 import CourseLearn from 'src/features/customer/course/pages/CourseLearn';
-import CourseList from 'src/features/customer/course/pages/CourseList';
 import Home from 'src/features/customer/home';
 import Quiz from 'src/features/customer/quiz';
 import QuizList from 'src/features/customer/quiz/pages/QuizList';
@@ -226,6 +228,17 @@ export const router = createBrowserRouter([
          {
             path: 'manage-orders',
             element: <OrderAdminPage />,
+         },
+         {
+            path: 'manage-quizs',
+            element: <ManageQuizs />,
+            children: [
+               { path: '', element: <ListQuizPage /> },
+               {
+                  path: 'add',
+                  element: <AddQuizPage />,
+               },
+            ],
          },
       ],
    },

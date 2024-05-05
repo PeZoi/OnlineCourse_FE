@@ -15,7 +15,7 @@ const Comment = ({ comment, isParent, isNested, setRerender }) => {
 
    const handleCreateComment = () => {
       const data = {
-         user_id: user.user_id,
+         user_id: user?.user_id,
          content: commentContent,
          lesson_id: comment.lesson_id,
          parent_id: comment.id,

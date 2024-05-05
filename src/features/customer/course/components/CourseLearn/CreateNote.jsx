@@ -12,7 +12,7 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
    const handleCreateNote = () => {
       const user = getUserDataByLocalStorage();
       const data = {
-         user_id: user.user_id,
+         user_id: user?.user_id,
          lesson_id: lesson.id,
          current_time: secondsConvert(currentTimeVideo),
          content: noteContent,

@@ -1,14 +1,39 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TippyModal from '../../../../../TippyModal';
 import SearchResult from './SearchResult';
+import useDebounce from 'src/hooks/useDebounce';
+import { searchCourseAPI } from 'src/api/courseApi';
 
 export default function Search() {
    const divContainerRef = useRef();
    const inputSearchRef = useRef();
-   const [searchText, setSearchText] = useState('');
-   const [loading, setLoading] = useState(false);
+   const [searchText, setSearchText] = useState(null);
+   const [loading, setLoading] = useState(true);
    const [showResult, setShowresult] = useState(false);
-   const [searchResult, setSearchResult] = useState([]);
+   const [searchResult, setSearchResult] = useState({
+      courses: [],
+      quizzes: [],
+   });
+
+   const debouncedValue = useDebounce(searchText, 500);
+
+   const fetchSearch = async () => {
+      setLoading(true);
+      const courses = await searchCourseAPI(debouncedValue).catch((err) => console.log(err));
+
+      if (courses.status === 200) {
+         setSearchResult((pre) => ({ ...pre, courses: courses.data }));
+      } else if (courses.status === 204) {
+         setSearchResult((pre) => ({ ...pre, courses: [] }));
+      }
+
+      setLoading(false);
+   };
+
+   useEffect(() => {
+      fetchSearch();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [debouncedValue]);
 
    // ======= LOGIC GIAO DIỆN ========
    const handleInputClick = () => {
@@ -42,7 +67,7 @@ export default function Search() {
                   className="border-none caret-[#444] flex-1 h-full outline-none px-1"
                   type="text"
                   spellCheck="false"
-                  placeholder="Tìm kiếm khóa học, bài viết, ..."
+                  placeholder="Tìm kiếm khóa học, bài viết, bài quiz ..."
                   onClick={handleInputClick}
                   onBlur={handleInputBlur}
                   onFocus={() => setShowresult(true)}

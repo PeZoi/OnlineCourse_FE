@@ -3,10 +3,12 @@ import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Image } from 'primereact/image';
 import { InputSwitch } from 'primereact/inputswitch';
+import { Rating } from 'primereact/rating';
 import { ToggleButton } from 'primereact/togglebutton';
 import { classNames } from 'primereact/utils';
 import toast from 'react-hot-toast';
-import { toggleCourseEnable, toggleCoursePublish } from 'src/api/courseApi';
+import { toggleCourseEnable, toggleCourseFinish, toggleCoursePublish } from 'src/api/courseApi';
+import { formatNumber } from 'src/utils/common';
 
 export default function TableCourse({ courses, setSelectedCourse, selectedCourse, searchKeyWord, setRerender }) {
    const handleClickSwitch = (courseId, isChecked, type) => {
@@ -32,11 +34,24 @@ export default function TableCourse({ courses, setSelectedCourse, selectedCourse
                }),
             objectToastPromise,
          );
-      }
-      if (type === 'ENABLED') {
+      } else if (type === 'ENABLED') {
          formData.append('enabled', isChecked);
          toast.promise(
             toggleCourseEnable(formData)
+               .then((res) => {
+                  if (res.status == 200) {
+                     setRerender(Math.random() * 1000);
+                  }
+               })
+               .catch((err) => {
+                  console.log(err);
+               }),
+            objectToastPromise,
+         );
+      } else if (type === 'FINISHED') {
+         formData.append('finished', isChecked);
+         toast.promise(
+            toggleCourseFinish(formData)
                .then((res) => {
                   if (res.status == 200) {
                      setRerender(Math.random() * 1000);
@@ -69,12 +84,37 @@ export default function TableCourse({ courses, setSelectedCourse, selectedCourse
       );
    };
 
+   const ratingTemplate = (rowData) => {
+      return (
+         <Rating
+            pt={{
+               onIcon: 'text-primary size-3',
+               offIcon: 'size-3',
+            }}
+            value={rowData?.average_review}
+            cancel={false}
+            readOnly
+         />
+      );
+   };
+
    const isPublishedTemplate = (rowData) => {
       return (
          <div className="flex justify-content-center">
             <InputSwitch
                checked={rowData.is_published}
                onChange={() => handleClickSwitch(rowData.id, !rowData.is_published, 'PUBLISHED')}
+            />
+         </div>
+      );
+   };
+
+   const isFinishedTemplate = (rowData) => {
+      return (
+         <div className="flex justify-content-center">
+            <InputSwitch
+               checked={rowData.is_finished}
+               onChange={() => handleClickSwitch(rowData.id, !rowData.is_finished, 'FINISHED')}
             />
          </div>
       );
@@ -103,6 +143,10 @@ export default function TableCourse({ courses, setSelectedCourse, selectedCourse
       );
    };
 
+   const priceTemplate = (rowData) => {
+      return <span>{formatNumber(rowData?.price)}đ</span>;
+   };
+
    return (
       <div className="my-7 border border-[#cccccc85] rounded-lg overflow-hidden">
          <DataTable
@@ -125,9 +169,11 @@ export default function TableCourse({ courses, setSelectedCourse, selectedCourse
             <Column field="id" sortable header="ID"></Column>
             <Column field="thumbnail" header="Ảnh" body={thumbnailTemplate}></Column>
             <Column field="title" sortable header="Tên" body={titleTemplate} style={{ maxWidth: '10rem' }}></Column>
-            <Column field="price" sortable header="Giá"></Column>
+            <Column field="price" sortable header="Giá" body={priceTemplate}></Column>
             <Column field="student_count" sortable header="SL học viên"></Column>
+            <Column field="average_review" sortable header="Đánh giá" body={ratingTemplate}></Column>
             <Column field="is_published" sortable header="Phát hành" body={isPublishedTemplate}></Column>
+            <Column field="is_finished" sortable header="Kết thúc" body={isFinishedTemplate}></Column>
             <Column field="is_enabled" sortable header="Ẩn/Hiện" body={isEnabledTemplate}></Column>
          </DataTable>
       </div>

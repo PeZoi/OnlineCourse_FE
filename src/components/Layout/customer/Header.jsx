@@ -4,6 +4,16 @@ import Action from './MainLayout/components/Action';
 import Logo from '../../../public/images/logo.png';
 
 export default function Header() {
+   // Lấy đường dẫn của URL hiện tại
+   var currentPath = window.location.pathname;
+   let checkURL = false;
+
+   // Kiểm tra xem đường dẫn có phải là "/search/courses" hay không
+   // Để ẩn hiện thanh search trên header
+   if (currentPath === '/search/courses') {
+      checkURL = true;
+   }
+
    return (
       <div className="relative w-full h-full " style={{ zIndex: '5000' }}>
          <div className="fixed z-10 w-full">
@@ -17,7 +27,7 @@ export default function Header() {
                      <h4 className="font-bold text-black text-sm ml-4">Học Lập Trình Để Đi Làm</h4>
                   </div>
                   {/* SEARCH */}
-                  <Search />
+                  {!checkURL && <Search />}
                   {/* ACTION */}
                   <Action />
                </div>

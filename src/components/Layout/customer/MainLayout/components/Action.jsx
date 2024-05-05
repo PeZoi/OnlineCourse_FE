@@ -7,6 +7,7 @@ import AuthPage from 'src/features/auth/AuthPage';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from 'src/features/auth/authSlice';
 import { Avatar } from 'primereact/avatar';
+import { getMyCourses } from 'src/features/customer/course/courseSlice';
 
 export default function Action() {
    const dispatch = useDispatch();
@@ -143,7 +144,7 @@ export default function Action() {
                   ModalChildren={
                      <div className="animate-fade w-[230px] h-fit rounded-lg px-6 py-3 shadow-base bg-white">
                         <div className="flex items-center justify-start">
-                           <Avatar image={user.photo} size="xlarge" shape="circle" />
+                           <Avatar image={user?.photo} size="xlarge" shape="circle" />
                            <div className="flex items-start flex-col justify-end ml-3">
                               <p className="text-black font-bold text-base">{user.full_name}</p>
                               <p className="text-gray text-sm">@{user.username}</p>
@@ -161,9 +162,20 @@ export default function Action() {
                            Cài đặt
                         </Link>
                         <hr />
+                        {user?.role_name === 'ROLE_ADMIN' && (
+                           <>
+                              <Link to={'/admin'} className="block text-gray text-sm py-2 hover:text-black">
+                                 Trang quản trị
+                              </Link>
+                              <hr />
+                           </>
+                        )}
                         <button
                            className="block text-gray text-sm py-2 hover:text-black w-full text-start"
-                           onClick={() => dispatch(logout())}
+                           onClick={() => {
+                              dispatch(logout());
+                              dispatch(getMyCourses(null));
+                           }}
                         >
                            Đăng xuất
                         </button>
@@ -176,7 +188,7 @@ export default function Action() {
                            setShowMyActions(!showMyActions);
                         }}
                      >
-                        <Avatar image={user.photo} size="normal" shape="circle" />
+                        <Avatar image={user?.photo} size="normal" shape="circle" />
                      </div>
                   }
                />

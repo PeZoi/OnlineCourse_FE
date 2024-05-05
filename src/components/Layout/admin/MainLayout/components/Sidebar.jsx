@@ -2,6 +2,7 @@ import { FaTachometerAlt, FaRegChartBar, FaRegUser, FaBook } from 'react-icons/f
 import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
+import { MdQuiz } from 'react-icons/md';
 
 const Sidebar = ({ children }) => {
    const navList = [
@@ -21,6 +22,11 @@ const Sidebar = ({ children }) => {
          title: 'Khoá học',
       },
       {
+         path: '/admin/manage-quizs',
+         icon: <MdQuiz />,
+         title: 'Bài kiểm tra',
+      },
+      {
          path: '/admin/manage-orders',
          icon: <FaMoneyBill1Wave />,
          title: 'Đơn hàng',
@@ -32,7 +38,9 @@ const Sidebar = ({ children }) => {
          <div className="col-span-2">
             <div className="bg-white h-full px-[25px] border-r-4 border-[#EDEDED]">
                <div className="px-[15px] py-[30px] flex items-center justify-center ">
-                  <h1 className="text-black text-[16px] leading-[24px] font-extrabold cursor-pointer">Admin panel</h1>
+                  <h1 className="text-black text-[16px] leading-[24px] font-extrabold cursor-pointer">
+                     TRANG QUẢN TRỊ
+                  </h1>
                </div>
                <hr className="m-0" />
                <div className="mt-3">

@@ -1,10 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import useRequireLogin from 'src/hooks/useRequireLogin';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
-export default function AdminPage() {
+export default function ManageQuizs() {
    useScrollToTop();
-   useRequireLogin();
+
    return (
       <>
          <Outlet />

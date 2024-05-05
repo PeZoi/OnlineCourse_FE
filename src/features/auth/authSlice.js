@@ -55,9 +55,9 @@ const authSlice = createSlice({
       }),
          builder.addCase(loginAsync.fulfilled, (state, action) => {
             if (action.payload.status !== 200) {
-               state.error = 'Email hoặc mật khẩu không đúng';
+               state.error = action.payload.data.message;
                state.loading = false;
-               toast.error('Email hoặc mật khẩu không đúng');
+               toast.error(action.payload.data.message);
             } else {
                state.user = action.payload.user;
                state.token = action.payload.token;

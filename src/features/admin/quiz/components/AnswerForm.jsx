@@ -3,7 +3,7 @@ import { useFieldArray } from 'react-hook-form';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoRemoveCircle } from 'react-icons/io5';
 import Tippy from '@tippyjs/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export default function AnswerForm({
    quizIndex,
@@ -13,6 +13,8 @@ export default function AnswerForm({
    errors,
    getValues,
    setValue,
+   rerender,
+   setRerender,
    type,
    quizMode,
 }) {
@@ -20,8 +22,6 @@ export default function AnswerForm({
       control,
       name: `quizs[${quizIndex}].answers`,
    });
-
-   const [rerender, setRerender] = useState(uuidv4());
 
    // Khi thay đổi dạng câu hỏi thì xoá các câu trả lời cũ đi
    // Còn bug: khi form là EDIT và chuyển các quiz có sẵn sang type là đục lỗ thì bị bug chưa nghĩ ra được ý tưởng

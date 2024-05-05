@@ -29,25 +29,19 @@ export default function QuizItem() {
                <p>
                   Ngày tạo: <span className=" font-semibold">21/03/2024</span>
                </p>
-               <hr />
-               <div>
-                  <button className="bg-gray-light text-gray text-xs font-medium me-2 px-2.5 py-0.5 rounded  transition-all ease-linear hover:-translate-y-1 ">
-                     Ngôn ngữ Java
-                  </button>
-                  <button className="bg-gray-light text-gray text-xs font-medium me-2 px-2.5 py-0.5 rounded  transition-all ease-linear hover:-translate-y-1 ">
-                     Frontend
-                  </button>
-                  <button className="bg-gray-light text-gray text-xs font-medium me-2 px-2.5 py-0.5 rounded  transition-all ease-linear hover:-translate-y-1 mt-2">
-                     Backend
-                  </button>
-               </div>
             </div>
+            <button
+               className="mt-5 rounded-lg w-full py-2 border-2 font-semibold text-base hover:bg-primaryBlur hover:text-primary hover:border-primary transition-all ease-linear flex items-center justify-center
+               "
+            >
+               Bảng xếp hạng
+            </button>
             <Link
                to={'/quiz/tests/1'}
                className="mt-5 rounded-lg w-full py-2 border-2 font-semibold text-base hover:bg-primaryBlur hover:text-primary hover:border-primary transition-all ease-linear flex items-center justify-center
                "
             >
-               Bắt đầu
+               Bắt đầu làm bài
             </Link>
          </div>
       </div>

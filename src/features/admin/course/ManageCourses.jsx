@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FaPen, FaPlus } from 'react-icons/fa';
-import { BsFillTrashFill } from 'react-icons/bs';
 import { BiSearch } from 'react-icons/bi';
 import { getAllCoursesAdminAPI } from 'src/api/courseApi';
 import TableCourse from './components/TableCourse';
@@ -69,15 +68,6 @@ export default function ManageCourses() {
                   }}
                >
                   <FaPen />
-               </button>
-               <button
-                  disabled={!selectedCourse}
-                  className={`py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white  ${
-                     !selectedCourse ? 'opacity-40' : 'opacity-100 hover:opacity-80'
-                  }`}
-                  onClick={() => alert(selectedCourse)}
-               >
-                  <BsFillTrashFill />
                </button>
             </div>
             <div className="relative">

@@ -1,15 +1,18 @@
+import { Avatar } from 'primereact/avatar';
 import { useState } from 'react';
-import { FaEnvelope, FaRegBell, FaSearch } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import TippyModal from 'src/components/TippyModal';
+import { logout } from 'src/features/auth/authSlice';
+import { getMyCourses } from 'src/features/customer/course/courseSlice';
 
 const Header = () => {
+   const { user } = useSelector((state) => state.auth);
+   const dispatch = useDispatch();
    const [open, setOpen] = useState(false);
 
-   const showProfile = () => {
-      setOpen(!open);
-   };
-
    return (
-      <div className="">
+      <div>
          <div className="flex items-center justify-between h-[70px] shadow-lg px-[25px] ">
             <div className="flex items-center rounded-[5px]">
                <input
@@ -22,28 +25,42 @@ const Header = () => {
                </div>
             </div>
             <div className="flex items-center gap-[20px]">
-               <div className="flex items-center gap-[25px] border-r-[1px] pr-[25px]">
-                  <FaRegBell />
-                  <FaEnvelope />
-               </div>
-               <div className="flex items-center gap-[15px] relative" onClick={showProfile}>
-                  <p>Viet Hung</p>
-                  <div className="h-[40px] w-[40px]   cursor-pointer flex items-center justify-center relative z-40">
-                     <img
-                        className="rounded-full "
-                        src="https://res.cloudinary.com/dqnoopa0x/image/upload/v1712991590/tgoumpmgy7qmjgnsgavg.png"
-                        alt=""
-                     />
-                  </div>
-
-                  {/* Sử lý để bấm vào tên hoặc avatar sẽ hiện ra nav con */}
-                  {open && (
-                     <div className="bg-white border h-[120px] w-[150px] absolute bottom-[-135px] z-20 right-0 pt-[15px] pl-[15px] space-y-[10px]">
-                        <p className="cursor-pointer hover:text-primary font-semibold">Profile</p>
-                        <p className="cursor-pointer hover:text-primary font-semibold">Settings</p>
-                        <p className="cursor-pointer hover:text-primary font-semibold">Log out</p>
-                     </div>
-                  )}
+               <div className="flex items-center gap-[15px] relative">
+                  <TippyModal
+                     isShow={open}
+                     setIsShow={setOpen}
+                     ModalChildren={
+                        <div className="animate-fade w-[230px] h-fit rounded-lg px-6 py-3 shadow-base bg-white">
+                           <div className="flex items-center justify-start">
+                              <Avatar image={user?.photo} size="xlarge" shape="circle" />
+                              <div className="flex items-start flex-col justify-end ml-3">
+                                 <p className="text-black font-bold text-base">{user?.full_name}</p>
+                                 <p className="text-gray text-sm">@{user?.username}</p>
+                              </div>
+                           </div>
+                           <hr />
+                           <button
+                              className="block text-gray text-sm py-2 hover:text-black w-full text-start"
+                              onClick={() => {
+                                 dispatch(logout());
+                                 dispatch(getMyCourses(null));
+                              }}
+                           >
+                              Đăng xuất
+                           </button>
+                        </div>
+                     }
+                     TriggerChildren={
+                        <div
+                           className="rounded-full ml-4 cursor-pointer overflow-hidden"
+                           onClick={() => {
+                              setOpen(!open);
+                           }}
+                        >
+                           <Avatar image={user?.photo} size="normal" shape="circle" />
+                        </div>
+                     }
+                  />
                </div>
             </div>
          </div>

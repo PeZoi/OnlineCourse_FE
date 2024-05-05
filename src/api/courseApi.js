@@ -49,6 +49,18 @@ export const updateCourseAPI = (courseId, formData) => {
       });
 };
 
+// xoá khoá học
+export const deleteCourseAPI = (courseId) => {
+   return axios
+      .delete(`/api/courses/delete/${courseId}`)
+      .then((res) => {
+         return res;
+      })
+      .catch((error) => {
+         return error;
+      });
+};
+
 export const getAllCourses = async (categoryId) => {
    const res = await axios
       .get(`/api/courses/home-page?categoryId=${categoryId || ''}`)
@@ -123,8 +135,8 @@ export const toggleCourseEnable = async (formData) => {
 };
 
 // toggle phát hành khoá học
-export const toggleCoursePublish = async (formData) => {
-   const res = await axios
+export const toggleCoursePublish = (formData) => {
+   return axios
       .post(`/api/courses/switch-published`, formData)
       .then((response) => {
          return response;
@@ -133,5 +145,30 @@ export const toggleCoursePublish = async (formData) => {
          console.log(error);
          return null;
       });
-   return res;
+};
+
+// toggle kết thúc khoá học
+export const toggleCourseFinish = (formData) => {
+   return axios
+      .post(`/api/courses/switch-finished`, formData)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};
+
+// tìm kiếm khoá học theo title
+export const searchCourseAPI = (searchText) => {
+   return axios
+      .get(`/api/courses/search?keyword=${searchText}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
 };
