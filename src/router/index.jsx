@@ -25,8 +25,8 @@ import CourseDetail from 'src/features/customer/course/pages/CourseDetail';
 import CourseLearn from 'src/features/customer/course/pages/CourseLearn';
 import Home from 'src/features/customer/home';
 import Quiz from 'src/features/customer/quiz';
-import QuizList from 'src/features/customer/quiz/pages/QuizList';
-import QuizTest from 'src/features/customer/quiz/pages/QuizTest';
+import ContestList from 'src/features/customer/quiz/pages/ContestList';
+import ContestTest from 'src/features/customer/quiz/pages/ContestTest';
 import Search from 'src/features/customer/search';
 import SearchBlogs from 'src/features/customer/search/pages/SearchBlogs';
 import SearchCourses from 'src/features/customer/search/pages/SearchCourses';
@@ -82,7 +82,7 @@ export const router = createBrowserRouter([
             path: '',
             element: (
                <MainLayout>
-                  <QuizList />
+                  <ContestList />
                </MainLayout>
             ),
          },
@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
             path: 'tests/:quizId',
             element: (
                <LearnQuizLayout>
-                  <QuizTest />
+                  <ContestTest />
                </LearnQuizLayout>
             ),
          },

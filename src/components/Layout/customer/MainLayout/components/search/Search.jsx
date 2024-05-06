@@ -12,7 +12,6 @@ export default function Search() {
    const [showResult, setShowresult] = useState(false);
    const [searchResult, setSearchResult] = useState({
       courses: [],
-      quizzes: [],
    });
 
    const debouncedValue = useDebounce(searchText, 500);
@@ -21,6 +20,7 @@ export default function Search() {
       setLoading(true);
       const courses = await searchCourseAPI(debouncedValue).catch((err) => console.log(err));
 
+      // handle courses
       if (courses.status === 200) {
          setSearchResult((pre) => ({ ...pre, courses: courses.data }));
       } else if (courses.status === 204) {

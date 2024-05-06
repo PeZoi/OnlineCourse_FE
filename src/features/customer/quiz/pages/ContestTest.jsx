@@ -68,7 +68,7 @@ const quizList = [
    },
 ];
 
-export default function QuizTest() {
+export default function ContestTest() {
    useScrollToTop();
 
    const { quizId } = useParams();

@@ -18,6 +18,7 @@ export default function SearchCourses() {
                <ProgressSpinner className="size-10" />
             ) : (
                <>
+                  {!response && <span>Không tìm thấy</span>}
                   {response &&
                      response.map((course) => (
                         <>

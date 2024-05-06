@@ -58,3 +58,16 @@ export const updateContestAPI = (id, formData) => {
          return error;
       });
 };
+
+// Tìm kiếm theo title
+export const searchContestAPI = (searchText) => {
+   return axios
+      .get(`/api/contest/search?keyword=${searchText}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};
