@@ -22,7 +22,7 @@ const Sidebar = ({ children }) => {
          title: 'Khoá học',
       },
       {
-         path: '/admin/manage-quizs',
+         path: '/admin/manage-contests',
          icon: <MdQuiz />,
          title: 'Bài kiểm tra',
       },

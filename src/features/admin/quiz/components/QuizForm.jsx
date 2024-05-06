@@ -13,16 +13,6 @@ export default function QuizForm({ control, register, errors, setValue, getValue
    return (
       <div className="flex flex-col gap-2 px-5 min-w-[700px]">
          <div className="mb-3">
-            {/* <button
-               type="button"
-               className="px-4 py-2 rounded-md bg-purple text-white font-semibold flex items-center gap-2"
-               onClick={() => {
-                  append({ id: uuidv4(), question: '', quiz_type: 'ONE_CHOICE' });
-               }}
-            >
-               <FaPlus />
-               Thêm câu hỏi
-            </button> */}
             <div className="fixed right-5">
                <Tippy content="Thêm câu hỏi">
                   <button

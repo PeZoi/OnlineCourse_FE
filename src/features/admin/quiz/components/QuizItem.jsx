@@ -74,7 +74,7 @@ export default function QuizItem({
          </div>
 
          <AnswerForm
-            {...{ quizIndex, quiz, control, errors, register, setValue, getValues, rerender, setRerender }}
+            {...{ quizIndex, control, errors, register, setValue, getValues, rerender, setRerender }}
             type={quizType}
             quizMode={quizMode}
          />

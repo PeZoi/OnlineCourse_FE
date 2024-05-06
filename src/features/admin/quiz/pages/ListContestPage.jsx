@@ -1,47 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import { BsFillTrashFill } from 'react-icons/bs';
 import { FaPen, FaPlus } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import TableQuiz from '../components/TableQuiz';
+import TableContest from '../components/TableContest';
+import useAxios from 'src/hooks/useAxios';
+import { getAllContestAPI } from 'src/api/contestApi';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
-export default function ListQuizPage() {
+export default function ListContestPage() {
+   useScrollToTop();
+
    const navigate = useNavigate();
 
-   const [selectedQuiz, setSelectedQuiz] = useState(null);
+   const [selectedContest, setSelectedContest] = useState(null);
    const [searchKeyWord, setSearchKeyWord] = useState('');
-   const [quizs, setQuizs] = useState([]);
 
-   useEffect(() => {}, []);
+   const [rerender, setRerender] = useState(0);
+
+   const { response: contests, loading: contestsLoading } = useAxios(getAllContestAPI, [rerender]);
+
    return (
       <div>
          <div className="bg-gray-light border border-[#cccccc85] rounded-lg w-full flex items-center justify-between px-8 py-5 font-bold">
             <div className="flex items-center gap-3">
                <Link
-                  to={'/admin/manage-quizs/add'}
+                  to={'/admin/manage-contests/add'}
                   className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white hover:opacity-80"
                >
                   <FaPlus />
                </Link>
                <button
-                  disabled={!selectedQuiz}
+                  disabled={!selectedContest}
                   className={`py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white ${
-                     !selectedQuiz ? 'opacity-40' : 'opacity-100 hover:opacity-80'
+                     !selectedContest ? 'opacity-40' : 'opacity-100 hover:opacity-80'
                   }`}
                   onClick={() => {
-                     navigate(`/admin/manage-courses/${selectedQuiz.id}`);
+                     navigate(`/admin/manage-contests/edit/${selectedContest.id}`);
                   }}
                >
                   <FaPen />
-               </button>
-               <button
-                  disabled={!selectedQuiz}
-                  className={`py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white  ${
-                     !selectedQuiz ? 'opacity-40' : 'opacity-100 hover:opacity-80'
-                  }`}
-                  onClick={() => alert(selectedQuiz)}
-               >
-                  <BsFillTrashFill />
                </button>
             </div>
             <div className="relative">
@@ -60,14 +58,21 @@ export default function ListQuizPage() {
             </div>
          </div>
 
-         <div>
-            <TableQuiz
-               quizs={quizs}
-               selectedQuiz={selectedQuiz}
-               setSelectedQuiz={setSelectedQuiz}
-               searchKeyWord={searchKeyWord}
-            />
-         </div>
+         {contestsLoading && !contests ? (
+            <div className="flex justify-center mt-5">
+               <ProgressSpinner className="size-5" />
+            </div>
+         ) : (
+            <div>
+               <TableContest
+                  contests={contests}
+                  selectedContest={selectedContest}
+                  setSelectedContest={setSelectedContest}
+                  searchKeyWord={searchKeyWord}
+                  setRerender={setRerender}
+               />
+            </div>
+         )}
       </div>
    );
 }

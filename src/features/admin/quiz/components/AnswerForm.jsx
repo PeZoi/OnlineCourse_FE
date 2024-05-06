@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 export default function AnswerForm({
    quizIndex,
-   quiz,
    control,
    register,
    errors,

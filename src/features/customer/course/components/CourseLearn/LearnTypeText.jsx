@@ -19,10 +19,14 @@ export default function LearnTypeText({ lesson }) {
       if (!checkIsCompleted?.is_completed) {
          confirmLessonCompletedAPI(lesson?.id).then((res) => {
             if (res.status === 200) {
+               if (res.data === 'DONE') {
+                  toast.success('Chúc mừng bạn đã hoàn khoá học! Hãy nhận chứng chỉ');
+               } else if (res.data === 'CONTINUE') {
+                  toast.success('Bạn đã mở khoá bài mới');
+               }
                getLessonOfUserAPI(courseSelected.slug)
                   .then((res) => {
                      if (res.status === 200) {
-                        toast.success('Bạn đã mở khoá bài mới');
                         dispatch(getMyCourseSelected(res.data));
                      }
                   })

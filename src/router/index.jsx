@@ -10,9 +10,10 @@ import ManageCourses from 'src/features/admin/course/ManageCourses';
 import CourseDetailAdmin from 'src/features/admin/course/pages/DetailCourse';
 import Dashboard from 'src/features/admin/dashboard/Dashboard';
 import OrderAdminPage from 'src/features/admin/order/OrderAdminPage';
-import ManageQuizs from 'src/features/admin/quiz/ManageQuizs';
-import AddQuizPage from 'src/features/admin/quiz/pages/AddQuizPage';
-import ListQuizPage from 'src/features/admin/quiz/pages/ListQuizPage';
+import ManageContests from 'src/features/admin/quiz/ManageContests';
+import AddContestPage from 'src/features/admin/quiz/pages/AddContestPage';
+import EditContestPage from 'src/features/admin/quiz/pages/EditContestPage';
+import ListContestPage from 'src/features/admin/quiz/pages/ListContestPage';
 import ManageUsers from 'src/features/admin/user/ManageUsers';
 import Auth from 'src/features/auth';
 import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
@@ -230,13 +231,17 @@ export const router = createBrowserRouter([
             element: <OrderAdminPage />,
          },
          {
-            path: 'manage-quizs',
-            element: <ManageQuizs />,
+            path: 'manage-contests',
+            element: <ManageContests />,
             children: [
-               { path: '', element: <ListQuizPage /> },
+               { path: '', element: <ListContestPage /> },
                {
                   path: 'add',
-                  element: <AddQuizPage />,
+                  element: <AddContestPage />,
+               },
+               {
+                  path: 'edit/:contestId',
+                  element: <EditContestPage />,
                },
             ],
          },
