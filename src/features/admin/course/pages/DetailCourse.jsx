@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getCourseByIdAdminAPI } from 'src/api/courseApi';
 import { Collapse } from 'react-collapse';
 import { GrSubtract } from 'react-icons/gr';
@@ -20,12 +20,15 @@ export default function CourseDetailAdmin() {
    const [isOpenInfoLessons, setIsOpenInfoLessons] = useState(false);
 
    const [rerender, setRerender] = useState(0);
+   const navigate = useNavigate();
 
    useEffect(() => {
       getCourseByIdAdminAPI(courseId)
          .then((res) => {
             if (res.status === 200) {
                setCourse(res.data);
+            } else if (res.status === 404) {
+               navigate('/not-found', { replace: true });
             } else {
                console.log(res);
             }
@@ -41,7 +44,7 @@ export default function CourseDetailAdmin() {
          .catch((err) => {
             console.log(err);
          });
-   }, [courseId, rerender]);
+   }, [courseId, navigate, rerender]);
 
    return (
       <div className="pb-10">

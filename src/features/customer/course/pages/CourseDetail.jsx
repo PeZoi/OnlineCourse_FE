@@ -27,10 +27,12 @@ export default function CourseDetail() {
          });
          setExistMyCourse(checkExistMyCourse);
          const res = await getCourseBySlug(courseSlug);
-         if (res === 404) {
-            navigate('/not-found');
+         if (res.status === 404) {
+            navigate('/not-found', { replace: true });
          }
-         setCourse(res);
+         if (res.status === 200) {
+            setCourse(res.data);
+         }
       };
       fetchCourse();
    }, [courseSlug, navigate]);

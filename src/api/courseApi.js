@@ -78,7 +78,7 @@ export const getCourseBySlug = async (slug) => {
    const res = await axios
       .get(`/api/courses/get-detail/${slug}`)
       .then((response) => {
-         return response.data;
+         return response;
       })
       .catch((error) => {
          console.log(error);

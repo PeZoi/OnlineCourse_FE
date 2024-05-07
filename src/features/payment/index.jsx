@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCourseBySlug, isExistCourseAPI } from 'src/api/courseApi';
-import useRequireLogin from 'src/hooks/useRequireLogin';
 import loading from 'src/public/images/loading.svg';
 import {
    calculatePriceDiscount,
@@ -21,8 +20,6 @@ import { FaCircleCheck } from 'react-icons/fa6';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 export default function Payment() {
    useScrollToTop();
-   // Bắt bược phải login mới vào được trang này
-   useRequireLogin();
 
    const { courseSlug } = useParams();
    const navigate = useNavigate();
@@ -41,16 +38,16 @@ export default function Payment() {
    // Check xem đủ điều kiện vào trang này không
    useEffect(() => {
       getCourseBySlug(courseSlug).then((res) => {
-         if (res === 404) {
-            navigate('/not-found');
-         } else {
+         if (res.status === 404) {
+            navigate('/not-found', { replace: true });
+         } else if (res.status === 200) {
             isExistCourseAPI(courseSlug).then((res) => {
                if (res.status === 200 && res.data) {
                   toast.error('Bạn đã có khoá học này rồi');
                }
             });
-            setCourse(res);
-            setTotalPrice(calculatePriceDiscountNumber(res.price, res.discount));
+            setCourse(res.data);
+            setTotalPrice(calculatePriceDiscountNumber(res.data.price, res.data.discount));
          }
       });
    }, [courseSlug, navigate]);

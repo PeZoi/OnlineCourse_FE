@@ -1,13 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalMiddle from 'src/components/ModalMiddle';
 import Logo from 'src/public/images/logo.png';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ForgotPassword from './components/ForgotPassword';
+import { useSearchParams } from 'react-router-dom';
 
 export default function AuthPage() {
    const [showModal, setShowModal] = useState(false);
    const [types, setTypes] = useState('');
+
+   const [searchParams] = useSearchParams();
+   useEffect(() => {
+      if (searchParams.get('m') === 'si') {
+         setShowModal(true);
+         setResetModal(false);
+         setTypes('SIGNIN');
+      }
+   }, [searchParams]);
 
    // Reset modal này để reset lại tất cả các lỗi validate trong form trước đó, để khi mở lại modal sẽ reset lại form đó
    const [resetModal, setResetModal] = useState(false);

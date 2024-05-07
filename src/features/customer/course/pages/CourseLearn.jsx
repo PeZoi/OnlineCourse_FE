@@ -39,7 +39,7 @@ export default function CourseLearn() {
             if (res.status === 200) {
                dispatch(getCourseSelected({ ...res.data, slug: courseSlug }));
             } else if (res.status === 404) {
-               navigate('/not-found');
+               navigate('/not-found', { replace: true });
             }
          })
          .catch((err) => {

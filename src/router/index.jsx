@@ -36,13 +36,20 @@ import ChangePassword from 'src/features/customer/settings/pages/ChangePassword'
 import MyCourses from 'src/features/customer/settings/pages/MyCourses';
 import MyTransactionHistory from 'src/features/customer/settings/pages/MyTransactionHistory';
 import Personal from 'src/features/customer/settings/pages/Personal';
-import NotFoundPage from 'src/features/NotFound';
+import NotFoundPage from 'src/features/NotFoundPage';
 import Payment from 'src/features/payment';
+import PrivateLoginRoute from './PrivateLoginRoute';
+import ForbbidenPage from 'src/features/ForbbidenPage';
+import PrivateAdminRoute from './PrivateAdminRoute';
 
 export const router = createBrowserRouter([
    {
-      path: '/not-found',
+      path: '*',
       element: <NotFoundPage />,
+   },
+   {
+      path: '/403',
+      element: <ForbbidenPage />,
    },
    {
       path: '/',
@@ -67,9 +74,11 @@ export const router = createBrowserRouter([
          {
             path: 'learn/:courseSlug',
             element: (
-               <LearnLayout>
-                  <CourseLearn />
-               </LearnLayout>
+               <PrivateLoginRoute>
+                  <LearnLayout>
+                     <CourseLearn />
+                  </LearnLayout>
+               </PrivateLoginRoute>
             ),
          },
       ],
@@ -89,16 +98,22 @@ export const router = createBrowserRouter([
          {
             path: 'tests/:quizId',
             element: (
-               <LearnQuizLayout>
-                  <ContestTest />
-               </LearnQuizLayout>
+               <PrivateLoginRoute>
+                  <LearnQuizLayout>
+                     <ContestTest />
+                  </LearnQuizLayout>
+               </PrivateLoginRoute>
             ),
          },
       ],
    },
    {
       path: '/settings',
-      element: <Settings />,
+      element: (
+         <PrivateLoginRoute>
+            <Settings />
+         </PrivateLoginRoute>
+      ),
       children: [
          {
             path: 'personal',
@@ -190,16 +205,22 @@ export const router = createBrowserRouter([
    },
    {
       path: '/payment/:courseSlug',
-      element: <Payment />,
+      element: (
+         <PrivateLoginRoute>
+            <Payment />
+         </PrivateLoginRoute>
+      ),
    },
 
    // ADMIN
    {
       path: 'admin',
       element: (
-         <MainLayoutAdmin>
-            <AdminPage />
-         </MainLayoutAdmin>
+         <PrivateAdminRoute>
+            <MainLayoutAdmin>
+               <AdminPage />
+            </MainLayoutAdmin>
+         </PrivateAdminRoute>
       ),
       children: [
          {

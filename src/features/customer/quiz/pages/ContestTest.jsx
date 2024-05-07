@@ -89,6 +89,7 @@ export default function ContestTest() {
 
    useState(() => {
       // Gọi api lấy danh sách quiz
+      // navigate('/not-found', { replace: true }); xử lý không tìm thấy id
    }, [quizId]);
 
    const handleQuizChange = (quizId, selectedAnswer) => {
