@@ -10,7 +10,7 @@ export default function HoleQuestion({ quiz, onAnswerChange }) {
    };
 
    return (
-      <div className="my-10">
+      <div>
          <div className="my-5 font-bold select-none">
             Câu hỏi {quiz?.order}: {quiz?.question}
          </div>

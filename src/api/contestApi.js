@@ -71,3 +71,16 @@ export const searchContestAPI = (searchText) => {
          return null;
       });
 };
+
+// Lấy bộ đề của contest đó
+export const getQuizzesByContestIdAPI = (contestId) => {
+   return axios
+      .get(`/api/contest/join/${contestId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};

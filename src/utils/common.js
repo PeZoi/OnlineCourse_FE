@@ -18,7 +18,7 @@ export const secondsConvert = (second) => {
 
 export const secondsConvertToMinutesAndSeconds = (second) => {
    if (second === 0) {
-      return '00:00:00';
+      return '00:00';
    }
 
    const remainingSeconds = second % 3600; // Số giây còn lại sau khi lấy ra số giờ

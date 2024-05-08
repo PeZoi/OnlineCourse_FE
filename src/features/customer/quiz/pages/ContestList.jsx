@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useAxios from 'src/hooks/useAxios';
 import { getAllContestAPI } from 'src/api/contestApi';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import Tippy from '@tippyjs/react';
 
 export default function ContestList() {
    useScrollToTop();
@@ -15,9 +16,11 @@ export default function ContestList() {
       <div className="p-11">
          <div className="flex justify-between">
             <h1 className="font-bold text-3xl">Thư viện đề thi</h1>
-            <Link to={'/search/quizs'} className="px-3 pt-3 hover:opacity-70 transition-all">
-               <IoSearchSharp className="size-5" />
-            </Link>
+            <Tippy content="Tìm kiếm">
+               <Link to={'/search/quizs'} className="px-3 pt-3 hover:opacity-70 transition-all">
+                  <IoSearchSharp className="size-5" />
+               </Link>
+            </Tippy>
          </div>
          <hr />
          <p className="italic my-3">(*) Các bộ câu hỏi chỉ bao gồm lý thuyết</p>

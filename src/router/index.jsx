@@ -96,7 +96,7 @@ export const router = createBrowserRouter([
             ),
          },
          {
-            path: 'tests/:quizId',
+            path: 'tests/:contestId',
             element: (
                <PrivateLoginRoute>
                   <LearnQuizLayout>
