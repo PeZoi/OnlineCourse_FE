@@ -52,14 +52,22 @@ export default function CourseChapterItem({ isOpen, handleToggle, index, chapter
          </div>
          <Collapse isOpened={isOpen}>
             <div className="opacity-100">
-               {chapter.lesson_list.map((lesson) => {
+               {chapter.lesson_list.map((lesson, indexLesson) => {
                   const trackLesson = myCourseSelected?.list_tracks?.find((l) => l.lesson_id === lesson.id);
                   const myLesson = {
                      ...lesson,
                      is_completed: trackLesson?.is_completed,
                      is_unlock: trackLesson?.is_unlock,
                   };
-                  return <LessonItem key={myLesson.id} myLesson={myLesson} />;
+                  return (
+                     <LessonItem
+                        key={myLesson.id}
+                        myLesson={myLesson}
+                        className={`${index === 0 && indexLesson === 0 && ' tour-lesson-first'} ${
+                           index === 0 && indexLesson === 1 && ' tour-lesson-second'
+                        }`}
+                     />
+                  );
                })}
             </div>
          </Collapse>

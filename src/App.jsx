@@ -26,7 +26,7 @@ function App() {
 
    return (
       <PrimeReactProvider>
-         <div className="font-sans text-[14px]">
+         <div className="font-sans text-[14px] tour-main-learn">
             <RouterProvider router={router}></RouterProvider>
          </div>
       </PrimeReactProvider>

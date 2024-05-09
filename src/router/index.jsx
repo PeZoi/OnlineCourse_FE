@@ -41,6 +41,9 @@ import Payment from 'src/features/payment';
 import PrivateLoginRoute from './PrivateLoginRoute';
 import ForbbidenPage from 'src/features/ForbbidenPage';
 import PrivateAdminRoute from './PrivateAdminRoute';
+import MyContestHistory from 'src/features/customer/settings/pages/MyContestHistory';
+import AboutPage from 'src/features/about/AboutPage';
+import ContactPage from 'src/features/about/ContactPage';
 
 export const router = createBrowserRouter([
    {
@@ -147,6 +150,14 @@ export const router = createBrowserRouter([
                </SettingLayout>
             ),
          },
+         {
+            path: 'my-contests-history',
+            element: (
+               <SettingLayout>
+                  <MyContestHistory />
+               </SettingLayout>
+            ),
+         },
       ],
    },
    {
@@ -209,6 +220,23 @@ export const router = createBrowserRouter([
          <PrivateLoginRoute>
             <Payment />
          </PrivateLoginRoute>
+      ),
+   },
+   // ABOUT
+   {
+      path: 'about-us',
+      element: (
+         <MainLayout>
+            <AboutPage />
+         </MainLayout>
+      ),
+   },
+   {
+      path: 'contact-us',
+      element: (
+         <MainLayout>
+            <ContactPage />
+         </MainLayout>
       ),
    },
 

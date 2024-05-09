@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckIcon, CirclePlayIcon, CircleQuestion, LockIcon } from 'src/public/icons';
 
-export default function LessonItem({ myLesson }) {
+export default function LessonItem({ myLesson, className }) {
    const [searchParams] = useSearchParams();
    const navigate = useNavigate();
    const [lessonId, setLessonId] = useState();
@@ -20,7 +20,11 @@ export default function LessonItem({ myLesson }) {
       navigate(`/course/learn/${courseSelected.slug}?id=${id}`);
    };
    return (
-      <div onClick={myLesson?.is_unlock && (() => handleClickLesson(myLesson.id))} key={myLesson.id}>
+      <div
+         onClick={myLesson?.is_unlock && (() => handleClickLesson(myLesson.id))}
+         key={myLesson.id}
+         className={className}
+      >
          <div
             className={`px-5 py-3 flex items-center justify-between transition-all ${
                myLesson.id !== lessonId &&

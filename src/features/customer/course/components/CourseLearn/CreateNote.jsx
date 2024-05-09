@@ -34,7 +34,7 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
    };
 
    return (
-      <div>
+      <div className="tour-note">
          <button
             className="flex items-center p-3 bg-gray-light text-black rounded-lg hover:opacity-80 "
             onClick={() => {

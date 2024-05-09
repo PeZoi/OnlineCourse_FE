@@ -22,7 +22,10 @@ export default function SearchCourses() {
                   {response &&
                      response.map((course) => (
                         <>
-                           <Link to={`/course/${course?.slug}`}>
+                           <Link
+                              to={`/course/${course?.slug}`}
+                              className={`${!course?.is_published && 'pointer-events-none'}`}
+                           >
                               <div className="flex">
                                  <img
                                     src={course?.thumbnail}

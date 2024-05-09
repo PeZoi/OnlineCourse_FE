@@ -5,10 +5,13 @@ import CircleProgressbar from './CircleProgressbar';
 import MyNote from './MyNote';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTour } from '@reactour/tour';
 
 export default function Header() {
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
    const [isShowMyNote, setIsShowMyNote] = useState(false);
+
+   const { setIsOpen } = useTour();
 
    return (
       <div className="relative w-full h-full">
@@ -43,7 +46,7 @@ export default function Header() {
                         </span>
                      </div>
                      <button
-                        className="text-sm flex items-center mx-5 opacity-80 hover:opacity-100"
+                        className="text-sm flex items-center mx-5 opacity-80 hover:opacity-100 tour-note-result"
                         onClick={() => setIsShowMyNote(!isShowMyNote)}
                      >
                         <FileIcon className="size-[14px]" /> <span className="ml-1">Ghi chú</span>
@@ -51,7 +54,10 @@ export default function Header() {
 
                      <MyNote isShow={isShowMyNote} setIsShow={setIsShowMyNote} courseSelected={courseSelected} />
 
-                     <button className="text-sm flex items-center opacity-80 hover:opacity-100">
+                     <button
+                        className="text-sm flex items-center opacity-80 hover:opacity-100"
+                        onClick={() => setIsOpen(true)}
+                     >
                         <CircleQuestion className="size-[14px]" /> <span className="ml-1">Hướng dẫn</span>
                      </button>
                   </div>

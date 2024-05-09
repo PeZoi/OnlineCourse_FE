@@ -38,7 +38,7 @@ export default function LessonContent() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [lessonId, navigate]);
    return (
-      <div>
+      <div className="tour-learn-content">
          {lesson && (
             <>
                <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pb-10">
@@ -53,7 +53,7 @@ export default function LessonContent() {
                </div>
 
                <div
-                  className="absolute right-8 bottom-5 shadow-base rounded-3xl bg-white px-4 py-2 text-primary flex items-center justify-center cursor-pointer select-none"
+                  className="absolute right-8 bottom-5 shadow-base rounded-3xl bg-white px-4 py-2 text-primary flex items-center justify-center cursor-pointer select-none tour-question-lesson"
                   onClick={() => setIsShowComment(!isShowComment)}
                >
                   <CommentIcon className="size-5" />

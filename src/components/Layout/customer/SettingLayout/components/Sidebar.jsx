@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { FaBook } from 'react-icons/fa';
 import { ShieldIcon, UserIcon } from 'src/public/icons';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
+import { MdQuiz } from 'react-icons/md';
 export default function Sidebar({ children }) {
    const NavList = [
       {
@@ -23,6 +24,11 @@ export default function Sidebar({ children }) {
          path: '/settings/my-transactions-history',
          icon: <FaMoneyBill1Wave className="size-5 text-primary" />,
          title: 'Lịch sử giao dịch',
+      },
+      {
+         path: '/settings/my-contests-history',
+         icon: <MdQuiz className="size-5 text-primary" />,
+         title: 'Lịch sử làm bài',
       },
    ];
 

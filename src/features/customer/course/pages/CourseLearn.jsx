@@ -89,8 +89,8 @@ export default function CourseLearn() {
          </div>
 
          {/* RIGHT */}
-         <div className="col-span-3">
-            <div className="pb-3 max-h-[calc(100vh-4rem)] overflow-y-auto">
+         <div className="col-span-3 tour-chapter-learn">
+            <div className="pb-3 max-h-[calc(100vh-4rem)] overflow-y-auto ">
                <div className="text-lg font-semibold px-3 bg-white select-none py-3 w-full">Nội dung khoá học</div>
                <div>
                   {courseSelected?.chapter_list.map((chapter, index) => (

@@ -35,7 +35,7 @@ export default function AuthPage() {
             Đăng nhập
          </button>
          <button
-            className="text-white rounded-full font-medium hover:opacity-90 transition-all ease-linear px-5 py-2 bg-primary"
+            className="text-white rounded-full font-medium hover:opacity-90 transition-all ease-linear px-5 py-2 bg-gradient-to-r from-[#ff8f26] to-[#ff5117]"
             onClick={() => {
                setShowModal(true);
                setResetModal(false);
