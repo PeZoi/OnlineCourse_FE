@@ -1,6 +1,8 @@
 export default function SingleQuestion({ quiz, onAnswerChange }) {
    const handleRadioChange = (event) => {
-      onAnswerChange(parseInt(event.target.value));
+      if (onAnswerChange) {
+         onAnswerChange(parseInt(event.target.value));
+      }
    };
    return (
       <div>

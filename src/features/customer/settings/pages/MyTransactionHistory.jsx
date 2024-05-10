@@ -36,16 +36,26 @@ export default function MyTransactionHistory() {
             </div>
          ) : (
             <div>
-               <DataTable value={transactions}>
-                  <Column field="id" header="Mã đơn hàng"></Column>
+               <DataTable
+                  value={transactions}
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[10, 25, 50]}
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  currentPageReportTemplate="Đang hiện {first} đến {last} trong tổng số {totalRecords} hoá đơn"
+                  removableSort
+                  resizableColumns
+               >
+                  <Column field="id" header="Mã đơn hàng" sortable></Column>
                   <Column
                      field="course_name"
                      header="Tên khoá học"
                      body={courseNameTemplate}
                      style={{ maxWidth: '10rem' }}
+                     sortable
                   ></Column>
-                  <Column field="total_price" header="Thành tiền" body={totalPriceTemplate}></Column>
-                  <Column field="created_time" header="Ngày thanh toán" body={createdTimeTemplate}></Column>
+                  <Column field="total_price" header="Thành tiền" sortable body={totalPriceTemplate}></Column>
+                  <Column field="created_time" header="Ngày thanh toán" sortable body={createdTimeTemplate}></Column>
                </DataTable>
             </div>
          )}

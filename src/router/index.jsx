@@ -44,6 +44,8 @@ import PrivateAdminRoute from './PrivateAdminRoute';
 import MyContestHistory from 'src/features/customer/settings/pages/MyContestHistory';
 import AboutPage from 'src/features/about/AboutPage';
 import ContactPage from 'src/features/about/ContactPage';
+import ContestReview from 'src/features/customer/quiz/pages/ContestReview';
+import CertificatePage from 'src/features/certificate/CertificatePage';
 
 export const router = createBrowserRouter([
    {
@@ -99,12 +101,22 @@ export const router = createBrowserRouter([
             ),
          },
          {
-            path: 'tests/:contestId',
+            path: 'test/:contestId',
             element: (
                <PrivateLoginRoute>
                   <LearnQuizLayout>
                      <ContestTest />
                   </LearnQuizLayout>
+               </PrivateLoginRoute>
+            ),
+         },
+         {
+            path: 'review/:recordId',
+            element: (
+               <PrivateLoginRoute>
+                  <MainLayout>
+                     <ContestReview />
+                  </MainLayout>
                </PrivateLoginRoute>
             ),
          },
@@ -219,6 +231,16 @@ export const router = createBrowserRouter([
       element: (
          <PrivateLoginRoute>
             <Payment />
+         </PrivateLoginRoute>
+      ),
+   },
+   {
+      path: '/cert/:idCert',
+      element: (
+         <PrivateLoginRoute>
+            <MainLayout>
+               <CertificatePage />
+            </MainLayout>
          </PrivateLoginRoute>
       ),
    },

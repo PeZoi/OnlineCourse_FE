@@ -2,6 +2,7 @@ import Tippy from '@tippyjs/react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { Link } from 'react-router-dom';
 import { getAllOrdersByUserIdAPI } from 'src/api/orderApi';
 import useAxios from 'src/hooks/useAxios';
 import useScrollToTop from 'src/hooks/useScrollToTop';
@@ -26,6 +27,14 @@ export default function MyContestHistory() {
       );
    };
 
+   const actionTemplate = () => {
+      return (
+         <div className="transition-all hover:underline">
+            <Link to={'/quiz/review/1'}>Xem lại</Link>
+         </div>
+      );
+   };
+
    return (
       <div className="ml-20 mt-16 min-h-screen">
          <h2 className="text-[22px] font-semibold">Lịch sử làm bài</h2>
@@ -36,16 +45,27 @@ export default function MyContestHistory() {
             </div>
          ) : (
             <div>
-               <DataTable value={transactions}>
-                  <Column field="id" header="ID"></Column>
+               <DataTable
+                  value={transactions}
+                  paginator
+                  rows={10}
+                  rowsPerPageOptions={[10, 25, 50]}
+                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                  currentPageReportTemplate="Đang hiện {first} đến {last} trong tổng số {totalRecords} hoá đơn"
+                  removableSort
+                  resizableColumns
+               >
+                  <Column field="id" header="ID" sortable></Column>
                   <Column
                      field="course_name"
                      header="Tên bài kiểm tra"
                      body={courseNameTemplate}
+                     sortable
                      style={{ maxWidth: '10rem' }}
                   ></Column>
-                  <Column field="total_price" header="Điểm" body={totalPriceTemplate}></Column>
-                  <Column field="created_time" header="Ngày làm bài" body={createdTimeTemplate}></Column>
+                  <Column field="total_price" header="Điểm" sortable body={totalPriceTemplate}></Column>
+                  <Column field="created_time" header="Ngày làm bài" sortable body={createdTimeTemplate}></Column>
+                  <Column header="Hành động" body={actionTemplate}></Column>
                </DataTable>
             </div>
          )}
