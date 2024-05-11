@@ -53,7 +53,7 @@ export default function ContestItem({ contest }) {
                Bảng xếp hạng
             </button>
             <Link
-               to={`/quiz/test/${contest?.id}`}
+               to={`/quiz/detail/${contest?.id}`}
                className="mt-4 rounded-lg w-full py-2 border-2 font-semibold text-base hover:bg-primaryBlur hover:text-primary hover:border-primary transition-all ease-linear flex items-center justify-center
                "
             >

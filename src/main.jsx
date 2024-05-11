@@ -159,7 +159,7 @@ const steps = [
                   <label htmlFor="tour-checkbox-5">Nghe giọng Miu {'>_<'} </label>
                </div>
                <audio
-                  src="https://res.cloudinary.com/dhqu0tjno/video/upload/v1715266384/audio/ybhwnxxfnkjf0vistu8w.mp3"
+                  src="https://res.cloudinary.com/dhqu0tjno/video/upload/v1715347312/audio/pgslk632gl6iejhnl7sz.mp3"
                   id="tour-audio-5"
                />
             </div>
@@ -243,6 +243,39 @@ const steps = [
                <audio
                   src="https://file01.fpt.ai/text2speech-v5/long/2024-05-09/e6251e393572985a07386bf9f47a308f.mp3"
                   id="tour-audio-8"
+               />
+            </div>
+         );
+      },
+   },
+   {
+      selector: '.tour',
+      position: 'center',
+      content: () => {
+         const tourAudio = document.getElementById('tour-audio-9');
+         const checkboxAudio = document.getElementById('tour-checkbox-9');
+         if (checkAudioPlay && tourAudio) {
+            checkboxAudio.checked = checkAudioPlay;
+            tourAudio.play();
+         }
+
+         return (
+            <div>
+               Tới đây là hết rồi! Chúc cậu học vui vẻ nhé! 🔥🔥
+               <br />
+               <div className="flex gap-3 mt-3">
+                  <input
+                     type="checkbox"
+                     id="tour-checkbox-9"
+                     onChange={() => {
+                        handleOnClick(tourAudio);
+                     }}
+                  />
+                  <label htmlFor="tour-checkbox-9">Nghe giọng Miu {'>_<'} </label>
+               </div>
+               <audio
+                  src="https://file01.fpt.ai/text2speech-v5/long/2024-05-10/73b2d10ab4c4cf5774a2606693e40beb.mp3"
+                  id="tour-audio-9"
                />
             </div>
          );

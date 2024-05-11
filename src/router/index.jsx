@@ -46,6 +46,7 @@ import AboutPage from 'src/features/about/AboutPage';
 import ContactPage from 'src/features/about/ContactPage';
 import ContestReview from 'src/features/customer/quiz/pages/ContestReview';
 import CertificatePage from 'src/features/certificate/CertificatePage';
+import ContestDetail from 'src/features/customer/quiz/pages/ContestDetail';
 
 export const router = createBrowserRouter([
    {
@@ -98,6 +99,16 @@ export const router = createBrowserRouter([
                <MainLayout>
                   <ContestList />
                </MainLayout>
+            ),
+         },
+         {
+            path: 'detail/:contestId',
+            element: (
+               <PrivateLoginRoute>
+                  <MainLayout>
+                     <ContestDetail />
+                  </MainLayout>
+               </PrivateLoginRoute>
             ),
          },
          {
@@ -235,7 +246,7 @@ export const router = createBrowserRouter([
       ),
    },
    {
-      path: '/cert/:idCert',
+      path: '/cert/:certId',
       element: (
          <PrivateLoginRoute>
             <MainLayout>

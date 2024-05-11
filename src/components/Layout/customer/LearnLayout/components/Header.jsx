@@ -44,9 +44,14 @@ export default function Header() {
                            </strong>{' '}
                            bài học
                         </span>
-                        <Link to={'/cert/1'} className="text-primary font-bold text-xs mt-[2px] ml-2">
-                           Xem chứng chỉ
-                        </Link>
+                        {courseSelected?.is_finished && myCourseSelected?.percent_achieved === 100 && (
+                           <Link
+                              to={`/cert/${myCourseSelected?.certificate_id}`}
+                              className="text-primary font-bold text-xs mt-[2px] ml-2"
+                           >
+                              Xem chứng chỉ
+                           </Link>
+                        )}
                      </div>
                      <button
                         className="text-sm flex items-center mx-5 opacity-80 hover:opacity-100 tour-note-result"

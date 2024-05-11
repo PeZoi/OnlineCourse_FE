@@ -76,22 +76,21 @@ export default function Payment() {
    // Check lịch sử giao dịch
    useEffect(() => {
       let intervalTransaction;
-      const handleCheckTransaction = () => {
+      const handleCheckTransaction = async () => {
          const data = {
             courseId: course?.id,
             description: paymentInfo?.content,
             totalPrice,
          };
-         checkTransactionAPI(data).then((res) => {
-            if (res.status === 200 && res.data) {
-               toast.success('Thanh toán thành công. Sẽ trở về khoá học sau 3s');
-               setIsSuccessPayment(true);
-               setTimeout(() => {
-                  navigate(`/course/${courseSlug}`);
-               }, 3000);
-               clearInterval(intervalTransaction);
-            }
-         });
+         const res = checkTransactionAPI(data);
+         if (res.status === 200 && res.data) {
+            clearInterval(intervalTransaction);
+            toast.success('Thanh toán thành công. Sẽ trở về khoá học sau 3s');
+            setIsSuccessPayment(true);
+            setTimeout(() => {
+               navigate(`/course/${courseSlug}`);
+            }, 3000);
+         }
       };
       intervalTransaction = setInterval(handleCheckTransaction, 5000);
 

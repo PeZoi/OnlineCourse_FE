@@ -1,5 +1,4 @@
 import axios from 'src/utils/axios';
-import { getUserDataByLocalStorage } from 'src/utils/common';
 
 export const getAllContestAPI = () => {
    return axios
@@ -75,9 +74,8 @@ export const searchContestAPI = (searchText) => {
 
 // Lấy bộ đề của contest đó
 export const getQuizzesByContestIdAPI = (contestId) => {
-   const user = getUserDataByLocalStorage();
    return axios
-      .get(`/api/contest/join/${contestId}/user/${user?.user_id}`)
+      .get(`/api/contest/join/${contestId}`)
       .then((response) => {
          return response;
       })

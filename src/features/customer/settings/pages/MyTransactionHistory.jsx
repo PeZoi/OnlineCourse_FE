@@ -5,7 +5,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { getAllOrdersByUserIdAPI } from 'src/api/orderApi';
 import useAxios from 'src/hooks/useAxios';
 import useScrollToTop from 'src/hooks/useScrollToTop';
-import { formatDate, formatNumber } from 'src/utils/common';
+import { formatDate2, formatNumber } from 'src/utils/common';
 
 export default function MyTransactionHistory() {
    useScrollToTop();
@@ -15,7 +15,7 @@ export default function MyTransactionHistory() {
       return <span>{formatNumber(rowData?.total_price)}đ</span>;
    };
    const createdTimeTemplate = (rowData) => {
-      return <span>{formatDate(rowData?.created_time)}</span>;
+      return <span>{formatDate2(rowData?.created_time)}</span>;
    };
 
    const courseNameTemplate = (rowData) => {

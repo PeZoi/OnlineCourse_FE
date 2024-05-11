@@ -16,6 +16,7 @@ export const secondsConvert = (second) => {
    return formattedHours + ':' + formattedMinutes + ':' + formattedSeconds;
 };
 
+// 70 => 01:10
 export const secondsConvertToMinutesAndSeconds = (second) => {
    if (second === 0) {
       return '00:00';
@@ -156,5 +157,36 @@ export const formatDate = (dateString) => {
    var formattedDay = day >= 10 ? day : '0'.concat(day);
    var formattedMonth = month >= 10 ? month : '0'.concat(month);
    var formattedDate = formattedDay + '/' + formattedMonth + '/' + year;
+   return formattedDate;
+};
+
+// format 2024-04-30T04:14:54.166+00:00 => 30/04/2024 10:50:00
+export const formatDate2 = (dateString) => {
+   const date = new Date(dateString);
+   const day = date.getUTCDate();
+   const month = date.getUTCMonth() + 1;
+   const year = date.getUTCFullYear();
+
+   const hours = date.getHours();
+   const minutes = date.getMinutes();
+   const seconds = date.getSeconds();
+
+   const formattedDay = day >= 10 ? day : '0'.concat(day);
+   const formattedMonth = month >= 10 ? month : '0'.concat(month);
+   const formattedMinutes = minutes >= 10 ? minutes : '0'.concat(minutes);
+   const formattedSeconds = seconds >= 10 ? seconds : '0'.concat(seconds);
+   const formattedDate =
+      formattedDay +
+      '/' +
+      formattedMonth +
+      '/' +
+      year +
+      ' - ' +
+      hours +
+      ':' +
+      formattedMinutes +
+      ':' +
+      formattedSeconds;
+
    return formattedDate;
 };
