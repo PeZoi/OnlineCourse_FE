@@ -27,18 +27,18 @@ export default function Sidebar({ children }) {
          name: 'Lộ trình',
          path: '/road-map',
       },
-      {
-         icon: <BlogIcon />,
-         name: 'Bài viết',
-         path: '/blog',
-      },
+      // {
+      //    icon: <BlogIcon />,
+      //    name: 'Bài viết',
+      //    path: '/blog',
+      // },
    ];
 
    return (
       <div className="grid grid-cols-16 min-h-screen">
          <div className="flex flex-col items-center">
             <div className="sticky top-[74px]">
-               <div>
+               {/* <div>
                   <TippyModal
                      isShow={isShowModalCreateBtn}
                      setIsShow={setIsShowModalCreateBtn}
@@ -67,7 +67,7 @@ export default function Sidebar({ children }) {
                         </div>
                      }
                   />
-               </div>
+               </div> */}
                <div className="grid gap-2 my-4">
                   {contentSidebar.map((item, index) => (
                      <NavLink

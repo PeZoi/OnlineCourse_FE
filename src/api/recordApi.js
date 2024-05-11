@@ -26,3 +26,15 @@ export const getRecordByUserIdAndContestIdAPI = (contestId) => {
          return error;
       });
 };
+
+// Nộp bài thi và lưu lại bài thi đó
+export const saveRecordAPI = (data) => {
+   return axios
+      .post(`/api/record/save`, data)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         return error;
+      });
+};

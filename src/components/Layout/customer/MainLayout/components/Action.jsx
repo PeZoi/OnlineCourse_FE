@@ -150,13 +150,13 @@ export default function Action() {
                               <p className="text-gray text-sm">@{user.username}</p>
                            </div>
                         </div>
-                        <hr />
+                        {/* <hr />
                         <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
                            Viết blog
                         </Link>
                         <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
                            Bài viết của tôi
-                        </Link>
+                        </Link> */}
                         <hr />
                         <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">
                            Cài đặt

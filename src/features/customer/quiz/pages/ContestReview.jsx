@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getQuizzesByContestIdAPI } from 'src/api/contestApi';
+import { getRecordByUserIdAndContestIdAPI } from 'src/api/recordApi';
 import HoleQuestion from 'src/components/QuizType/HoleQuestion';
 import MultiQuestion from 'src/components/QuizType/MultiQuestion';
 import SingleQuestion from 'src/components/QuizType/SingleQuestion';
@@ -12,20 +13,21 @@ export default function ContestReview() {
    // const { recordId } = useParams();
 
    const [quizzes, setQuizzes] = useState([]);
+   const [contest, setContest] = useState([]);
 
-   useState(() => {
-      getQuizzesByContestIdAPI(10).then((res) => {
-         if (res.status === 404) {
-            navigate('/not-found', { replace: true });
-         } else if (res.status === 200) {
-            const quizzesFormatted = res.data.quiz_list.map((quiz) => {
-               return { ...quiz, key: uuidv4() }; // key thêm vào đây để có thể click câu hỏi bên phải
-            });
-            console.log(quizzesFormatted);
-            setQuizzes(quizzesFormatted);
-         }
-      });
-   }, []);
+   // useState(() => {
+   //    getRecordByUserIdAndContestIdAPI(10).then((res) => {
+   //       if (res.status === 404) {
+   //          navigate('/not-found', { replace: true });
+   //       } else if (res.status === 200) {
+   //          const quizzesFormatted = res.data.quiz_list?.map((quiz) => {
+   //             return { ...quiz, key: uuidv4() }; // key thêm vào đây để có thể click câu hỏi bên phải
+   //          });
+   //          console.log(res.data);
+   //          setQuizzes(quizzesFormatted);
+   //       }
+   //    });
+   // }, []);
 
    const handleClickQuestion = (id) => {
       const yOffset = -80;

@@ -70,10 +70,12 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
                         </span>
                      </>
                   )}
-                  <p className="flex items-center text-gray">
-                     <GroupUser className="size-4" />
-                     <span className="ml-2">{data?.student_count}</span>
-                  </p>
+                  <Tippy content="Số học viên">
+                     <p className="flex items-center text-gray">
+                        <GroupUser className="size-4" />
+                        <span className="ml-2">{data?.student_count}</span>
+                     </p>
+                  </Tippy>
                </div>
             </>
          ) : (

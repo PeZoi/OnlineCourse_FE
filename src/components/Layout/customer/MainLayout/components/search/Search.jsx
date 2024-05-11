@@ -3,6 +3,7 @@ import TippyModal from '../../../../../TippyModal';
 import SearchResult from './SearchResult';
 import useDebounce from 'src/hooks/useDebounce';
 import { searchCourseAPI } from 'src/api/courseApi';
+import { searchContestAPI } from 'src/api/contestApi';
 
 export default function Search() {
    const divContainerRef = useRef();
@@ -12,6 +13,7 @@ export default function Search() {
    const [showResult, setShowresult] = useState(false);
    const [searchResult, setSearchResult] = useState({
       courses: [],
+      quizzes: [],
    });
 
    const debouncedValue = useDebounce(searchText, 500);
@@ -19,12 +21,20 @@ export default function Search() {
    const fetchSearch = async () => {
       setLoading(true);
       const courses = await searchCourseAPI(debouncedValue).catch((err) => console.log(err));
+      const quizzes = await searchContestAPI(debouncedValue).catch((err) => console.log(err));
 
       // handle courses
       if (courses.status === 200) {
          setSearchResult((pre) => ({ ...pre, courses: courses.data }));
       } else if (courses.status === 204) {
          setSearchResult((pre) => ({ ...pre, courses: [] }));
+      }
+
+      // handle quizzes
+      if (quizzes.status === 200) {
+         setSearchResult((pre) => ({ ...pre, quizzes: quizzes.data }));
+      } else if (quizzes.status === 204) {
+         setSearchResult((pre) => ({ ...pre, quizzes: [] }));
       }
 
       setLoading(false);

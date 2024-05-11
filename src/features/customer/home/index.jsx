@@ -71,7 +71,7 @@ export default function Home() {
             </div>
             <div className="flex items-center justify-between">
                <p className="text-black text-2xl font-extrabold">Khoá học</p>
-               <Link to={'/'} className="flex items-center group text-base">
+               <Link to={'/road-map'} className="flex items-center group text-base">
                   <span className="font-semibold mr-1 hover:underline">Xem lộ trình</span>
                   <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />
                </Link>
@@ -101,7 +101,7 @@ export default function Home() {
             </div>
          </div>
 
-         <div className="my-16 px-11">
+         {/* <div className="my-16 px-11">
             <div className="flex items-center justify-between">
                <p className="text-black text-2xl font-extrabold">Bài viết nổi bật</p>
                <Link to={'/'} className="flex items-center group text-base">
@@ -114,7 +114,7 @@ export default function Home() {
                   <BlockItem type={'blog'} key={index} className="mb-5" />
                ))}
             </div>
-         </div>
+         </div> */}
       </div>
    );
 }

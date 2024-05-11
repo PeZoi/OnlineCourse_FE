@@ -1,29 +1,36 @@
 import Tippy from '@tippyjs/react';
+import { Button } from 'primereact/button';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaFlag } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getQuizzesByContestIdAPI } from 'src/api/contestApi';
+import { saveRecordAPI } from 'src/api/recordApi';
 import HoleQuestion from 'src/components/QuizType/HoleQuestion';
 import MultiQuestion from 'src/components/QuizType/MultiQuestion';
 import SingleQuestion from 'src/components/QuizType/SingleQuestion';
 import useScrollToTop from 'src/hooks/useScrollToTop';
-import { secondsConvertToMinutesAndSeconds } from 'src/utils/common';
+import { getUserDataByLocalStorage, secondsConvertToMinutesAndSeconds } from 'src/utils/common';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function ContestTest() {
    useScrollToTop();
    const navigate = useNavigate();
 
+   const [submitLoading, setSubmitLoading] = useState(false);
+
    // Biến thời gian làm bài
    const countRef = useRef();
    const [currentTime, setCurrentTime] = useState(0);
 
    const { contestId } = useParams();
+   // Tạo ra biến này để tính toán thời gian làm bài của học viên, và biến này lưu thời gian làm bài của bài thi đó
+   const [periodOfContest, setPeriodOfContest] = useState();
    const [answers, setAnswers] = useState([]);
    const [quizzes, setQuizzes] = useState([]);
    const [flags, setFlags] = useState([]);
 
+   // Xử lý khi click vào câu hỏi
    const handleClickQuestion = (id) => {
       const yOffset = -80;
       const element = document.getElementById(id);
@@ -32,6 +39,7 @@ export default function ContestTest() {
       window.scrollTo({ top: y, behavior: 'smooth' });
    };
 
+   // xử lý đánh cờ
    const handleClickFlag = (id) => {
       setFlags((pre) =>
          pre.map((flag) => {
@@ -44,8 +52,62 @@ export default function ContestTest() {
       );
    };
 
+   const handleFormattedRequestData = () => {
+      const user = getUserDataByLocalStorage();
+      const formattedData = {
+         user_id: user?.user_id,
+         contest_id: +contestId,
+         // Lấy thời gian làm bài của bài thi - thời gian hiện tại đang làm bài
+         period: periodOfContest - currentTime, // Thời gian làm bài
+         list_quizzes: quizzes.map((quiz) => {
+            let listAnswers = [];
+            if (quiz.quiz_type === 'ONE_CHOICE') {
+               listAnswers = answers[quiz.id]
+                  ? [
+                       {
+                          answer_id: answers[quiz.id],
+                       },
+                    ]
+                  : [];
+            } else if (quiz.quiz_type === 'MULTIPLE_CHOICE') {
+               listAnswers = answers[quiz.id].map((ans) => {
+                  return { answer_id: ans };
+               });
+            } else if (quiz.quiz_type === 'PERFORATE') {
+               listAnswers = answers[quiz.id]
+                  ? [
+                       {
+                          content_perforate: answers[quiz.id],
+                       },
+                    ]
+                  : [];
+            }
+            return {
+               quiz_id: quiz.id,
+               list_answers: listAnswers,
+            };
+         }),
+      };
+      return formattedData;
+   };
+
    const handleSubmitTest = () => {
-      console.log({ answers, flags });
+      setSubmitLoading(true);
+
+      const data = handleFormattedRequestData();
+
+      saveRecordAPI(data)
+         .then((res) => {
+            if (res.status === 201) {
+               toast(`Bạn đã đạt được ${res.data?.grade} điểm`);
+               navigate(`/quiz/detail/${contestId}`, { replace: true });
+               setSubmitLoading(false);
+            }
+         })
+         .catch((err) => {
+            setSubmitLoading(false);
+            toast.error(err);
+         });
    };
 
    // Gọi api lấy danh sách câu hỏi
@@ -59,7 +121,9 @@ export default function ContestTest() {
                return { ...quiz, key: uuidv4() }; // key thêm vào đây để có thể click câu hỏi bên phải
             });
             setQuizzes(quizzesFormatted);
+
             const minutesConvertSeconds = res.data?.period * 60; // * 60 vì period tính bằng phút phải chuyển sang giây
+            setPeriodOfContest(minutesConvertSeconds);
             setCurrentTime(minutesConvertSeconds);
             countRef.current = minutesConvertSeconds;
          }
@@ -172,12 +236,13 @@ export default function ContestTest() {
                <div className="bg-white w-full h-full p-5 rounded-md shadow-md">
                   <p className="text-base">Thời gian làm bài:</p>
                   <p className="text-xl font-bold">{secondsConvertToMinutesAndSeconds(currentTime)}</p>
-                  <button
+                  <Button
+                     loading={submitLoading}
                      className="border border-primary text-primary rounded-md font-bold py-2 w-full mt-4 hover:bg-primaryBlur transition-all ease-linear"
                      onClick={handleSubmitTest}
                   >
-                     Nộp bài
-                  </button>
+                     <span className="flex-1">Nộp bài</span>
+                  </Button>
                   <hr className="my-5" />
                   <div className="grid grid-cols-5 gap-2 mt-3">
                      {quizzes?.map((quiz, index) => {

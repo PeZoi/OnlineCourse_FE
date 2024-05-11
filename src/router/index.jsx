@@ -47,6 +47,7 @@ import ContactPage from 'src/features/about/ContactPage';
 import ContestReview from 'src/features/customer/quiz/pages/ContestReview';
 import CertificatePage from 'src/features/certificate/CertificatePage';
 import ContestDetail from 'src/features/customer/quiz/pages/ContestDetail';
+import RoadmapPage from 'src/features/roadmap/RoadmapPage';
 
 export const router = createBrowserRouter([
    {
@@ -253,6 +254,14 @@ export const router = createBrowserRouter([
                <CertificatePage />
             </MainLayout>
          </PrivateLoginRoute>
+      ),
+   },
+   {
+      path: '/road-map',
+      element: (
+         <MainLayout>
+            <RoadmapPage />
+         </MainLayout>
       ),
    },
    // ABOUT

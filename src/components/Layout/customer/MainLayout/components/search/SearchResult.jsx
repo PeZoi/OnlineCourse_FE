@@ -7,7 +7,7 @@ export default function SearchResult({ searchText, searchResult }) {
             <div className="w-[18px] h-[18px] bg-[url(https://fullstack.edu.vn/static/media/search.9bd3926522ea0937310c.svg)] bg-[length:15px] bg-no-repeat bg-[50%] opacity-70 hover:opacity-100 transition-all"></div>
             <span className="text-sm text-gray ml-3">Kết quả cho &apos;{searchText}&apos;</span>
          </div>
-         {searchResult.courses.length === 0 ? (
+         {searchResult.courses.length === 0 && searchResult.quizzes.length === 0 ? (
             <span className="block mt-5 text-gray">Không có kết quả</span>
          ) : (
             <>
@@ -31,6 +31,24 @@ export default function SearchResult({ searchText, searchResult }) {
                               </div>
                            </Link>
                         ))}
+                  </div>
+               )}
+               {searchResult.quizzes.length !== 0 && (
+                  <div>
+                     <div className="flex items-center justify-between mt-3">
+                        <span className="text-sm font-medium text-black">BÀI QUIZ</span>
+                        <Link to={`/search/quizs?q=${searchText}`} className="text-gray">
+                           Xem thêm
+                        </Link>
+                     </div>
+                     <hr />
+                     {searchResult?.quizzes.slice(0, 3).map((quiz) => (
+                        <Link to={`/quiz/detail/${quiz?.id}`} className="py-2" key={quiz?.id}>
+                           <div className="flex items-center mt-3">
+                              <span className="text-sm">{quiz?.title}</span>
+                           </div>
+                        </Link>
+                     ))}
                   </div>
                )}
                {/* <div className="mt-7">
