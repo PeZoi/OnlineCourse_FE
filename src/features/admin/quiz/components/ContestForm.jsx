@@ -2,14 +2,27 @@ import { useForm } from 'react-hook-form';
 import FloatInput from 'src/components/FloatInput';
 import QuizForm from '../components/QuizForm';
 import toast from 'react-hot-toast';
-import { createContestAPI, updateContestAPI } from 'src/api/contestApi';
+import {
+   createContestAPI,
+   getRankedByContestIdAPI,
+   resetRankedByContestIdAPI,
+   updateContestAPI,
+} from 'src/api/contestApi';
 import { Button } from 'primereact/button';
 import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import ModalMiddle from 'src/components/ModalMiddle';
+import Rankings from 'src/components/Rankings';
+import { GrPowerReset } from 'react-icons/gr';
+import Tippy from '@tippyjs/react';
 
 export default function ContestInfoForm({ type, contest }) {
    const [loadingSubmit, setLoadingSubmit] = useState(false);
+
+   const [ranks, setRanks] = useState([]);
+   const [modalRanks, setModalRanks] = useState(false);
+   const [rerenderRankkings, setRerenderRankkings] = useState(0);
 
    const schema = yup.object().shape({
       title: yup
@@ -57,6 +70,7 @@ export default function ContestInfoForm({ type, contest }) {
       resolver: yupResolver(schema),
    });
 
+   // Lấy dữ liệu của contest đó
    useEffect(() => {
       if (type === 'EDIT') {
          reset({
@@ -79,6 +93,30 @@ export default function ContestInfoForm({ type, contest }) {
          });
       }
    }, [contest?.listQuizzes, contest?.period, contest?.title, reset, type]);
+
+   // Lấy dữ liệu của bảng xếp hạng của contest
+   useEffect(() => {
+      getRankedByContestIdAPI(contest?.id).then((res) => {
+         if (res.status === 200) {
+            setRanks(res.data);
+         }
+      });
+   }, [contest?.id, rerenderRankkings]);
+
+   const handleResetRankings = () => {
+      toast.promise(
+         resetRankedByContestIdAPI(contest?.id).then((res) => {
+            if (res.status === 200) {
+               setRerenderRankkings(Math.random() * 1000);
+            }
+         }),
+         {
+            loading: 'Đang xử lý',
+            success: 'Cài đặt lại bảng xếp hạng thành công',
+            error: 'Có lỗi xảy ra',
+         },
+      );
+   };
 
    const onSubmit = (data) => {
       setLoadingSubmit(true);
@@ -148,6 +186,26 @@ export default function ContestInfoForm({ type, contest }) {
                      Thời gian được tính theo phút (Giá trị 0 nghĩa là thời gian vô tận)
                   </small>
                </div>
+               {type === 'EDIT' && (
+                  <div className="pl-5 flex items-center gap-3">
+                     <button
+                        type="button"
+                        onClick={() => setModalRanks(true)}
+                        className="px-4 py-2 bg-primaryBlur rounded-lg border-2 border-primary w-fit font-semibold hover:opacity-80"
+                     >
+                        Xem bảng xếp hạng 🏆
+                     </button>
+                     <Tippy content="Cài đặt lại bảng xếp hạng">
+                        <button
+                           type="button"
+                           className="px-4 py-2 rounded-lg hover:bg-gray-light"
+                           onClick={handleResetRankings}
+                        >
+                           <GrPowerReset className="size-5" />
+                        </button>
+                     </Tippy>
+                  </div>
+               )}
             </div>
             <div>
                <QuizForm
@@ -167,6 +225,10 @@ export default function ContestInfoForm({ type, contest }) {
                />
             </div>
          </form>
+
+         <ModalMiddle isShow={modalRanks} setIsShow={setModalRanks} className={'w-fit px-10 mx-auto'}>
+            <Rankings ranks={ranks} />
+         </ModalMiddle>
       </div>
    );
 }

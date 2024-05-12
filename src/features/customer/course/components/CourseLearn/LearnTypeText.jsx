@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ArrowRightIcon } from '../../../../../public/icons';
 import { confirmLessonCompletedAPI, getLessonOfUserAPI } from 'src/api/lessonApi';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,10 +5,6 @@ import toast from 'react-hot-toast';
 import { getMyCourseSelected } from '../../courseSlice';
 
 export default function LearnTypeText({ lesson }) {
-   useEffect(() => {
-      document.getElementById('lesson-content').innerHTML = lesson?.text.content;
-   }, [lesson]);
-
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
    const dispatch = useDispatch();
 
@@ -46,7 +41,9 @@ export default function LearnTypeText({ lesson }) {
    return (
       <div className="my-12 max-w-[860px] min-h-screen mx-auto">
          <h1 className="font-semibold text-[28px] flex-1">{lesson?.name}</h1>
-         <div id="lesson-content"></div>
+         <div id="lesson-content" className="ql-ql-snow">
+            <div className="ql-editor" dangerouslySetInnerHTML={{ __html: lesson?.text.content }}></div>
+         </div>
          <div className="flex justify-end mt-20">
             <button
                className="flex items-center justify-center px-4 py-1 border border-primary text-primary font-semibold rounded-md text-base group

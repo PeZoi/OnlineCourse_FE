@@ -39,6 +39,12 @@ html ::-webkit-scrollbar-track {
    border-radius: 0;
 }
 
+.reset-css-tailwind {
+   font-size: null !important;
+   font-weight: null !important;
+   list-style: none !important;
+}
+
 hr {
    color: #cccccc4d;
    box-sizing: content-box;

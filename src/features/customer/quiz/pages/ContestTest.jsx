@@ -136,8 +136,8 @@ export default function ContestTest() {
       const handleTimeUpdate = () => {
          if (countRef.current <= 1) {
             toast('Bạn đã hết thời gian làm bài');
-            // Nếu hết thời gian thì làm gì đó ở đây
-            // ...
+            // Nếu hết thời gian thì nộp bài luôn
+            handleSubmitTest();
 
             clearInterval(intervalCount);
          }

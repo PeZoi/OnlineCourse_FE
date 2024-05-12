@@ -5,7 +5,7 @@ import { getAllNotesAPI } from 'src/api/noteApi';
 import NoteItem from './NoteItem';
 
 export default function MyNote({ isShow, setIsShow, courseSelected }) {
-   const optionSortByTime = ['Cũ nhất', 'Mới nhất'];
+   const OPTION_ORDER_TO_TIME = ['Cũ nhất', 'Mới nhất'];
    const [notes, setNotes] = useState([]);
 
    const [rerender, setRerender] = useState(0);
@@ -48,7 +48,7 @@ export default function MyNote({ isShow, setIsShow, courseSelected }) {
                      className="w-fit ml-3 border-2 border-gray outline-none rounded-lg px-3 py-1"
                      onChange={(e) => handleOnChangeSortTime(e.target.value)}
                   >
-                     {optionSortByTime.map((i, index) => (
+                     {OPTION_ORDER_TO_TIME.map((i, index) => (
                         <option value={index} key={index}>
                            {i}
                         </option>

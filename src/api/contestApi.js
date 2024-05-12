@@ -97,3 +97,15 @@ export const getRankedByContestIdAPI = (contestId) => {
          return null;
       });
 };
+
+export const resetRankedByContestIdAPI = (contestId) => {
+   return axios
+      .delete(`/api/contest/ranking/reset/${contestId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};

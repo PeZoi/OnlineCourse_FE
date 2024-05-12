@@ -1,4 +1,3 @@
-import parse from 'html-react-parser';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSolidPencil } from 'react-icons/bi';
@@ -86,7 +85,9 @@ const Comment = ({ comment, isParent, isNested, setRerender }) => {
                <div className="rounded-2xl py-2 px-4 bg-gray-light min-w-fit max-w-fit overflow-hidden">
                   <span className="font-semibold text-sm">{comment.username}</span>
 
-                  <p className="my-3 w-fit font-normal">{parse(comment.content)}</p>
+                  <div className="my-3 w-fit font-normal ql-snow">
+                     <p className="ql-editor w-fit" dangerouslySetInnerHTML={{ __html: comment.content }}></p>
+                  </div>
                </div>
                <div className="flex items-center mt-3 text-[13px] select-none">
                   <span className="text-primary cursor-pointer hover:underline" onClick={() => setIsCommenting(true)}>

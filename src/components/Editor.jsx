@@ -120,6 +120,7 @@ export default function Editor({ value, setValue, className, type }) {
    return (
       <div className={className}>
          <ReactQuill
+            theme="snow"
             ref={editorRef}
             modules={type === 'basic' ? modulesBasic : modulesAdvance}
             formats={type === 'basic' ? formatsBasic : formatsAdvance}

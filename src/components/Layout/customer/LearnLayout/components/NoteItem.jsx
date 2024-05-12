@@ -1,5 +1,4 @@
 import Tippy from '@tippyjs/react';
-import parse from 'html-react-parser';
 import Editor from 'src/components/Editor';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
@@ -92,7 +91,9 @@ export default function NoteItem({ note, setRerender, setIsShow }) {
             </div>
          </div>
          {!isUpdatingNote ? (
-            <div className="bg-gray-light rounded-lg mt-5 px-5 py-4">{parse(note.content)}</div>
+            <div className="bg-gray-light rounded-lg mt-5 px-5 py-4 ql-snow">
+               <div className="ql-editor" dangerouslySetInnerHTML={{ __html: note.content }}></div>
+            </div>
          ) : (
             <div className="mt-8">
                <Editor type={'basic'} value={noteContent} setValue={setNoteContent} className={'w-full'} />
