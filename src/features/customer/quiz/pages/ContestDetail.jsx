@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getContestByIdAPI } from 'src/api/contestApi';
+import { getQuizzesByContestIdAPI } from 'src/api/contestApi';
 import { getRecordByUserIdAndContestIdAPI } from 'src/api/recordApi';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { durationFormat, formatDate, formatDate2, secondsConvert } from 'src/utils/common';
 
 export default function ContestDetail() {
+   useScrollToTop();
+
    const { contestId } = useParams();
 
    const [contestDetail, setContestDetail] = useState();
@@ -17,7 +20,8 @@ export default function ContestDetail() {
          }
       });
 
-      getContestByIdAPI(contestId).then((res) => {
+      // Lấy thông tin bài test đó
+      getQuizzesByContestIdAPI(contestId).then((res) => {
          if (res.status === 200) {
             setContestDetail(res.data);
          }
@@ -37,7 +41,7 @@ export default function ContestDetail() {
             <tr>
                <th className="text-end py-1 px-5 border-separate border border-gray">Gồm:</th>
                <td className="text-start py-1 px-5 border-separate border border-gray">
-                  {contestDetail?.listQuizzes?.length} câu hỏi
+                  {contestDetail?.number_question} câu hỏi
                </td>
             </tr>
             <tr>

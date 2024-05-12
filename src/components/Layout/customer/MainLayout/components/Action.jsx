@@ -39,8 +39,7 @@ export default function Action() {
                               </Link>
                            </div>
                            <div className="overflow-y-auto overscroll-contain mt-3 max-h-[60vh] px-3">
-                              {myCourses &&
-                                 myCourses.length > 0 &&
+                              {myCourses && myCourses.length > 0 ? (
                                  myCourses.map((course) => (
                                     <Link to={`/course/${course.slug}`} key={course.id}>
                                        <div className="flex items-center my-3 p-3 rounded-lg hover:bg-gray-light">
@@ -63,7 +62,10 @@ export default function Action() {
                                           </div>
                                        </div>
                                     </Link>
-                                 ))}
+                                 ))
+                              ) : (
+                                 <p className="font-medium text-center mt-3 pb-3">Bạn chưa có khoá học nào</p>
+                              )}
                            </div>
                         </div>
                      }

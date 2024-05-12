@@ -84,3 +84,16 @@ export const getQuizzesByContestIdAPI = (contestId) => {
          return null;
       });
 };
+
+// lấy ra bảng xếp hạng của contest
+export const getRankedByContestIdAPI = (contestId) => {
+   return axios
+      .get(`/api/contest/ranking/contest/${contestId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};
