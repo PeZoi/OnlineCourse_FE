@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import toast from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 
-export default function Editor({ value, setValue, className, type }) {
+export default function Editor({ value, setValue, className, quillClassName, type }) {
    const editorRef = useRef(null);
 
    const onChange = (content) => {
@@ -126,7 +126,8 @@ export default function Editor({ value, setValue, className, type }) {
             formats={type === 'basic' ? formatsBasic : formatsAdvance}
             value={value}
             onChange={onChange}
-            className="w-full h-full"
+            className={`w-full ${quillClassName}`}
+            placeholder="Nội dung viết ở đây"
          />
       </div>
    );

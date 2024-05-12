@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { FaBook } from 'react-icons/fa';
-import { ShieldIcon, UserIcon } from 'src/public/icons';
+import { BlogIcon, ShieldIcon, UserIcon } from 'src/public/icons';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import { MdQuiz } from 'react-icons/md';
 export default function Sidebar({ children }) {
@@ -19,6 +19,11 @@ export default function Sidebar({ children }) {
          path: '/settings/my-courses',
          icon: <FaBook className="size-5 text-primary" />,
          title: 'Khoá học của tôi',
+      },
+      {
+         path: '/settings/my-blogs',
+         icon: <BlogIcon className="size-5 text-primary" />,
+         title: 'Bài viết của tôi',
       },
       {
          path: '/settings/my-transactions-history',

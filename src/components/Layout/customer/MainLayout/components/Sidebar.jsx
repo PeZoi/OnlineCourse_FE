@@ -45,7 +45,7 @@ export default function Sidebar({ children }) {
                      ModalChildren={
                         <div className="w-48 rounded-lg shadow-base animate-fade transition-all ease-in-out bg-white py-2">
                            <Link
-                              to={'/'}
+                              to={'/blog/new-post'}
                               className="px-3 py-3 flex items-center hover:bg-gray-light transition-all ease-linear duration-300"
                            >
                               <PenIcon className="size-4 mr-4" />

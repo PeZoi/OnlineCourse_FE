@@ -46,7 +46,7 @@ export default function Action() {
                                           <img
                                              src={course.thumbnail}
                                              alt=""
-                                             className="w-[120px] h-[67px] rounded-lg object-cover"
+                                             className="w-[120px] h-[67px] rounded-lg object-contain"
                                           />
 
                                           <div className="ml-3 flex-1">
@@ -153,10 +153,10 @@ export default function Action() {
                            </div>
                         </div>
                         <hr />
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
+                        <Link to={'/blog/new-post'} className="block text-gray text-sm py-2 hover:text-black">
                            Viết blog
                         </Link>
-                        <Link to={'/'} className="block text-gray text-sm py-2 hover:text-black">
+                        <Link to={'/settings/my-blogs'} className="block text-gray text-sm py-2 hover:text-black">
                            Bài viết của tôi
                         </Link>
                         <hr />

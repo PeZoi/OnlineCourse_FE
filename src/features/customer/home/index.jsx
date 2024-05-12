@@ -39,8 +39,7 @@ export default function Home() {
       <div>
          <CarouselQuote />
 
-         <div className="mt-16 px-11">
-            <hr />
+         <div className="mt-12 px-11">
             <div className="my-5">
                <Link to={'/'} onClick={() => setCategoryId('')}>
                   <button
@@ -78,7 +77,6 @@ export default function Home() {
             </div>
 
             <div className="my-5 grid grid-cols-4 gap-6">
-               {/* min-h-96 */}
                {courses?.map(
                   (course) => !course.is_coming_soon && <BlockItem type={'course'} key={course.id} data={course} />,
                )}
@@ -89,7 +87,7 @@ export default function Home() {
             <hr className="mb-10" />
             <div className="flex items-center justify-between">
                <p className="text-black text-2xl font-extrabold">Sắp ra mắt ... </p>
-               <Link to={'/'} className="flex items-center group text-base">
+               <Link to={'/road-map'} className="flex items-center group text-base">
                   <span className="font-semibold mr-1 hover:underline">Xem lộ trình</span>
                   <ArrowRightIcon className="size-3 group-hover:translate-x-1 transition-all ease-in-out duration-300" />
                </Link>

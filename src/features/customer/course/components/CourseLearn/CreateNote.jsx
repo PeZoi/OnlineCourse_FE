@@ -63,7 +63,6 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
                   </span>
                </div>
                <Editor value={noteContent} setValue={setNoteContent} type={'basic'} className="w-full h-fit my-5" />
-               <div></div>
                <div className="flex items-center justify-end font-semibold">
                   <button
                      className="mr-3 text-gray hover:text-black px-4 py-2"

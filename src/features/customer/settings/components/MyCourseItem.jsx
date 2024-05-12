@@ -5,7 +5,7 @@ export default function MyCourseItem({ course }) {
    return (
       <div>
          <Link to={`/course/learn/${course.slug}`} className="relative block rounded-xl overflow-hidden group">
-            <img src={course.thumbnail} alt="" className="w-full h-[155px] object-cover" />
+            <img src={course.thumbnail} alt="" className="w-full h-[155px] object-contain" />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out bg-[#00000080] bg-opacity-50">
                <button className="bg-white text-black py-2 px-4 rounded-lg shadow-lg translate-y-6 group-hover:translate-y-0 transition-transform duration-300 ease-in-out font-semibold">
                   Tiếp tục học

@@ -1,5 +1,5 @@
 import useScrollToTop from 'src/hooks/useScrollToTop';
-import ContestItem from '../../../../components/Layout/customer/ContestItem';
+import ContestItem from '../../../../components/ContestItem';
 import { IoSearchSharp } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import useAxios from 'src/hooks/useAxios';

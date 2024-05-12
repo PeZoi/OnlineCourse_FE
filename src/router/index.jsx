@@ -19,7 +19,6 @@ import Auth from 'src/features/auth';
 import ResetPasswordPage from 'src/features/auth/pages/ResetPasswordPage';
 import VerifyPage from 'src/features/auth/pages/VerifyPage';
 import Blog from 'src/features/customer/blog';
-import BlogsList from 'src/features/customer/blog/pages/BlogsList';
 import Course from 'src/features/customer/course';
 import CourseDetail from 'src/features/customer/course/pages/CourseDetail';
 import CourseLearn from 'src/features/customer/course/pages/CourseLearn';
@@ -48,6 +47,11 @@ import ContestReview from 'src/features/customer/quiz/pages/ContestReview';
 import CertificatePage from 'src/features/certificate/CertificatePage';
 import ContestDetail from 'src/features/customer/quiz/pages/ContestDetail';
 import RoadmapPage from 'src/features/roadmap/RoadmapPage';
+import AddBlogPage from 'src/features/customer/blog/pages/AddBlogPage';
+import BlogLayout from 'src/components/Layout/customer/BlogLayout';
+import BlogList from 'src/features/customer/blog/pages/BlogList';
+import DetailBlogPage from 'src/features/customer/blog/pages/DetailBlogPage';
+import MyBlogs from 'src/features/customer/settings/pages/MyBlogs';
 
 export const router = createBrowserRouter([
    {
@@ -182,6 +186,14 @@ export const router = createBrowserRouter([
                </SettingLayout>
             ),
          },
+         {
+            path: 'my-blogs',
+            element: (
+               <SettingLayout>
+                  <MyBlogs />
+               </SettingLayout>
+            ),
+         },
       ],
    },
    {
@@ -208,15 +220,31 @@ export const router = createBrowserRouter([
    },
    {
       path: '/blog',
-      element: (
-         <MainLayout>
-            <Blog />
-         </MainLayout>
-      ),
+      element: <Blog />,
       children: [
          {
             path: '',
-            element: <BlogsList />,
+            element: (
+               <MainLayout>
+                  <BlogList />
+               </MainLayout>
+            ),
+         },
+         {
+            path: 'new-post',
+            element: (
+               <BlogLayout>
+                  <AddBlogPage />
+               </BlogLayout>
+            ),
+         },
+         {
+            path: ':blogSlug',
+            element: (
+               <BlogLayout>
+                  <DetailBlogPage />
+               </BlogLayout>
+            ),
          },
       ],
    },

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineClockCircle } from 'react-icons/ai';
-import { UserIcon } from '../../../public/icons';
+import { UserIcon } from '../public/icons';
 import { formatDate } from 'src/utils/common';
 import Tippy from '@tippyjs/react';
 import { useEffect, useState } from 'react';

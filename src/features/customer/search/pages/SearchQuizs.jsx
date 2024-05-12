@@ -1,5 +1,5 @@
 import SearchPage from '../components/SearchPage';
-import ContestItem from '../../../../components/Layout/customer/ContestItem';
+import ContestItem from '../../../../components/ContestItem';
 import { useSearchParams } from 'react-router-dom';
 import useAxios from 'src/hooks/useAxios';
 import { searchContestAPI } from 'src/api/contestApi';

@@ -12,7 +12,7 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
          {!isCommingSoon ? (
             <>
                <Link to={`/course/${data?.slug}`} className="relative block rounded-xl overflow-hidden group">
-                  <img src={data?.thumbnail} alt={data?.title} className="w-full h-[170px] object-cover" />
+                  <img src={data?.thumbnail} alt={data?.title} className="w-full h-[170px] object-contain" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out bg-[#00000080] bg-opacity-50">
                      <button className="bg-white text-black py-2 px-4 rounded-lg shadow-lg translate-y-6 group-hover:translate-y-0 transition-transform duration-300 ease-in-out font-semibold">
                         Xem chi tiết
@@ -29,7 +29,7 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
          ) : (
             <>
                <div className="relative block rounded-xl overflow-hidden">
-                  <img src={data?.thumbnail} alt={data?.title} className="w-full h-full max-h-[170px] object-cover" />
+                  <img src={data?.thumbnail} alt={data?.title} className="w-full h-full max-h-[170px] object-contain" />
                </div>
                <div className="text-base my-2 block font-semibold ">
                   <Tippy content={<span>{data?.title}</span>} placement="bottom">
