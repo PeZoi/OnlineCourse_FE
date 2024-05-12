@@ -38,3 +38,15 @@ export const saveRecordAPI = (data) => {
          return error;
       });
 };
+
+// Lấy ra các câu hỏi đã làm theo record id (review lại contest)
+export const getReviewContestByRecordId = (recordId) => {
+   return axios
+      .get(`/api/record/review/${recordId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         return error;
+      });
+};

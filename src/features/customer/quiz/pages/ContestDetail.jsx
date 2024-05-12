@@ -86,7 +86,7 @@ export default function ContestDetail() {
                         </td>
                         <td className="text-start py-4 px-10 border-t border-b border-gray">
                            <div className="transition-all hover:underline">
-                              <Link to={`/quiz/review/${contestCompleted?.contest_id}`}>Xem lại</Link>
+                              <Link to={`/quiz/review/${contestCompleted?.id}`}>Xem lại</Link>
                            </div>
                         </td>
                      </tr>

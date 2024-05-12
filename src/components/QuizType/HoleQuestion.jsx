@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import { FaXmark } from 'react-icons/fa6';
 
-export default function HoleQuestion({ quiz, onAnswerChange }) {
+export default function HoleQuestion({ quiz, onAnswerChange, type = null }) {
    const [filledAnswer, setFilledAnswer] = useState('');
 
    const handleInputChange = (e) => {
@@ -19,10 +21,24 @@ export default function HoleQuestion({ quiz, onAnswerChange }) {
             <input
                type="text"
                className="bg-gray-light outline-none py-1 px-3"
-               value={filledAnswer}
+               value={type !== 'review' ? filledAnswer : quiz?.answer_list?.[0]?.content_perforate_of_customer}
+               disabled={type === 'review'}
                onChange={handleInputChange}
             />
+            <span className="ml-3">
+               {type === 'review' &&
+                  (quiz?.answer_list?.[0]?.answer_of_customer === quiz?.answer_list?.[0]?.answer_is_correct ? (
+                     <FaCheck className="text-green size-4" />
+                  ) : (
+                     <FaXmark className="text-red size-4" />
+                  ))}
+            </span>
          </div>
+         {type === 'review' && !quiz?.answer_list?.[0]?.is_correct_for_answer && (
+            <p className="text-base my-3 py-2 px-4 bg-[#fbff0a70] w-fit font-semibold">
+               Đáp án đúng là: {quiz?.answer_list?.[0]?.content}
+            </p>
+         )}
       </div>
    );
 }
