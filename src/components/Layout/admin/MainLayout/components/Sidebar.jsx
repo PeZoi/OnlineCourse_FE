@@ -2,7 +2,7 @@ import { FaTachometerAlt, FaRegChartBar, FaRegUser, FaBook } from 'react-icons/f
 import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
-import { MdQuiz } from 'react-icons/md';
+import { MdQuiz, MdRateReview } from 'react-icons/md';
 
 const Sidebar = ({ children }) => {
    const navList = [
@@ -30,6 +30,11 @@ const Sidebar = ({ children }) => {
          path: '/admin/manage-orders',
          icon: <FaMoneyBill1Wave />,
          title: 'Đơn hàng',
+      },
+      {
+         path: '/admin/manage-course-reviews',
+         icon: <MdRateReview />,
+         title: 'Đánh giá',
       },
    ];
 

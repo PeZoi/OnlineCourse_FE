@@ -52,6 +52,7 @@ import BlogLayout from 'src/components/Layout/customer/BlogLayout';
 import BlogList from 'src/features/customer/blog/pages/BlogList';
 import DetailBlogPage from 'src/features/customer/blog/pages/DetailBlogPage';
 import MyBlogs from 'src/features/customer/settings/pages/MyBlogs';
+import ManageReviews from 'src/features/admin/reviews/ManageReviews';
 
 export const router = createBrowserRouter([
    {
@@ -363,6 +364,10 @@ export const router = createBrowserRouter([
                   element: <EditContestPage />,
                },
             ],
+         },
+         {
+            path: 'manage-course-reviews',
+            element: <ManageReviews />,
          },
       ],
    },

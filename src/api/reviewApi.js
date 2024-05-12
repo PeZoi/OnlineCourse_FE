@@ -3,6 +3,18 @@ import { getUserDataByLocalStorage } from 'src/utils/common';
 
 const user = getUserDataByLocalStorage();
 
+// Lấy ra tất cả review
+export const getAllReviewAPI = () => {
+   return axios
+      .get(`/api/reviews/get-all`)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
 // Lấy ra tất cả review của khoá học
 export const getAllReviewByCourseIdAPI = (courseId) => {
    return axios
@@ -31,6 +43,18 @@ export const checkReviewedByUserIdAPI = (courseId) => {
 export const createReviewAPI = (data) => {
    return axios
       .post(`/api/reviews/create`, { ...data, user_id: user?.user_id })
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
+// Xoá review
+export const deleteReviewByIdAPI = (reviewId) => {
+   return axios
+      .delete(`/api/reviews/delete/${reviewId}`)
       .then((res) => {
          return res;
       })
