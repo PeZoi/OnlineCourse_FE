@@ -9,7 +9,11 @@ export const useAxios = (axiosFunction, dependencies) => {
       const fetchData = async () => {
          try {
             const res = await axiosFunction();
-            setResponse(res.data);
+            if (res.status === 200) {
+               setResponse(res.data);
+            } else {
+               setError(res);
+            }
          } catch (error) {
             setError(error);
          } finally {
