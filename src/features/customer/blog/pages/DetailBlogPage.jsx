@@ -1,30 +1,63 @@
 import { Avatar } from 'primereact/avatar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaLink } from 'react-icons/fa';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getBlogsBySlugAPI, updateViewsCountBlogAPI } from 'src/api/blogApi';
 import TippyModal from 'src/components/TippyModal';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function DetailBlogPage() {
+   useScrollToTop();
+
+   const { blogSlug } = useParams();
+   const navigate = useNavigate();
+   const [blog, setBlog] = useState();
    const [showMore, setShowMore] = useState(false);
+
+   useEffect(() => {
+      let timeout = null;
+      if (blogSlug) {
+         getBlogsBySlugAPI(blogSlug).then((res) => {
+            if (res.status === 200) {
+               setBlog(res.data);
+               // Cập nhật views sau 10s
+               timeout = setTimeout(() => {
+                  updateViewsCountBlogAPI(res.data?.id).catch((err) => {
+                     console.log(err);
+                  });
+               }, 10000);
+            } else if (res.status === 404) {
+               navigate('/not-found', { replace: true });
+            }
+         });
+      }
+
+      return () => {
+         clearTimeout(timeout);
+      };
+   }, [blogSlug, navigate]);
 
    return (
       <div className="p-5 min-h-screen">
          <div className="mx-auto w-4/5">
-            <h1 className="text-[40px] font-bold leading-relaxed">
-               Config Zsh bằng Oh-my-zsh và P10k trên WSL cực ngầu ✨
-            </h1>
+            <h1 className="text-[40px] font-bold leading-relaxed">{blog?.title}</h1>
             <div className="my-10">
                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                      <Avatar
-                        image="https://files.fullstack.edu.vn/f8-prod/user_avatars/345914/6631a5983d3a3.jpg"
+                        image={blog?.avatar_user}
                         imageAlt="avatar"
                         className="size-12 rounded-full overflow-hidden"
                      />
-                     <div className="flex flex-col justify-center ">
-                        <span className="text-base font-medium">Thánh Wibu</span>
-                        <span className="text-sm text-gray">18 ngày trước</span>
+                     <div className="flex flex-col justify-center flex-1">
+                        <span className="text-base font-medium">{blog?.username}</span>
+                        <div className="flex items-center gap-3 mt-1">
+                           <span className="text-base">{blog?.created_at_format}</span>
+                           <span>·</span>
+                           <span className="text-base">{blog?.view} lượt xem</span>
+                        </div>
                      </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -38,7 +71,7 @@ export default function DetailBlogPage() {
                                  onClick={() => {
                                     setShowMore(!showMore);
                                     toast('Đã sao chép liên kết');
-                                    navigator.clipboard.writeText('http://localhost:5173/blog');
+                                    navigator.clipboard.writeText(`http://localhost:5173/blog/${blog?.slug}`);
                                  }}
                               >
                                  <FaLink />
@@ -56,6 +89,11 @@ export default function DetailBlogPage() {
                </div>
             </div>
 
+            <div className="ql-snow">
+               <div className="ql-editor" dangerouslySetInnerHTML={{ __html: blog?.content }}></div>
+            </div>
+
+            {/* 
             <div
                className="MarkdownParser_wrapper__JYN63 BlogDetail_markdownParser__QFL3L"
                style={{
@@ -230,7 +268,7 @@ export default function DetailBlogPage() {
                   Vậy là mình đã setup xong 1 em WSL rồi, giờ có thể code thỏa thích luôn 😋, mình chức các bạn thành
                   công trong việc setup nhé!
                </p>
-            </div>
+            </div> */}
          </div>
       </div>
    );

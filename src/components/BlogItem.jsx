@@ -3,26 +3,40 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { FaLink, FaRegTrashAlt } from 'react-icons/fa';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import TippyModal from 'src/components/TippyModal';
 import { GoPencil } from 'react-icons/go';
-export default function BlogItem({ type }) {
+import { deleteBlogAPI } from 'src/api/blogApi';
+
+// type để phần biết blog list hay my blogs
+export default function BlogItem({ type, blog, setRerender }) {
    const [showMore, setShowMore] = useState(false);
+   const navigate = useNavigate();
 
    const handleDeleteBlog = () => {
-      alert('Xoá bài viết');
+      const confirm = window.confirm('Bạn có chắc chắn xoá bài viết này chứ');
+      if (confirm) {
+         deleteBlogAPI(blog?.id)
+            .then((res) => {
+               if (res.status === 200) {
+                  toast.success('Xoá bài viết thành công');
+                  setRerender(Math.random() * 1000);
+               } else {
+                  toast.error('Xoá bài viết thất bại');
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+            });
+      }
    };
 
    return (
       <div className="border-2 border-[#eee] rounded-2xl px-8 py-5 max-w-[780px] ">
          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-               <Avatar
-                  image="https://files.fullstack.edu.vn/f8-prod/user_avatars/345914/6631a5983d3a3.jpg"
-                  imageAlt="avatar"
-                  className="size-6 rounded-full overflow-hidden"
-               />
-               <span className="mt-1 text-[12px] font-medium">Thánh Wibu</span>
+               <Avatar image={blog?.avatar_user} imageAlt="avatar" className="size-6 rounded-full overflow-hidden" />
+               <span className="mt-1 text-[12px] font-medium">{blog?.username}</span>
             </div>
             <div className="flex items-center gap-3">
                <TippyModal
@@ -35,9 +49,7 @@ export default function BlogItem({ type }) {
                               <button
                                  className="flex items-center gap-3 w-full px-6 py-3 hover:bg-gray-light"
                                  onClick={() => {
-                                    setShowMore(!showMore);
-                                    toast('Đã sao chép liên kết');
-                                    navigator.clipboard.writeText('http://localhost:5173/blog');
+                                    navigate(`/blog/edit/${blog?.slug}`);
                                  }}
                               >
                                  <GoPencil />
@@ -60,7 +72,7 @@ export default function BlogItem({ type }) {
                               onClick={() => {
                                  setShowMore(!showMore);
                                  toast('Đã sao chép liên kết');
-                                 navigator.clipboard.writeText('http://localhost:5173/blog');
+                                 navigator.clipboard.writeText(`http://localhost:5173/blog/${blog?.id}`);
                               }}
                            >
                               <FaLink />
@@ -79,22 +91,18 @@ export default function BlogItem({ type }) {
          </div>
          <div className="flex items-center">
             <div className="flex-1 pr-5">
-               <Link to={'/'} className="inline-block w-fit">
-                  <h2 className="mt-2 text-xl font-bold">Config Zsh bằng Oh-my-zsh và P10k trên WSL cực ngầu ✨</h2>
+               <Link to={`/blog/${blog?.slug}`} className="inline-block w-fit">
+                  <h2 className="mt-2 text-xl font-bold">{blog?.title}</h2>
                </Link>
-               <p className="mt-3 text-[16px] text-gray">
-                  Hello anh em , thì như blog trước mình có nói rằng mình ko có dùng Ubuntu, nhưng sao lại có...
-               </p>
-               <div className="flex items-center mt-3">
-                  <span className="text-base">18 ngày trước</span>
+               <p className="mt-3 text-[16px] text-gray">{blog?.description}</p>
+               <div className="flex items-center gap-3 mt-3">
+                  <span className="text-base">{blog?.created_at_format}</span>
+                  <span>·</span>
+                  <span className="text-base">{blog?.view} lượt xem</span>
                </div>
             </div>
-            <Link to={'/'}>
-               <img
-                  src="https://files.fullstack.edu.vn/f8-prod/blog_posts/10266/6628ed851ef83.png"
-                  alt=""
-                  className="w-[200px] object-contain rounded-xl"
-               />
+            <Link to={`/blog/${blog?.slug}`}>
+               <img src={blog?.thumbnail} alt="thumbnail" className="w-[200px] max-h-32 object-cover rounded-xl" />
             </Link>
          </div>
       </div>

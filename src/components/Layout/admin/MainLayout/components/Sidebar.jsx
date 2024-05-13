@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
 import { MdQuiz, MdRateReview } from 'react-icons/md';
+import { BlogIcon } from 'src/public/icons';
 
 const Sidebar = ({ children }) => {
    const navList = [
@@ -35,6 +36,11 @@ const Sidebar = ({ children }) => {
          path: '/admin/manage-course-reviews',
          icon: <MdRateReview />,
          title: 'Đánh giá',
+      },
+      {
+         path: '/admin/manage-blogs',
+         icon: <BlogIcon className={'size-[14px]'} />,
+         title: 'Bài viết',
       },
    ];
 

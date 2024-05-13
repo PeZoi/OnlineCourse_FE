@@ -47,12 +47,14 @@ import ContestReview from 'src/features/customer/quiz/pages/ContestReview';
 import CertificatePage from 'src/features/certificate/CertificatePage';
 import ContestDetail from 'src/features/customer/quiz/pages/ContestDetail';
 import RoadmapPage from 'src/features/roadmap/RoadmapPage';
-import AddBlogPage from 'src/features/customer/blog/pages/AddBlogPage';
+import CreateBlogPage from 'src/features/customer/blog/pages/CreateBlogPage';
 import BlogLayout from 'src/components/Layout/customer/BlogLayout';
 import BlogList from 'src/features/customer/blog/pages/BlogList';
 import DetailBlogPage from 'src/features/customer/blog/pages/DetailBlogPage';
 import MyBlogs from 'src/features/customer/settings/pages/MyBlogs';
 import ManageReviews from 'src/features/admin/reviews/ManageReviews';
+import EditBlogPage from 'src/features/customer/blog/pages/EditBlogPage';
+import ManageBlogs from 'src/features/admin/blog/ManageBlogs';
 
 export const router = createBrowserRouter([
    {
@@ -234,9 +236,21 @@ export const router = createBrowserRouter([
          {
             path: 'new-post',
             element: (
-               <BlogLayout>
-                  <AddBlogPage />
-               </BlogLayout>
+               <PrivateLoginRoute>
+                  <BlogLayout>
+                     <CreateBlogPage />
+                  </BlogLayout>
+               </PrivateLoginRoute>
+            ),
+         },
+         {
+            path: 'edit/:blogSlug',
+            element: (
+               <PrivateLoginRoute>
+                  <BlogLayout>
+                     <EditBlogPage />
+                  </BlogLayout>
+               </PrivateLoginRoute>
             ),
          },
          {
@@ -368,6 +382,10 @@ export const router = createBrowserRouter([
          {
             path: 'manage-course-reviews',
             element: <ManageReviews />,
+         },
+         {
+            path: 'manage-blogs',
+            element: <ManageBlogs />,
          },
       ],
    },

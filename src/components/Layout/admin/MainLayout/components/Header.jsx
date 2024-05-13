@@ -2,13 +2,15 @@ import { Avatar } from 'primereact/avatar';
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import TippyModal from 'src/components/TippyModal';
 import { logout } from 'src/features/auth/authSlice';
 import { getMyCourses } from 'src/features/customer/course/courseSlice';
 
 const Header = () => {
-   const { user } = useSelector((state) => state.auth);
    const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const { user } = useSelector((state) => state.auth);
    const [open, setOpen] = useState(false);
 
    return (
@@ -39,6 +41,14 @@ const Header = () => {
                               </div>
                            </div>
                            <hr />
+                           <button
+                              className="block text-gray text-sm py-2 hover:text-black w-full text-start"
+                              onClick={() => {
+                                 navigate('/settings/personal');
+                              }}
+                           >
+                              Cài đặt
+                           </button>
                            <button
                               className="block text-gray text-sm py-2 hover:text-black w-full text-start"
                               onClick={() => {
