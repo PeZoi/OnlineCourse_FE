@@ -1,5 +1,4 @@
 import { FaEllipsisV, FaRegCalendarMinus } from 'react-icons/fa';
-// import { Progress } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import PieComponent from './PieComponent';
 import { ProgressBar } from 'primereact/progressbar';
@@ -54,35 +53,63 @@ const Dashboard = () => {
       <div className="pt-[25px] px-[25px] bg-[#F8F9FC]">
          <div className="flex items-center justify-between">
             <h1 className="text-[#5a5c69] text-[28px] leading-[34px] font-normal cursor-pointer">Dashboard</h1>
-            <button className="bg-primary h-[32px] rounded-[3px] text-white flex items-center justify-center px-[8px]">
+            {/* <button className="bg-primary h-[32px] rounded-[3px] text-white flex items-center justify-center px-[8px]">
                Generate Report
-            </button>
+            </button> */}
          </div>
          <div className="grid grid-cols-4 gap-[30px] mt-[25px] pb-[15px]">
             <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#4E73DF] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
                <div>
-                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">EARNINGS (MONTHLY)</h2>
-                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ NGƯỜI DÙNG</h2>
+                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">56</h1>
                </div>
                <FaRegCalendarMinus fontSize={28} color="" />
             </div>
             <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#4edf8f] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
                <div>
-                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">EARNINGS (ANNUAL)</h2>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ DANH MỤC</h2>
                   <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$240,000</h1>
                </div>
                <FaRegCalendarMinus fontSize={28} color="" />
             </div>
             <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#a84edf] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
                <div>
-                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TASKS</h2>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ KHOÁ HỌC</h2>
                   <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$240,000</h1>
                </div>
                <FaRegCalendarMinus fontSize={28} color="" />
             </div>
             <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#d8df4e] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
                <div>
-                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">PENDING REQUESTS</h2>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ BÀI QUIZ</h2>
+                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
+               </div>
+               <FaRegCalendarMinus fontSize={28} color="" />
+            </div>
+            <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#d8df4e] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
+               <div>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ BÀI VIẾT</h2>
+                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
+               </div>
+               <FaRegCalendarMinus fontSize={28} color="" />
+            </div>
+            <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#d8df4e] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
+               <div>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ ĐƠN HÀNG</h2>
+                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
+               </div>
+               <FaRegCalendarMinus fontSize={28} color="" />
+            </div>
+            <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#d8df4e] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
+               <div>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ ĐÁNH GIÁ</h2>
+                  <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
+               </div>
+               <FaRegCalendarMinus fontSize={28} color="" />
+            </div>
+            <div className="h-[100px] rounded-[8px] bg-white border-l-4 border-[#d8df4e] flex items-center justify-between px-[30px] cursor-pointer hover:shadow-lg transform hover:scale-[103%] transition duration-300 ease-out">
+               <div>
+                  <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ TIỀN</h2>
                   <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">$40,000</h1>
                </div>
                <FaRegCalendarMinus fontSize={28} color="" />

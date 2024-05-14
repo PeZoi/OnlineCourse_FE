@@ -85,3 +85,16 @@ export const updateViewsCountBlogAPI = (blogId) => {
          return error;
       });
 };
+
+// Search theo title
+export const searchBlogAPI = (searchText) => {
+   return axios
+      .get(`/api/blog/search?keyword=${searchText}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};

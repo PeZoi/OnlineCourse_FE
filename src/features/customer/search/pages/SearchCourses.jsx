@@ -1,16 +1,29 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import SearchPage from '../components/SearchPage';
-import useAxios from 'src/hooks/useAxios';
 import { searchCourseAPI } from 'src/api/courseApi';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Rating } from 'primereact/rating';
 import { formatDate } from 'src/utils/common';
+import { useEffect, useState } from 'react';
 
 export default function SearchCourses() {
    const [searchParams] = useSearchParams();
 
-   const { response, loading } = useAxios(() => searchCourseAPI(searchParams.get('q')), [searchParams]);
+   const [loading, setLoading] = useState(false);
+   const [courses, setCourses] = useState([]);
 
+   useEffect(() => {
+      setLoading(true);
+      searchCourseAPI(searchParams.get('q') || '').then((res) => {
+         if (res.status === 200) {
+            setLoading(false);
+            setCourses(res.data);
+         } else {
+            setLoading(false);
+            setCourses([]);
+         }
+      });
+   }, [searchParams]);
    return (
       <SearchPage>
          <div className="my-5">
@@ -18,9 +31,9 @@ export default function SearchCourses() {
                <ProgressSpinner className="size-10" />
             ) : (
                <>
-                  {!response && <span>Không tìm thấy</span>}
-                  {response &&
-                     response.map((course) => (
+                  {courses.length === 0 && <span>Không tìm thấy</span>}
+                  {courses &&
+                     courses.map((course) => (
                         <>
                            <Link
                               to={`/course/${course?.slug}`}

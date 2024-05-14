@@ -4,6 +4,7 @@ import SearchResult from './SearchResult';
 import useDebounce from 'src/hooks/useDebounce';
 import { searchCourseAPI } from 'src/api/courseApi';
 import { searchContestAPI } from 'src/api/contestApi';
+import { searchBlogAPI } from 'src/api/blogApi';
 
 export default function Search() {
    const divContainerRef = useRef();
@@ -14,6 +15,7 @@ export default function Search() {
    const [searchResult, setSearchResult] = useState({
       courses: [],
       quizzes: [],
+      blogs: [],
    });
 
    const debouncedValue = useDebounce(searchText, 500);
@@ -22,6 +24,7 @@ export default function Search() {
       setLoading(true);
       const courses = await searchCourseAPI(debouncedValue).catch((err) => console.log(err));
       const quizzes = await searchContestAPI(debouncedValue).catch((err) => console.log(err));
+      const blogs = await searchBlogAPI(debouncedValue).catch((err) => console.log(err));
 
       // handle courses
       if (courses.status === 200) {
@@ -35,6 +38,13 @@ export default function Search() {
          setSearchResult((pre) => ({ ...pre, quizzes: quizzes.data }));
       } else if (quizzes.status === 204) {
          setSearchResult((pre) => ({ ...pre, quizzes: [] }));
+      }
+
+      // handle blogs
+      if (blogs.status === 200) {
+         setSearchResult((pre) => ({ ...pre, blogs: blogs.data }));
+      } else if (blogs.status === 204) {
+         setSearchResult((pre) => ({ ...pre, blogs: [] }));
       }
 
       setLoading(false);
