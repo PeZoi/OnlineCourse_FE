@@ -98,3 +98,17 @@ export const searchBlogAPI = (searchText) => {
          return null;
       });
 };
+
+// Check xem có phải blog không
+export const checkAuthorAPI = (blogId) => {
+   const user = getUserDataByLocalStorage();
+   return axios
+      .get(`/api/blog/check-author?user=${user?.user_id}&blog=${blogId}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         console.log(error);
+         return null;
+      });
+};

@@ -6,7 +6,7 @@ import { getCCCDataByPeriodAPI, getGeneralDataAPI, getSaleIncomeDataByPeriodAPI 
 import useAxios from 'src/hooks/useAxios';
 import { BlogIcon } from 'src/public/icons';
 import { formatCurrency } from 'src/utils/common';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import IncomeChart from './components/IncomeChart';
 import CategoryChart from './components/CategoryChart';
 import CourseTotalIncomeChart from './components/CourseTotalIncomeChart';
@@ -14,7 +14,6 @@ import CourseOrderCountChart from './components/CourseOrderCountChart';
 import ContestAvgGradeChart from './components/ContestAvgGradeChart';
 import ContestJoinCountChart from './components/ContestJoinCountChart';
 
-// const TYPE_PERIOD = [{ value: 'last_7_days', display: '7 ngày trước' }, 'last_28_days', 'last_6_months', 'last_year'];
 const TYPE_PERIOD = [
    { value: 'last_7_days', display: '7 ngày trước' },
    { value: 'last_28_days', display: '28 ngày trước' },
@@ -42,10 +41,6 @@ const Dashboard = () => {
       () => getCCCDataByPeriodAPI('CONTEST', period),
       [period],
    );
-
-   useEffect(() => {
-      console.log({ contestData });
-   }, [contestData]);
 
    return (
       <div className="pt-[25px] px-[25px] pb-20">
