@@ -54,7 +54,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ NGƯỜI DÙNG</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_users}
+                           {generalData?.total_users || 0}
                         </h1>
                      </div>
                      <FaUser fontSize={28} color="" />
@@ -63,7 +63,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ DANH MỤC</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_categories}
+                           {generalData?.total_categories || 0}
                         </h1>
                      </div>
                      <BiSolidCategoryAlt fontSize={28} color="" />
@@ -72,7 +72,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ KHOÁ HỌC</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_courses}
+                           {generalData?.total_courses || 0}
                         </h1>
                      </div>
                      <FaBook fontSize={28} color="" />
@@ -81,7 +81,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ BÀI QUIZ</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_quizzes}
+                           {generalData?.total_quizzes || 0}
                         </h1>
                      </div>
                      <MdQuiz fontSize={28} color="" />
@@ -90,7 +90,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ BÀI VIẾT</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_blogs}
+                           {generalData?.total_blogs || 0}
                         </h1>
                      </div>
                      <BlogIcon className={'size-[28px]'} />
@@ -99,7 +99,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ ĐƠN HÀNG</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_orders}
+                           {generalData?.total_orders || 0}
                         </h1>
                      </div>
                      <RiBillFill fontSize={28} color="" />
@@ -108,7 +108,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG SỐ ĐÁNH GIÁ</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {generalData?.total_reviews}
+                           {generalData?.total_reviews || 0}
                         </h1>
                      </div>
                      <MdRateReview fontSize={28} color="" />
@@ -117,7 +117,7 @@ const Dashboard = () => {
                      <div>
                         <h2 className="text-[#B589DF] text-[11px] leading-[17px] font-bold">TỔNG DOANH THU</h2>
                         <h1 className="text-[20px] leading-[24px] font-bold text-[#5a5c69] mt-[5px]">
-                           {formatCurrency(generalData?.total_incomes)}
+                           {formatCurrency(generalData?.total_incomes || 0)}
                         </h1>
                      </div>
                      <MdAttachMoney fontSize={28} color="" />

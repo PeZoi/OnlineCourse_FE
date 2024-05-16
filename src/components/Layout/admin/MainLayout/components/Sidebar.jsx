@@ -2,7 +2,7 @@ import { FaTachometerAlt, FaRegChartBar, FaRegUser, FaBook } from 'react-icons/f
 import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
-import { MdQuiz, MdRateReview } from 'react-icons/md';
+import { MdContactSupport, MdQuiz, MdRateReview } from 'react-icons/md';
 import { BlogIcon } from 'src/public/icons';
 
 const Sidebar = ({ children }) => {
@@ -41,6 +41,11 @@ const Sidebar = ({ children }) => {
          path: '/admin/manage-blogs',
          icon: <BlogIcon className={'size-[14px]'} />,
          title: 'Bài viết',
+      },
+      {
+         path: '/admin/manage-contacts',
+         icon: <MdContactSupport className={'size-5'} />,
+         title: 'Liên hệ',
       },
    ];
 

@@ -12,7 +12,7 @@ export default function CourseOrderCountChart(props) {
          },
          title: {
             display: true,
-            text: 'THỐNG KÊ SỐ HOÁ ĐƠN CỦA KHOÁ HỌC',
+            text: 'THỐNG KÊ SỐ ĐƠN HÀNG CỦA KHOÁ HỌC',
          },
       },
    };

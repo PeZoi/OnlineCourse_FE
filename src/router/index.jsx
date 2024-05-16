@@ -55,6 +55,7 @@ import MyBlogs from 'src/features/customer/settings/pages/MyBlogs';
 import ManageReviews from 'src/features/admin/reviews/ManageReviews';
 import EditBlogPage from 'src/features/customer/blog/pages/EditBlogPage';
 import ManageBlogs from 'src/features/admin/blog/ManageBlogs';
+import ManageContacts from 'src/features/admin/contact/ManageContacts';
 
 export const router = createBrowserRouter([
    {
@@ -386,6 +387,10 @@ export const router = createBrowserRouter([
          {
             path: 'manage-blogs',
             element: <ManageBlogs />,
+         },
+         {
+            path: 'manage-contacts',
+            element: <ManageContacts />,
          },
       ],
    },

@@ -27,14 +27,14 @@ export default function HoleQuestion({ quiz, onAnswerChange, type = null }) {
             />
             <span className="ml-3">
                {type === 'review' &&
-                  (quiz?.answer_list?.[0]?.answer_of_customer === quiz?.answer_list?.[0]?.answer_is_correct ? (
+                  (quiz?.is_correct_for_answer ? (
                      <FaCheck className="text-green size-4" />
                   ) : (
                      <FaXmark className="text-red size-4" />
                   ))}
             </span>
          </div>
-         {type === 'review' && !quiz?.answer_list?.[0]?.is_correct_for_answer && (
+         {type === 'review' && !quiz?.is_correct_for_answer && (
             <p className="text-base my-3 py-2 px-4 bg-[#fbff0a70] w-fit font-semibold">
                Đáp án đúng là: {quiz?.answer_list?.[0]?.content}
             </p>

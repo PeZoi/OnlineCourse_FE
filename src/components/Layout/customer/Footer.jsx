@@ -44,7 +44,7 @@ export default function Footer() {
                   <span className="text-base text-white font-bold mt-[7px]">VỀ TC</span>
                   <div className="flex flex-col text-[#a9b3bb] text-sm gap-2">
                      <Link to={'/about-us'}>Giới thiệu</Link>
-                     <Link to={'/'}>Liên hệ</Link>
+                     <Link to={'/contact-us'}>Liên hệ</Link>
                      <span>Điều khoản</span>
                      <span>Bảo mật</span>
                   </div>
