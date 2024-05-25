@@ -7,6 +7,7 @@ import * as htmlToImage from 'html-to-image';
 import { FaDownload } from 'react-icons/fa';
 import { useState } from 'react';
 import { Button } from 'primereact/button';
+import { URL_FE } from 'src/utils/constant';
 export default function CertificatePage() {
    const { certId } = useParams();
    const [loadingDownload, setLoadingDownload] = useState(false);
@@ -73,7 +74,7 @@ export default function CertificatePage() {
                      </span>
                      <div className="absolute top-[51px] left-[67px] inline-block">
                         <img
-                           src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:5173/cert/${certId}`}
+                           src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${URL_FE}/cert/${certId}`}
                            alt=""
                            className="size-14"
                         />

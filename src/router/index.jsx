@@ -56,6 +56,8 @@ import ManageReviews from 'src/features/admin/reviews/ManageReviews';
 import EditBlogPage from 'src/features/customer/blog/pages/EditBlogPage';
 import ManageBlogs from 'src/features/admin/blog/ManageBlogs';
 import ManageContacts from 'src/features/admin/contact/ManageContacts';
+import CodeLayout from 'src/components/Layout/customer/CodeLayout';
+import CodeCompiler from 'src/features/code';
 
 export const router = createBrowserRouter([
    {
@@ -306,6 +308,16 @@ export const router = createBrowserRouter([
          <MainLayout>
             <RoadmapPage />
          </MainLayout>
+      ),
+   },
+   {
+      path: '/code',
+      element: (
+         <PrivateLoginRoute>
+            <CodeLayout>
+               <CodeCompiler />
+            </CodeLayout>
+         </PrivateLoginRoute>
       ),
    },
    // ABOUT

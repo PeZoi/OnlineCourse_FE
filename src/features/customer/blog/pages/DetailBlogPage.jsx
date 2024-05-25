@@ -6,6 +6,7 @@ import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getBlogsBySlugAPI, updateViewsCountBlogAPI } from 'src/api/blogApi';
 import TippyModal from 'src/components/TippyModal';
+import { URL_FE } from 'src/utils/constant';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function DetailBlogPage() {
@@ -71,7 +72,7 @@ export default function DetailBlogPage() {
                                  onClick={() => {
                                     setShowMore(!showMore);
                                     toast('Đã sao chép liên kết');
-                                    navigator.clipboard.writeText(`http://localhost:5173/blog/${blog?.slug}`);
+                                    navigator.clipboard.writeText(`${URL_FE}/blog/${blog?.slug}`);
                                  }}
                               >
                                  <FaLink />

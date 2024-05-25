@@ -86,7 +86,7 @@ const Comment = ({ comment, isParent, isNested, setRerender }) => {
                   <span className="font-semibold text-sm">{comment.username}</span>
 
                   <div className="my-3 w-fit font-normal ql-snow">
-                     <p className="ql-editor w-fit" dangerouslySetInnerHTML={{ __html: comment.content }}></p>
+                     <p className=" w-fit" dangerouslySetInnerHTML={{ __html: comment.content }}></p>
                   </div>
                </div>
                <div className="flex items-center mt-3 text-[13px] select-none">

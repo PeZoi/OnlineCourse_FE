@@ -9,7 +9,7 @@ import useAxios from 'src/hooks/useAxios';
 export default function CourseFeedback({ course }) {
    const [feedback, setFeedback] = useState('');
    const [rating, setRating] = useState(null);
-   const [checkUserReviewed, setCheckUserReviewed] = useState(true);
+   const [checkUserReviewed, setCheckUserReviewed] = useState(false);
 
    const [rerender, setRerender] = useState(true);
 

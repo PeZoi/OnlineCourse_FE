@@ -52,14 +52,15 @@ export default function Payment() {
       });
    }, [courseSlug, navigate]);
 
-   // Xử lý thời gian chạy
    useEffect(() => {
+      // Xử lý thời gian chạy
       let intervalCount;
       const handleTimeUpdate = () => {
          if (countRef.current < 1) {
             toast('Bạn đã hết thời gian thanh toán');
             navigate(`/course/${courseSlug}`);
             clearInterval(intervalCount);
+            clearInterval(intervalTransaction);
          }
          countRef.current--;
          setCurrentTime(countRef.current);
@@ -67,14 +68,7 @@ export default function Payment() {
       // Gọi handleTimeUpdate mỗi giây
       intervalCount = setInterval(handleTimeUpdate, 1000);
 
-      return () => {
-         clearInterval(intervalCount);
-      };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
-
-   // Check lịch sử giao dịch
-   useEffect(() => {
+      // Xử lý check transaction
       let intervalTransaction;
       const handleCheckTransaction = () => {
          const data = {
@@ -90,12 +84,14 @@ export default function Payment() {
                   navigate(`/course/${courseSlug}`);
                }, 3000);
                clearInterval(intervalTransaction);
+               clearInterval(intervalCount);
             }
          });
       };
       intervalTransaction = setInterval(handleCheckTransaction, 10000);
 
       return () => {
+         clearInterval(intervalCount);
          clearInterval(intervalTransaction);
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -115,12 +111,15 @@ export default function Payment() {
                   {isSuccessPayment ? (
                      <FaCircleCheck className="size-7 text-green" />
                   ) : (
-                     <img src={loading} alt="loading" className="w-16 h-10 object-cover " />
+                     <div className="flex flex-col">
+                        <img src={loading} alt="loading" className="w-16 h-10 object-cover " />
+                        <div className="flex items-center justify-center">
+                           <span className=" text-2xl">{secondsConvertToMinutesAndSeconds(currentTime)}</span>
+                        </div>
+                     </div>
                   )}
                </div>
-               <div className="flex items-center justify-center">
-                  <span className=" text-2xl">{secondsConvertToMinutesAndSeconds(currentTime)}</span>
-               </div>
+
                <hr className="mt-5" />
                <div className="uppercase my-5 text-wrap">
                   <p className="text-base font-bold overflow-hidden">

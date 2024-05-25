@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import toast from 'react-hot-toast';
 import { submitSignInAPI } from 'src/api/auth';
+import { URL_FE } from 'src/utils/constant';
 
 export const loginAsync = createAsyncThunk('auth/login', async (payload, thunkAPI) => {
    try {
@@ -65,6 +66,7 @@ const authSlice = createSlice({
                state.isLogged = true;
                localStorage.setItem('user', JSON.stringify(state.user));
                localStorage.setItem('token', state.token);
+
                toast.success('Đăng nhập thành công');
             }
          });

@@ -3,6 +3,7 @@ import TippyModal from '../../../../TippyModal';
 import { Link, NavLink } from 'react-router-dom';
 import { MdQuiz } from 'react-icons/md';
 import { BlogIcon, CreateIcon, HomeIcon, PenIcon, RoadMapIcon } from 'src/public/icons';
+import { FaCode } from 'react-icons/fa';
 
 export default function Sidebar({ children }) {
    const [isShowModalCreateBtn, setIsShowModalCreateBtn] = useState(false);
@@ -21,6 +22,11 @@ export default function Sidebar({ children }) {
          icon: <MdQuiz className="size-5" />,
          name: 'Quiz',
          path: '/quiz',
+      },
+      {
+         icon: <FaCode className="size-5" />,
+         name: 'Code',
+         path: '/code',
       },
       {
          icon: <RoadMapIcon />,

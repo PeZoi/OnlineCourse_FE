@@ -1,12 +1,15 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { signUpCheckExistsAPI, submitSignUpAPI } from 'src/api/auth';
 import { phoneNumberRegex } from 'src/utils/regex';
 import toast from 'react-hot-toast';
+import { Button } from 'primereact/button';
 
 export default function SignUp({ setTypes, resetModal }) {
+   const [loadingSubmit, setLoadingSubmit] = useState(false);
+
    const schema = yup.object().shape({
       full_name: yup
          .string()
@@ -87,13 +90,17 @@ export default function SignUp({ setTypes, resetModal }) {
    });
 
    const onSubmit = (data) => {
+      setLoadingSubmit(true);
       let formData = new FormData();
       formData.append('user', new Blob([JSON.stringify(data)], { type: 'application/json' }));
 
       toast.promise(
          submitSignUpAPI(formData).then((response) => {
-            if (response) {
+            if (response.status === 201) {
                reset();
+               setLoadingSubmit(false);
+            } else {
+               setLoadingSubmit(false);
             }
          }),
          {
@@ -185,11 +192,14 @@ export default function SignUp({ setTypes, resetModal }) {
                      Gợi ý: Mật khẩu cần có ít nhất 8-30 ký tự
                   </p>
                </div>
-               <button className="bg-primary text-white w-full h-10 mt-5 hover:opacity-80 rounded-3xl font-bold">
+               <Button
+                  loading={loadingSubmit}
+                  className="bg-primary flex justify-center text-white w-full h-10 mt-5 hover:opacity-80 rounded-3xl font-bold"
+               >
                   Đăng ký
-               </button>
+               </Button>
             </div>
-            <div className="mt-10">
+            <div className="mt-4">
                <p className="text-center">
                   Bạn đã có tài khoản?
                   <span className="text-primary font-medium cursor-pointer ml-1" onClick={() => setTypes('SIGNIN')}>

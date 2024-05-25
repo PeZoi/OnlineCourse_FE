@@ -106,8 +106,8 @@ export default function LearnTypeVideo({ lesson }) {
 
                <CreateNote videoRef={videoRef} currentTimeVideo={currentTimeVideo} lesson={lesson} />
             </div>
-            <div className="mt-5">
-               <p>{lesson?.video.description}</p>
+            <div className="mt-5 ql-snow">
+               <div className="ql-editor" dangerouslySetInnerHTML={{ __html: lesson?.video.description }}></div>
             </div>
          </div>
       </div>

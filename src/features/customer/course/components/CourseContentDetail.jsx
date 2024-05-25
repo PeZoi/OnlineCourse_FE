@@ -8,7 +8,7 @@ export default function CourseContentDetail({ isOpen, handleToggle, index, chapt
       <div className="my-3">
          <button
             className={
-               'flex items-center justify-between py-3 px-5 bg-gray-light rounded-lg border border-[#ececee] w-full ' +
+               'flex items-centaer justify-between py-3 px-5 bg-gray-light rounded-lg border border-[#ececee] w-full ' +
                (isOpen && 'sticky top-[66px]')
             }
             style={{ zIndex: '50' }}

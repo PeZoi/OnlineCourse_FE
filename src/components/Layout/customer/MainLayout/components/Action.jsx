@@ -146,7 +146,12 @@ export default function Action() {
                   ModalChildren={
                      <div className="animate-fade w-[230px] h-fit rounded-lg px-6 py-3 shadow-base bg-white">
                         <div className="flex items-center justify-start">
-                           <Avatar image={user?.photo} size="xlarge" shape="circle" />
+                           <Avatar
+                              image={user?.photo}
+                              size="xlarge"
+                              shape="circle"
+                              className="object-contain overflow-hidden"
+                           />
                            <div className="flex items-start flex-col justify-end ml-3">
                               <p className="text-black font-bold text-base">{user.full_name}</p>
                               <p className="text-gray text-sm">@{user.username}</p>

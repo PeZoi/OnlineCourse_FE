@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TippyModal from 'src/components/TippyModal';
 import { GoPencil } from 'react-icons/go';
 import { deleteBlogAPI } from 'src/api/blogApi';
+import { URL_FE } from 'src/utils/constant';
 
 // type để phần biết blog list hay my blogs
 export default function BlogItem({ type, blog, setRerender }) {
@@ -19,8 +20,8 @@ export default function BlogItem({ type, blog, setRerender }) {
          deleteBlogAPI(blog?.id)
             .then((res) => {
                if (res.status === 200) {
-                  toast.success('Xoá bài viết thành công');
                   setRerender(Math.random() * 1000);
+                  toast.success('Xoá bài viết thành công');
                } else {
                   toast.error('Xoá bài viết thất bại');
                }
@@ -72,7 +73,7 @@ export default function BlogItem({ type, blog, setRerender }) {
                               onClick={() => {
                                  setShowMore(!showMore);
                                  toast('Đã sao chép liên kết');
-                                 navigator.clipboard.writeText(`http://localhost:5173/blog/${blog?.id}`);
+                                 navigator.clipboard.writeText(`${URL_FE}/blog/${blog?.id}`);
                               }}
                            >
                               <FaLink />
