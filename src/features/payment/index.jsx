@@ -19,6 +19,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { FaCircleCheck } from 'react-icons/fa6';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 export default function Payment() {
+   document.title = 'Thanh Toán';
    useScrollToTop();
 
    const { courseSlug } = useParams();

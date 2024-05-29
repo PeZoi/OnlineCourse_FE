@@ -11,6 +11,7 @@ import { updateInformationUser } from 'src/features/auth/authSlice';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function Personal() {
+   document.title = 'Thông Tin Cá Nhân';
    useScrollToTop();
    const dispatch = useDispatch();
 

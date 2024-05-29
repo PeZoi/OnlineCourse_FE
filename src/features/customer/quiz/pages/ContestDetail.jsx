@@ -24,6 +24,7 @@ export default function ContestDetail() {
       getQuizzesByContestIdAPI(contestId).then((res) => {
          if (res.status === 200) {
             setContestDetail(res.data);
+            document.title = res.data.title;
          }
       });
    }, [contestId]);

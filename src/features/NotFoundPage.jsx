@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import NotFoundSVG from 'src/public/images/404.svg';
 
 export default function NotFoundPage() {
+   document.title = 'Không tìm thấy!';
+
    return (
       <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
          <div className="relative h-[200px] w-full">

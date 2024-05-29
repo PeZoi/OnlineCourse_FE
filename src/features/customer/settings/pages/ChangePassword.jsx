@@ -6,6 +6,7 @@ import useScrollToTop from 'src/hooks/useScrollToTop';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 import * as yup from 'yup';
 export default function ChangePassword() {
+   document.title = 'Đổi Mật Khẩu';
    useScrollToTop();
 
    // Xử lý validate form

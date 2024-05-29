@@ -4,9 +4,12 @@ import { Link } from 'react-router-dom';
 import { getAllBlogsByUserIdAPI } from 'src/api/blogApi';
 import BlogItem from 'src/components/BlogItem';
 import useAxios from 'src/hooks/useAxios';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { CirclePlus } from 'src/public/icons';
 
 export default function MyBlogs() {
+   document.title = 'Bài Viết Của Tôi';
+   useScrollToTop();
    const [rerender, setRerender] = useState(0);
 
    const { response: blogs, loading } = useAxios(getAllBlogsByUserIdAPI, [rerender]);

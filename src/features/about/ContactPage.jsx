@@ -11,6 +11,7 @@ import useScrollToTop from 'src/hooks/useScrollToTop';
 import { sendContactAPI } from 'src/api/contactApi';
 import toast from 'react-hot-toast';
 export default function ContactPage() {
+   document.title = 'Liên Hệ';
    useScrollToTop();
    const [loadingSubmit, setLoadingSubmit] = useState(false);
 

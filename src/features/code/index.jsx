@@ -3,9 +3,13 @@ import { Button } from 'primereact/button';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { executeCodeAPI } from 'src/api/codeApi';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 import { CODE_SNIPPETS, LANGUAGE_VERSIONS } from 'src/utils/constant';
 
 export default function CodeCompiler() {
+   document.title = 'Code Compiler';
+   useScrollToTop();
+
    const [code, setCode] = useState(CODE_SNIPPETS.javascript);
    const [language, setLanguage] = useState(LANGUAGE_VERSIONS[0].name);
    const [output, setOutput] = useState(null);

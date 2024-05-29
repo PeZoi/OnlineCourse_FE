@@ -1,6 +1,7 @@
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function AboutPage() {
+   document.title = 'Về Chúng Tôi';
    useScrollToTop();
    return (
       <div className="text-lg p-10 pb-20">

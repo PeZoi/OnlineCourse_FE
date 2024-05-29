@@ -1,6 +1,7 @@
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function RoadmapPage() {
+   document.title = 'Lộ Trình';
    useScrollToTop();
 
    return (

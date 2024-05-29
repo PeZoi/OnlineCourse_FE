@@ -32,6 +32,7 @@ export default function CourseDetail() {
          }
          if (res.status === 200) {
             setCourse(res.data);
+            document.title = res.data.title;
          }
       };
       fetchCourse();

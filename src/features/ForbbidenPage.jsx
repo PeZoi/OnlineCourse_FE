@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import ForbbidenSVG from 'src/public/images/403.svg';
 
 export default function ForbbidenPage() {
+   document.title = 'Không có quyền!';
    return (
       <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
          <div className="relative h-[200px] w-full">

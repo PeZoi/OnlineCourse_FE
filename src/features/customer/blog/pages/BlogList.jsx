@@ -2,8 +2,11 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { getAllBlogsAPI } from 'src/api/blogApi';
 import BlogItem from 'src/components/BlogItem';
 import useAxios from 'src/hooks/useAxios';
+import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function BlogList() {
+   document.title = 'Bài Viết';
+   useScrollToTop();
    const { response: blogs, loading } = useAxios(getAllBlogsAPI, []);
 
    return (

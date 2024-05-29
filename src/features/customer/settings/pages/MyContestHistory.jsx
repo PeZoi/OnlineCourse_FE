@@ -11,6 +11,7 @@ import useScrollToTop from 'src/hooks/useScrollToTop';
 import { durationFormat, formatDate2, secondsConvert } from 'src/utils/common';
 
 export default function MyContestHistory() {
+   document.title = 'Lịch Sử Làm Bài';
    useScrollToTop();
    const { response: records, loading: recordLoading } = useAxios(getAllRecordByUserIdAPI, []);
    const [searchKeyWord, setSearchKeyWord] = useState('');

@@ -23,6 +23,7 @@ export default function DetailBlogPage() {
          getBlogsBySlugAPI(blogSlug).then((res) => {
             if (res.status === 200) {
                setBlog(res.data);
+               document.title = res.data.title;
                // Cập nhật views sau 10s
                timeout = setTimeout(() => {
                   updateViewsCountBlogAPI(res.data?.id).catch((err) => {

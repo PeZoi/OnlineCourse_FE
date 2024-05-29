@@ -8,6 +8,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import Tippy from '@tippyjs/react';
 
 export default function ContestList() {
+   document.title = 'Bộ Đề Thi Lý Thuyết';
    useScrollToTop();
 
    const { response: contests, loading } = useAxios(getAllContestAPI, []);

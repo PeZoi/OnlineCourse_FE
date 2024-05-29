@@ -313,11 +313,9 @@ export const router = createBrowserRouter([
    {
       path: '/code',
       element: (
-         <PrivateLoginRoute>
-            <CodeLayout>
-               <CodeCompiler />
-            </CodeLayout>
-         </PrivateLoginRoute>
+         <CodeLayout>
+            <CodeCompiler />
+         </CodeLayout>
       ),
    },
    // ABOUT

@@ -8,6 +8,7 @@ import useScrollToTop from 'src/hooks/useScrollToTop';
 import { formatDate2, formatNumber } from 'src/utils/common';
 
 export default function MyTransactionHistory() {
+   document.title = 'Lịch Sử Giao Dịch';
    useScrollToTop();
    const { response: transactions, loading: transactionsLoading } = useAxios(getAllOrdersByUserIdAPI, []);
 

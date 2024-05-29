@@ -6,6 +6,7 @@ import { getMyCourseAPI } from 'src/api/courseApi';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function MyCourses() {
+   document.title = 'Khoá Học Của Tôi';
    useScrollToTop();
 
    const [myCourses, setMyCourses] = useState([]);

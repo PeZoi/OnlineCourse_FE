@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Button } from 'primereact/button';
 import { URL_FE } from 'src/utils/constant';
 export default function CertificatePage() {
+   document.title = 'Chứng Chỉ';
    const { certId } = useParams();
    const [loadingDownload, setLoadingDownload] = useState(false);
 

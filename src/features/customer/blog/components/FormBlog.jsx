@@ -18,6 +18,11 @@ export default function FormBlog({ type, blog }) {
 
    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
+   // Handle change title
+   useEffect(() => {
+      document.title = title || 'Tạo Bài Viết';
+   }, [title]);
+
    useEffect(() => {
       if (type === 'EDIT') {
          setTitle(blog?.title);

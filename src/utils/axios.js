@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getTokenByLocalStorage } from './common';
 
 const axiosInstance = axios.create({
    baseURL: import.meta.env.VITE_URL_API,
@@ -7,7 +8,10 @@ const axiosInstance = axios.create({
 // Add a request interceptor
 axiosInstance.interceptors.request.use(
    function (config) {
-      // Do something before request is sent
+      const token = getTokenByLocalStorage();
+      if (token) {
+         config.headers.Authorization = 'Bearer ' + token;
+      }
       return config;
    },
    function (error) {

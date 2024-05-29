@@ -27,6 +27,7 @@ export default function LessonContent() {
          getLessonByIdAPI(lessonId)
             .then((res) => {
                if (res.status === 200) {
+                  document.title = res.data.name;
                   setLesson(res.data);
                } else {
                   let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);

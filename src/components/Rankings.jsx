@@ -18,7 +18,7 @@ export default function Rankings({ ranks }) {
                      <div>
                         <img src={Top1} alt="top1" className="size-12" />
                      </div>
-                     <Avatar image={ranks?.[0]?.avatar_user} size="large" shape="circle" />
+                     <img className="rounded-full object-cover size-12" src={ranks?.[0]?.avatar_user} />
                      <Tippy content="Tên tài khoản">
                         <span className="text-lg drop-shadow-xl">{ranks?.[0]?.username}</span>
                      </Tippy>
@@ -35,7 +35,7 @@ export default function Rankings({ ranks }) {
                      <div>
                         <img src={Top2} alt="top2" className="size-12" />
                      </div>
-                     <Avatar image={ranks?.[1]?.avatar_user} size="large" shape="circle" />
+                     <img className="rounded-full object-cover size-12" src={ranks?.[1]?.avatar_user} />
                      <Tippy content="Tên tài khoản">
                         <span className="text-lg drop-shadow-xl">{ranks?.[1]?.username}</span>
                      </Tippy>
@@ -50,7 +50,7 @@ export default function Rankings({ ranks }) {
                {ranks.length > 2 && ranks?.[2] && (
                   <div className="rounded-2xl w-full p-3 flex items-center justify-evenly text-white font-semibold gap-5 bg-gradient-to-tl from-[#d946ef] to-[#ec4899]">
                      <div className="font-bold text-xl">TOP 3</div>
-                     <Avatar image={ranks?.[2]?.avatar_user} size="large" shape="circle" />
+                     <img className="rounded-full object-cover size-12" src={ranks?.[2]?.avatar_user} />
                      <Tippy content="Tên tài khoản">
                         <span className="text-lg drop-shadow-xl">{ranks?.[2]?.username}</span>
                      </Tippy>
@@ -71,7 +71,10 @@ export default function Rankings({ ranks }) {
                               key={index}
                            >
                               <div className="font-bold text-xl">TOP {index + 4}</div>
-                              <Avatar image={ranks?.[index + 3]?.avatar_user} size="large" shape="circle" />
+                              <img
+                                 className="rounded-full object-cover size-12"
+                                 src={ranks?.[index + 3]?.avatar_user}
+                              />
                               <Tippy content="Tên tài khoản">
                                  <span className="text-lg drop-shadow-xl">{ranks?.[index + 3]?.username}</span>
                               </Tippy>

@@ -9,6 +9,7 @@ import { getAllCategoriesAPI } from 'src/api/categoryApi';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
 export default function Home() {
+   document.title = 'TC - Học Lập Trình Để Đi Làm';
    useScrollToTop();
 
    const [categories, setCategories] = useState([]);
