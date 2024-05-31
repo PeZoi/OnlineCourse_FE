@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import CourseChapterItem from '../components/CourseLearn/CourseChapterItem';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { getLessonOfCourseAPI, getLessonOfUserAPI } from 'src/api/lessonApi';
@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import LessonContent from '../components/CourseLearn/LessonContent';
 import useScrollToTop from 'src/hooks/useScrollToTop';
 
-export default function CourseLearn() {
+const CourseLearn = memo(function CourseLearn() {
    useScrollToTop();
 
    const { courseSlug } = useParams();
@@ -60,10 +60,11 @@ export default function CourseLearn() {
    useEffect(() => {
       const id = parseInt(searchParams.get('id'));
       let currentLesson = myCourseSelected?.list_tracks.find((track) => track.is_current);
+
       myCourseSelected?.list_tracks.forEach((track) => {
          // Nếu trên thanh url không có id thì load bài đang học
          if (track.is_current && !id) {
-            navigate(`/course/learn/${courseSlug}?id=${track.lesson_id}`);
+            navigate(`/course/learn/${courseSlug}?id=${track.lesson_id}`, { replace: true });
          }
 
          // Xử lý khi bài học đó chưa unlock mà người dùng vẫn cố vào
@@ -71,6 +72,17 @@ export default function CourseLearn() {
             !track?.is_unlock && navigate(`/course/learn/${courseSlug}?id=${currentLesson.lesson_id}`);
          }
       });
+
+      // Nếu khoá học đó đã hoàn thành xong hết rồi thì mặc định vào sẽ vào bài học cuối
+      if (!currentLesson) {
+         // Lấy ra danh sách id của bài học
+         const lessonIdList = myCourseSelected?.list_tracks.map((track) => track?.lesson_id) || [];
+         // Tìm xem bài học nào là cuối cùng
+         const lastLesson = Math.max(...lessonIdList);
+         if (lastLesson !== -Infinity) {
+            navigate(`/course/learn/${courseSlug}?id=${lastLesson}`, { replace: true });
+         }
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [myCourseSelected]);
 
@@ -109,4 +121,6 @@ export default function CourseLearn() {
          </div>
       </div>
    );
-}
+});
+
+export default CourseLearn;

@@ -14,16 +14,18 @@ export default function CourseFeedback({ course }) {
    const [rerender, setRerender] = useState(true);
 
    const { response: reviews, loading: reviewsLoading } = useAxios(
-      () => getAllReviewByCourseIdAPI(course?.id),
+      () => course?.id && getAllReviewByCourseIdAPI(course?.id),
       [course, rerender],
    );
 
    useEffect(() => {
-      checkReviewedByUserIdAPI(course?.id).then((res) => {
-         if (res.status === 200) {
-            setCheckUserReviewed(res.data.is_process);
-         }
-      });
+      if (course?.id) {
+         checkReviewedByUserIdAPI(course?.id).then((res) => {
+            if (res.status === 200) {
+               setCheckUserReviewed(res.data.is_process);
+            }
+         });
+      }
    }, [course]);
 
    const handleSubmitFeedback = () => {
@@ -101,27 +103,33 @@ export default function CourseFeedback({ course }) {
                </div>
             ) : (
                <>
-                  {reviews?.list_responses?.map((review) => (
-                     <div className="flex mt-5" key={review?.id}>
-                        <img className="size-10 rounded-full my-2" src={review?.photo_user} alt="Avatar"></img>
-                        <div className="ml-3">
-                           <div className="flex items-end mb-2">
-                              <span className="text-sm font-semibold">{review?.username}</span>
-                              <span className="ml-3 text-xs font-medium text-gray">{review?.time_formatted}</span>
+                  {!reviews ? (
+                     <p className="mt-3">Chưa có đánh giá nào!!</p>
+                  ) : (
+                     <>
+                        {reviews?.list_responses?.map((review) => (
+                           <div className="flex mt-5" key={review?.id}>
+                              <img className="size-10 rounded-full my-2" src={review?.photo_user} alt="Avatar"></img>
+                              <div className="ml-3">
+                                 <div className="flex items-end mb-2">
+                                    <span className="text-sm font-semibold">{review?.username}</span>
+                                    <span className="ml-3 text-xs font-medium text-gray">{review?.time_formatted}</span>
+                                 </div>
+                                 <Rating
+                                    pt={{
+                                       onIcon: 'text-primary size-3',
+                                       offIcon: 'size-3',
+                                    }}
+                                    value={review?.rating}
+                                    cancel={false}
+                                    readOnly
+                                 />
+                                 <p className="mt-2">{review?.comment}</p>
+                              </div>
                            </div>
-                           <Rating
-                              pt={{
-                                 onIcon: 'text-primary size-3',
-                                 offIcon: 'size-3',
-                              }}
-                              value={review?.rating}
-                              cancel={false}
-                              readOnly
-                           />
-                           <p className="mt-2">{review?.comment}</p>
-                        </div>
-                     </div>
-                  ))}
+                        ))}
+                     </>
+                  )}
                </>
             )}
          </div>

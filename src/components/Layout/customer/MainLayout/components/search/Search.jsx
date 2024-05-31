@@ -7,10 +7,14 @@ import { searchContestAPI } from 'src/api/contestApi';
 import { searchBlogAPI } from 'src/api/blogApi';
 
 export default function Search() {
+   // Render Counter
+   // Mục đích: để khi render lần đầu thì sẽ không fetch api
+   const [renderConter, setRenderCounter] = useState(0);
+
    const divContainerRef = useRef();
    const inputSearchRef = useRef();
    const [searchText, setSearchText] = useState(null);
-   const [loading, setLoading] = useState(true);
+   const [loading, setLoading] = useState(false);
    const [showResult, setShowresult] = useState(false);
    const [searchResult, setSearchResult] = useState({
       courses: [],
@@ -51,7 +55,10 @@ export default function Search() {
    };
 
    useEffect(() => {
-      fetchSearch();
+      if (renderConter > 1) {
+         fetchSearch();
+      }
+      setRenderCounter((preValue) => preValue + 1);
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [debouncedValue]);
 

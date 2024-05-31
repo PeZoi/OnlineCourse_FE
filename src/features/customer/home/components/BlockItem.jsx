@@ -11,7 +11,10 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
       <div className={className}>
          {!isCommingSoon ? (
             <>
-               <Link to={`/course/${data?.slug}`} className="relative block rounded-xl overflow-hidden group">
+               <Link
+                  to={type !== 'blog' ? `/course/${data?.slug}` : `/blog/${data?.slug}`}
+                  className="relative block rounded-xl overflow-hidden group"
+               >
                   <img src={data?.thumbnail} alt={data?.title} className="w-full h-[170px] object-contain" />
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out bg-[#00000080] bg-opacity-50">
                      <button className="bg-white text-black py-2 px-4 rounded-lg shadow-lg translate-y-6 group-hover:translate-y-0 transition-transform duration-300 ease-in-out font-semibold">
@@ -20,7 +23,10 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
                   </div>
                </Link>
 
-               <Link to={`/course/${data?.slug}`} className="text-base my-2 block font-semibold ">
+               <Link
+                  to={type !== 'blog' ? `/course/${data?.slug}` : `/blog/${data?.slug}`}
+                  className="text-base my-2 block font-semibold "
+               >
                   <Tippy content={<span>{data?.title}</span>} placement="bottom">
                      <div className="truncate">{data?.title}</div>
                   </Tippy>
@@ -81,15 +87,11 @@ export default function BlockItem({ type, className, data, isCommingSoon }) {
          ) : (
             <div className="flex items-center mt-3">
                <div>
-                  <img
-                     src="https://files.fullstack.edu.vn/f8-prod/user_avatars/1/64f9a2fd4e064.jpg"
-                     alt=""
-                     className="size-5 rounded-full"
-                  />
+                  <img src={data?.avatar_user} alt="avatar" className="size-5 rounded-full" />
                </div>
                <div className="flex items-center justify-between ml-2 flex-1">
-                  <span className="text-black font-semibold text-sm">Sơn Đặng</span>
-                  <span className="text-gray font-medium text-xs">11/03/2024</span>
+                  <span className="text-black font-semibold text-sm">{data?.username}</span>
+                  <span className="text-gray font-medium text-xs">{data?.created_at_format}</span>
                </div>
             </div>
          )}

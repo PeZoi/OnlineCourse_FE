@@ -4,14 +4,21 @@ import CirclePlus from '../../../../public/icons/CirclePlus';
 import { useEffect, useState } from 'react';
 import { getMyCourseAPI } from 'src/api/courseApi';
 import useScrollToTop from 'src/hooks/useScrollToTop';
+import { useDispatch } from 'react-redux';
+import { deleteCourseSelected } from '../../course/courseSlice';
 
 export default function MyCourses() {
    document.title = 'Khoá Học Của Tôi';
    useScrollToTop();
+   const dispatch = useDispatch();
 
    const [myCourses, setMyCourses] = useState([]);
 
    useEffect(() => {
+      // Xoá dữ liệu trong state đi
+      // Mục đích: Khỏi bị bug dính id khoá học
+      dispatch(deleteCourseSelected());
+
       getMyCourseAPI()
          .then((res) => {
             if (res.status === 200) {

@@ -1,4 +1,4 @@
-import { ProgressSpinner } from 'primereact/progressspinner';
+import { Skeleton } from 'primereact/skeleton';
 import { getAllBlogsAPI } from 'src/api/blogApi';
 import BlogItem from 'src/components/BlogItem';
 import useAxios from 'src/hooks/useAxios';
@@ -16,7 +16,13 @@ export default function BlogList() {
             Tổng hợp các bài viết chia sẻ về kinh nghiệm tự học lập trình online và các kỹ thuật lập trình.
          </p>
          {loading ? (
-            <ProgressSpinner className="size-10" />
+            <div className="flex flex-col gap-7 mt-20">
+               {Array(4)
+                  .fill()
+                  .map((_, index) => (
+                     <Skeleton width="780px" height="10rem" key={index}></Skeleton>
+                  ))}
+            </div>
          ) : (
             <div className="flex flex-col gap-5 mt-20">
                {blogs

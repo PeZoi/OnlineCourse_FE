@@ -34,7 +34,10 @@ export default function Payment() {
    const countRef = useRef(300); // State để xử lý time
 
    // Lấy thông tin payment ra
-   const { response: paymentInfo, loading: paymentLoading } = useAxios(() => getInfoPaymentAPI(course?.id), [course]);
+   const { response: paymentInfo, loading: paymentLoading } = useAxios(
+      () => course?.id && getInfoPaymentAPI(course?.id),
+      [course],
+   );
 
    // Check xem đủ điều kiện vào trang này không
    useEffect(() => {

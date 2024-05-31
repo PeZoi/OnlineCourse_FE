@@ -20,12 +20,12 @@ export default function Header() {
                <div className="flex justify-between items-center flex-1 h-full">
                   {/* LEFT */}
                   <div className="flex items-center ">
-                     <Link
-                        to={`/course/${courseSelected?.slug}`}
+                     <div
+                        onClick={() => history.back()}
                         className="-rotate-180 cursor-pointer hover:bg-[#0000001a] transition-all ease-in-out"
                      >
                         <ArrowRightIcon className="text-white size-4 mx-6 my-4 " />
-                     </Link>
+                     </div>
                      <div className="flex items-center ml-2">
                         <Link to={'/'}>
                            <img className="size-[30px] rounded-lg" src={Logo} alt="F8" />

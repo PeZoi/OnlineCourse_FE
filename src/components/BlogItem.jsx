@@ -73,7 +73,7 @@ export default function BlogItem({ type, blog, setRerender }) {
                               onClick={() => {
                                  setShowMore(!showMore);
                                  toast('Đã sao chép liên kết');
-                                 navigator.clipboard.writeText(`${URL_FE}/blog/${blog?.id}`);
+                                 navigator.clipboard.writeText(`${URL_FE}/blog/${blog?.slug}`);
                               }}
                            >
                               <FaLink />
