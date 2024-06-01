@@ -16,12 +16,16 @@ export default function QuizItem({
    getValues,
    quizMode,
 }) {
-   const [quizType, setQuizType] = useState('ONE_CHOICE');
+   const [quizType, setQuizType] = useState('');
    const [rerender, setRerender] = useState(uuidv4());
 
    useEffect(() => {
       if (quizMode === 'EDIT') {
          setQuizType(getValues(`quizs.${quizIndex}.quiz_type`));
+      } else {
+         // Khi quizmod là ADD thì setQuizType là ONE_CHOICE
+         // Vì khi để mặc định là ONE_CHOICE lúc đầu thì dẫn đến khi update mà đổi type câu hỏi bị bug
+         setQuizType('ONE_CHOICE');
       }
    }, [getValues, quizIndex, quizMode]);
 

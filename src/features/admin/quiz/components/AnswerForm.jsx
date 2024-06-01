@@ -3,7 +3,7 @@ import { useFieldArray } from 'react-hook-form';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { IoRemoveCircle } from 'react-icons/io5';
 import Tippy from '@tippyjs/react';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function AnswerForm({
    quizIndex,
@@ -22,44 +22,105 @@ export default function AnswerForm({
       name: `quizs[${quizIndex}].answers`,
    });
 
+   // Mục đích: để khi render lần 1 của quizMode là UPDATE thì nó không bị xoá các câu trả lời đi
+   const [renderCounters, setRerenderCounters] = useState(0);
+
    // Khi thay đổi dạng câu hỏi thì xoá các câu trả lời cũ đi
-   // Còn bug: khi form là EDIT và chuyển các quiz có sẵn sang type là đục lỗ thì bị bug chưa nghĩ ra được ý tưởng
    useEffect(() => {
       if (quizMode === 'ADD') {
          const answers = getValues(`quizs.${quizIndex}.answers`);
          setValue(`quizs.${quizIndex}.answers`, []);
          answers?.forEach((_, index) => remove(index));
+      } else {
+         setRerenderCounters(renderCounters + 1);
+         if (renderCounters > 1) {
+            const answers = getValues(`quizs.${quizIndex}.answers`);
+            setValue(`quizs.${quizIndex}.answers`, []);
+            answers?.forEach((_, index) => remove(index));
+         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [type, quizIndex]);
 
-   const handleOnChangeRadio = (answerIndex) => {
-      fields.forEach((_, index) => {
-         const checked = index === answerIndex;
-         setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, checked);
-      });
-      setRerender(uuidv4());
-   };
+   const handleOnChangeRadio = useCallback(
+      (answerIndex) => {
+         fields.forEach((_, index) => {
+            const checked = index === answerIndex;
+            setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, checked);
+         });
+         setRerender(uuidv4());
+      },
+      [fields, quizIndex, setRerender, setValue],
+   );
 
-   const handleOnChangeCheckbox = (answerIndex) => {
-      fields.forEach((_, index) => {
-         if (index === answerIndex) {
-            const checked = getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`);
-            setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, !checked);
-         }
-      });
-      setRerender(uuidv4());
-   };
+   const handleOnChangeCheckbox = useCallback(
+      (answerIndex) => {
+         fields.forEach((_, index) => {
+            if (index === answerIndex) {
+               const checked = getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`);
+               setValue(`quizs[${quizIndex}].answers[${index}].isCorrect`, !checked);
+            }
+         });
+         setRerender(uuidv4());
+      },
+      [fields, getValues, quizIndex, setRerender, setValue],
+   );
 
-   function QuizSigleTemplate({ answerIndex }) {
-      return (
-         <>
-            <input
-               name={quizIndex}
-               type="radio"
-               checked={getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`)}
-               onChange={() => handleOnChangeRadio(answerIndex)}
-            />
+   const QuizSigleTemplate = useCallback(
+      ({ answerIndex }) => {
+         return (
+            <>
+               <input
+                  name={quizIndex}
+                  type="radio"
+                  checked={getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`)}
+                  onChange={() => handleOnChangeRadio(answerIndex)}
+               />
+               <input
+                  {...register(`quizs[${quizIndex}].answers[${answerIndex}].content`)}
+                  type="text"
+                  className={`px-3 py-2 border rounded-md flex-1 ${
+                     errors.quizs?.[quizIndex]?.answers?.[answerIndex]?.content.message
+                        ? ' border-2 border-red outline-none'
+                        : 'border-[#ccc] outline-[#aaa]'
+                  }`}
+                  placeholder="Nhập câu trả lời"
+               />
+            </>
+         );
+      },
+      [errors.quizs, getValues, handleOnChangeRadio, quizIndex, register],
+   );
+
+   const QuizMultiTemplate = useCallback(
+      ({ answerIndex }) => {
+         return (
+            <>
+               <input
+                  name={quizIndex}
+                  type="checkbox"
+                  checked={getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`)}
+                  onChange={() => handleOnChangeCheckbox(answerIndex)}
+               />
+               <input
+                  {...register(`quizs[${quizIndex}].answers[${answerIndex}].content`)}
+                  type="text"
+                  className={`px-3 py-2 border rounded-md flex-1 ${
+                     errors.quizs?.[quizIndex]?.answers?.[answerIndex]?.content.message
+                        ? ' border-2 border-red outline-none'
+                        : 'border-[#ccc] outline-[#aaa]'
+                  }`}
+                  placeholder="Nhập câu trả lời"
+               />
+            </>
+         );
+      },
+      [errors.quizs, getValues, handleOnChangeCheckbox, quizIndex, register],
+   );
+
+   const QuizPerforateTemplate = useCallback(
+      ({ answerIndex }) => {
+         return (
             <input
                {...register(`quizs[${quizIndex}].answers[${answerIndex}].content`)}
                type="text"
@@ -70,47 +131,10 @@ export default function AnswerForm({
                }`}
                placeholder="Nhập câu trả lời"
             />
-         </>
-      );
-   }
-
-   function QuizMultiTemplate({ answerIndex }) {
-      return (
-         <>
-            <input
-               name={quizIndex}
-               type="checkbox"
-               checked={getValues(`quizs[${quizIndex}].answers[${answerIndex}].isCorrect`)}
-               onChange={() => handleOnChangeCheckbox(answerIndex)}
-            />
-            <input
-               {...register(`quizs[${quizIndex}].answers[${answerIndex}].content`)}
-               type="text"
-               className={`px-3 py-2 border rounded-md flex-1 ${
-                  errors.quizs?.[quizIndex]?.answers?.[answerIndex]?.content.message
-                     ? ' border-2 border-red outline-none'
-                     : 'border-[#ccc] outline-[#aaa]'
-               }`}
-               placeholder="Nhập câu trả lời"
-            />
-         </>
-      );
-   }
-
-   function QuizPerforateTemplate({ answerIndex }) {
-      return (
-         <input
-            {...register(`quizs[${quizIndex}].answers[${answerIndex}].content`)}
-            type="text"
-            className={`px-3 py-2 border rounded-md flex-1 ${
-               errors.quizs?.[quizIndex]?.answers?.[answerIndex]?.content.message
-                  ? ' border-2 border-red outline-none'
-                  : 'border-[#ccc] outline-[#aaa]'
-            }`}
-            placeholder="Nhập câu trả lời"
-         />
-      );
-   }
+         );
+      },
+      [errors.quizs, quizIndex, register],
+   );
 
    return (
       <div key={rerender}>
