@@ -110,16 +110,31 @@ export default function ContestTest() {
          });
    };
 
+   function shuffleQuestions(quizzes) {
+      for (let i = quizzes.length - 1; i > 0; i--) {
+         const j = Math.floor(Math.random() * (i + 1));
+         [quizzes[i], quizzes[j]] = [quizzes[j], quizzes[i]]; // Hoán đổi phần tử
+      }
+      return quizzes;
+   }
+
    // Gọi api lấy danh sách câu hỏi
    useState(() => {
       getQuizzesByContestIdAPI(contestId).then((res) => {
          if (res.status === 404) {
             navigate('/not-found', { replace: true });
          } else if (res.status === 200) {
-            const quizzesFormatted = res.data.quiz_list.map((quiz) => {
+            let quizzesFormatted = res.data.quiz_list.map((quiz) => {
                setFlags((pre) => [...pre, { id: quiz?.id, isFlag: false }]);
                return { ...quiz, key: uuidv4() }; // key thêm vào đây để có thể click câu hỏi bên phải
             });
+
+            console.log('Trước: ' + { quizzesFormatted });
+
+            quizzesFormatted = shuffleQuestions(quizzesFormatted);
+
+            console.log('Sau: ' + { quizzesFormatted });
+
             setQuizzes(quizzesFormatted);
 
             const minutesConvertSeconds = res.data?.period * 60; // * 60 vì period tính bằng phút phải chuyển sang giây
@@ -185,46 +200,41 @@ export default function ContestTest() {
          <div className="col-span-13 mr-5">
             <div className="bg-white w-full p-10 rounded-md shadow-md">
                <div>
-                  {quizzes?.map((quiz) => {
-                     if (quiz.quiz_type === 'ONE_CHOICE') {
-                        return (
-                           <div id={quiz.key} key={quiz.id} className="flex items-start gap-3">
+                  {quizzes?.map((quiz, index) => {
+                     return (
+                        <div key={quiz.id}>
+                           <div className="flex items-center gap-3">
                               <FlagTemplate quiz={quiz} />
+                              <div className="my-5 font-bold select-none">
+                                 Câu hỏi {index + 1}: {quiz?.question}
+                              </div>
+                           </div>
+                           {quiz.quiz_type === 'ONE_CHOICE' && (
                               <div className="flex-1">
                                  <SingleQuestion
                                     quiz={quiz}
                                     onAnswerChange={(selectedAnswer) => handleQuizChange(quiz.id, selectedAnswer)}
                                  />
                               </div>
-                           </div>
-                        );
-                     } else if (quiz.quiz_type === 'MULTIPLE_CHOICE') {
-                        return (
-                           <div id={quiz.key} key={quiz.id} className="flex items-start gap-3">
-                              <FlagTemplate quiz={quiz} />
+                           )}
+                           {quiz.quiz_type === 'MULTIPLE_CHOICE' && (
                               <div className="flex-1">
                                  <MultiQuestion
                                     quiz={quiz}
-                                    key={quiz.id}
                                     onAnswerChange={(selectedAnswers) => handleQuizChange(quiz.id, selectedAnswers)}
                                  />
                               </div>
-                           </div>
-                        );
-                     } else if (quiz.quiz_type === 'PERFORATE') {
-                        return (
-                           <div id={quiz.key} key={quiz.id} className="flex items-start gap-3">
-                              <FlagTemplate quiz={quiz} />
+                           )}
+                           {quiz.quiz_type === 'PERFORATE' && (
                               <div className="flex-1">
                                  <HoleQuestion
                                     quiz={quiz}
-                                    key={quiz.id}
                                     onAnswerChange={(filledAnswer) => handleQuizChange(quiz.id, filledAnswer)}
                                  />
                               </div>
-                           </div>
-                        );
-                     }
+                           )}
+                        </div>
+                     );
                   })}
                </div>
             </div>

@@ -122,32 +122,32 @@ export default function LearnTypeQuiz({ lesson }) {
       <div className="my-12 max-w-[760px] mx-auto relative">
          <h1 className="font-semibold text-[28px] flex-1">Ôn tập</h1>
          <div className="flex flex-col gap-4">
-            {lesson?.quizList.map((quiz) => {
-               if (quiz.quiz_type === 'ONE_CHOICE') {
-                  return (
-                     <SingleQuestion
-                        quiz={quiz}
-                        key={quiz.id}
-                        onAnswerChange={(selectedAnswer) => handleQuizChange(quiz.id, selectedAnswer)}
-                     />
-                  );
-               } else if (quiz.quiz_type === 'MULTIPLE_CHOICE') {
-                  return (
-                     <MultiQuestion
-                        quiz={quiz}
-                        key={quiz.id}
-                        onAnswerChange={(selectedAnswers) => handleQuizChange(quiz.id, selectedAnswers)}
-                     />
-                  );
-               } else if (quiz.quiz_type === 'PERFORATE') {
-                  return (
-                     <HoleQuestion
-                        quiz={quiz}
-                        key={quiz.id}
-                        onAnswerChange={(filledAnswer) => handleQuizChange(quiz.id, filledAnswer)}
-                     />
-                  );
-               }
+            {lesson?.quizList.map((quiz, index) => {
+               return (
+                  <div key={quiz.id}>
+                     <div className="my-5 font-bold select-none">
+                        Câu hỏi {index + 1}: {quiz?.question}
+                     </div>
+                     {quiz.quiz_type === 'ONE_CHOICE' && (
+                        <SingleQuestion
+                           quiz={quiz}
+                           onAnswerChange={(selectedAnswer) => handleQuizChange(quiz.id, selectedAnswer)}
+                        />
+                     )}
+                     {quiz.quiz_type === 'MULTIPLE_CHOICE' && (
+                        <MultiQuestion
+                           quiz={quiz}
+                           onAnswerChange={(selectedAnswers) => handleQuizChange(quiz.id, selectedAnswers)}
+                        />
+                     )}
+                     {quiz.quiz_type === 'PERFORATE' && (
+                        <HoleQuestion
+                           quiz={quiz}
+                           onAnswerChange={(filledAnswer) => handleQuizChange(quiz.id, filledAnswer)}
+                        />
+                     )}
+                  </div>
+               );
             })}
          </div>
          <button

@@ -9,9 +9,6 @@ export default function SingleQuestion({ quiz, onAnswerChange, type = null }) {
    };
    return (
       <div>
-         <div className="my-5 font-bold select-none">
-            Câu hỏi {quiz?.order}: {quiz?.question}
-         </div>
          {quiz?.answer_list?.map((ans) => (
             <div key={ans.id}>
                <label

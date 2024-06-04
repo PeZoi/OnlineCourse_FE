@@ -27,23 +27,21 @@ export default function QuizForm({ control, register, errors, setValue, getValue
                </Tippy>
             </div>
          </div>
-         {fields.map((quiz, quizIndex) => {
-            return (
-               <QuizItem
-                  key={quiz.id}
-                  register={register}
-                  quiz={quiz}
-                  quizIndex={quizIndex}
-                  errors={errors}
-                  fields={fields}
-                  remove={remove}
-                  control={control}
-                  setValue={setValue}
-                  getValues={getValues}
-                  quizMode={quizMode}
-               />
-            );
-         })}
+         {fields.map((quiz, quizIndex) => (
+            <QuizItem
+               key={quiz.id}
+               register={register}
+               quiz={quiz}
+               quizIndex={quizIndex}
+               errors={errors}
+               fields={fields}
+               remove={remove}
+               control={control}
+               setValue={setValue}
+               getValues={getValues}
+               quizMode={quizMode}
+            />
+         ))}
       </div>
    );
 }

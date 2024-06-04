@@ -90,32 +90,35 @@ export default function ContestReview() {
             <div className="col-span-13 mr-5">
                <div className="w-full rounded-md">
                   <div>
-                     {quizzes?.map((quiz) => {
-                        if (quiz.quiz_type === 'ONE_CHOICE') {
-                           return (
-                              <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
-                                 <div className="flex-1">
-                                    <SingleQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
-                                 </div>
+                     {quizzes?.map((quiz, index) => {
+                        return (
+                           <div key={uuidv4()}>
+                              <div className="my-5 font-bold select-none">
+                                 Câu hỏi {index + 1}: {quiz?.question}
                               </div>
-                           );
-                        } else if (quiz.quiz_type === 'MULTIPLE_CHOICE') {
-                           return (
-                              <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
-                                 <div className="flex-1">
-                                    <MultiQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
+                              {quiz.quiz_type === 'ONE_CHOICE' && (
+                                 <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
+                                    <div className="flex-1">
+                                       <SingleQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
+                                    </div>
                                  </div>
-                              </div>
-                           );
-                        } else if (quiz.quiz_type === 'PERFORATE') {
-                           return (
-                              <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
-                                 <div className="flex-1">
-                                    <HoleQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
+                              )}
+                              {quiz.quiz_type === 'MULTIPLE_CHOICE' && (
+                                 <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
+                                    <div className="flex-1">
+                                       <MultiQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
+                                    </div>
                                  </div>
-                              </div>
-                           );
-                        }
+                              )}
+                              {quiz.quiz_type === 'PERFORATE' && (
+                                 <div id={quiz.key} key={uuidv4()} className="flex items-start gap-3">
+                                    <div className="flex-1">
+                                       <HoleQuestion type={'review'} quiz={quiz} onAnswerChange={() => {}} />
+                                    </div>
+                                 </div>
+                              )}
+                           </div>
+                        );
                      })}
                   </div>
                </div>
