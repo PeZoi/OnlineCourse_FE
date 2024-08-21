@@ -5,6 +5,7 @@ import { confirmLessonCompletedAPI, getLessonOfUserAPI, updatePeriodCurrentOfVid
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyCourseSelected } from '../../courseSlice';
 import { getUserDataByLocalStorage, secondsConvert, timeToSeconds } from 'src/utils/common';
+import { fireCompletedLesson } from 'src/utils/fire';
 
 export default function LearnTypeVideo({ lesson }) {
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
@@ -74,6 +75,7 @@ export default function LearnTypeVideo({ lesson }) {
       const res = await confirmLessonCompletedAPI(lesson?.id);
       if (res.status === 200) {
          if (res.data === 'CONTINUE') {
+            fireCompletedLesson();
             toast.success('Bạn đã mở khoá bài mới');
          }
       } else if (res.status === 201) {

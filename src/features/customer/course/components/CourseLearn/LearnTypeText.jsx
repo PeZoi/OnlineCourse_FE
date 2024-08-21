@@ -3,6 +3,7 @@ import { confirmLessonCompletedAPI, getLessonOfUserAPI } from 'src/api/lessonApi
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { getMyCourseSelected } from '../../courseSlice';
+import { fireCompletedLesson } from 'src/utils/fire';
 
 export default function LearnTypeText({ lesson }) {
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
@@ -14,6 +15,7 @@ export default function LearnTypeText({ lesson }) {
          confirmLessonCompletedAPI(lesson?.id).then((res) => {
             if (res.status === 200) {
                if (res.data === 'CONTINUE') {
+                  fireCompletedLesson();
                   toast.success('Bạn đã mở khoá bài mới');
                }
             } else if (res.status === 201) {

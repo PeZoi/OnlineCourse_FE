@@ -7,6 +7,7 @@ import HoleQuestion from 'src/components/QuizType/HoleQuestion';
 import MultiQuestion from 'src/components/QuizType/MultiQuestion';
 import SingleQuestion from 'src/components/QuizType/SingleQuestion';
 import { getMyCourseSelected } from '../../courseSlice';
+import { fireCompletedLesson } from 'src/utils/fire';
 
 export default function LearnTypeQuiz({ lesson }) {
    const [answers, setAnswers] = useState([]);
@@ -58,7 +59,6 @@ export default function LearnTypeQuiz({ lesson }) {
 
    const handleSubmit = async () => {
       // Tạo định dạng dữ liệu khi người dùng nhấn submit
-
       const answersData = handleFormattedAnswers();
 
       // Kiểm tra xem người dùng chọn đầy đủ đáp án chưa
@@ -86,12 +86,14 @@ export default function LearnTypeQuiz({ lesson }) {
 
          const checkIsCompleted = myCourseSelected?.list_tracks.find((track) => track.lesson_id === lesson.id);
          if (checkIsCompleted.is_completed) {
+            fireCompletedLesson();
             toast.success('Bạn được ' + point + ' điểm. Xin chúc mừng!');
          } else {
             if (point >= 8) {
                confirmLessonCompletedAPI(lesson?.id).then((res) => {
                   if (res.status === 200) {
                      if (res.data === 'CONTINUE') {
+                        fireCompletedLesson();
                         toast.success('Bạn đã mở khoá bài mới');
                      }
                   } else if (res.status === 201) {
