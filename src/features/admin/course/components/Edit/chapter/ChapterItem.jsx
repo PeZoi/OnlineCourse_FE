@@ -19,13 +19,12 @@ export default function ChapterItem({
    handleToggleCollapse,
    openCollapses,
    setRerender,
-   course,
    setLessonMode,
 }) {
    const handleDeleteChapter = (chapterId) => {
       const confirm = window.confirm('Bạn có chắc chắn xoá chứ');
       if (confirm) {
-         deleteChapterAPI(course?.id, chapterId)
+         deleteChapterAPI(chapterId)
             .then((res) => {
                if (res.status === 200) {
                   setRerender(Math.random() * 1000);

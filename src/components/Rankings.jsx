@@ -1,5 +1,4 @@
 import Tippy from '@tippyjs/react';
-import { Avatar } from 'primereact/avatar';
 import Top1 from 'src/public/images/top1.svg';
 import Top2 from 'src/public/images/top2.svg';
 import { durationFormat, secondsConvert } from 'src/utils/common';

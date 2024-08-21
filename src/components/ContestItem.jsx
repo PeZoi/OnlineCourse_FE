@@ -13,12 +13,14 @@ export default function ContestItem({ contest }) {
    const [ranks, setRanks] = useState([]);
 
    useEffect(() => {
-      getRankedByContestIdAPI(contest?.id).then((res) => {
-         if (res.status === 200) {
-            setRanks(res.data);
-         }
-      });
-   }, [contest]);
+      if (modalRanks) {
+         getRankedByContestIdAPI(contest?.id).then((res) => {
+            if (res.status === 200) {
+               setRanks(res.data);
+            }
+         });
+      }
+   }, [contest, modalRanks]);
 
    return (
       <div className="inline-block min-h-56 border border-[#ccc] rounded-lg px-4 py-5 text-gray select-none hover:shadow-xl transition-all ease-linear">
@@ -68,6 +70,7 @@ export default function ContestItem({ contest }) {
                Bắt đầu làm bài
             </Link>
          </div>
+
          <ModalMiddle isShow={modalRanks} setIsShow={setModalRanks} className={'w-fit px-10 mx-auto'}>
             <Rankings ranks={ranks} />
          </ModalMiddle>

@@ -22,7 +22,7 @@ export default function CourseFeedback({ course }) {
       if (course?.id) {
          checkReviewedByUserIdAPI(course?.id).then((res) => {
             if (res.status === 200) {
-               setCheckUserReviewed(res.data.is_process);
+               setCheckUserReviewed(true);
             }
          });
       }

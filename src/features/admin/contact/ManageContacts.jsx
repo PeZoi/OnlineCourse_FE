@@ -3,7 +3,6 @@ import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { Rating } from 'primereact/rating';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSearch } from 'react-icons/bi';
@@ -156,7 +155,7 @@ export default function ManageContacts() {
                      header="Nội dung liên hệ"
                      body={contentTemplate}
                   ></Column>
-                  <Column field="email" sortable header="Tên khoá học"></Column>
+                  <Column field="email" sortable header="Email"></Column>
                   <Column field="full_name" sortable header="Họ và tên" body={fullNameTemplate}></Column>
                   <Column field="phone_number" sortable header="Số điện thoại"></Column>
                   <Column field="status" sortable header="Trạng thái" body={statusTemplate}></Column>

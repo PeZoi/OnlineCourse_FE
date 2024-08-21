@@ -40,8 +40,6 @@ export default function ChapterForm({ chapter, course, setRerender, setIsShowMod
          orders: chapter?.orders || course?.chapter_list[course?.chapter_list?.length - 1]?.orders + 1,
       };
 
-      console.log({ formattedData, couresId: course?.id });
-
       if (!chapter) {
          toast.promise(
             createChapterAPI(formattedData, course?.id).then((res) => {

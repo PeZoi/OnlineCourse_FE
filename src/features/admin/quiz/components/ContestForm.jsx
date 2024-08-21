@@ -16,8 +16,11 @@ import ModalMiddle from 'src/components/ModalMiddle';
 import Rankings from 'src/components/Rankings';
 import { GrPowerReset } from 'react-icons/gr';
 import Tippy from '@tippyjs/react';
+import { useNavigate } from 'react-router-dom';
 
 export default function ContestInfoForm({ type, contest }) {
+   const navigate = useNavigate();
+
    const [loadingSubmit, setLoadingSubmit] = useState(false);
 
    const [ranks, setRanks] = useState([]);
@@ -91,17 +94,17 @@ export default function ContestInfoForm({ type, contest }) {
                };
             }),
          });
-      }
-   }, [contest?.listQuizzes, contest?.period, contest?.title, reset, type]);
 
-   // Lấy dữ liệu của bảng xếp hạng của contest
-   useEffect(() => {
-      getRankedByContestIdAPI(contest?.id).then((res) => {
-         if (res.status === 200) {
-            setRanks(res.data);
+         // Lấy dữ liệu của bảng xếp hạng
+         if (contest?.id) {
+            getRankedByContestIdAPI(contest?.id).then((res) => {
+               if (res.status === 200) {
+                  setRanks(res.data);
+               }
+            });
          }
-      });
-   }, [contest?.id, rerenderRankkings]);
+      }
+   }, [contest?.listQuizzes, contest?.period, contest?.title, contest?.id, rerenderRankkings, reset, type]);
 
    const handleResetRankings = () => {
       toast.promise(
@@ -138,6 +141,11 @@ export default function ContestInfoForm({ type, contest }) {
          }),
       };
 
+      if (!dataFormatted.quiz_list.length) {
+         toast.error('Phải có ít nhất 1 câu hỏi trong bài thi');
+         setLoadingSubmit(false);
+         return;
+      }
       if (type === 'EDIT') {
          toast.promise(
             updateContestAPI(contest?.id, dataFormatted).then((res) => {
@@ -158,7 +166,7 @@ export default function ContestInfoForm({ type, contest }) {
             createContestAPI(dataFormatted).then((res) => {
                setLoadingSubmit(false);
                if (res.status === 201) {
-                  reset();
+                  navigate('/admin/manage-contests');
                } else {
                   const error = new Error(`Lỗi: ${res.data.message}`);
                   return Promise.reject(error);

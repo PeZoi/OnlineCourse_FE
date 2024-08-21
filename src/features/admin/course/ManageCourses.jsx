@@ -28,7 +28,7 @@ export default function ManageCourses() {
          .then((res) => {
             if (res.status === 200) {
                setCourses(
-                  res.data.content.map((course) => {
+                  res.data.map((course) => {
                      return { ...course };
                   }),
                );
@@ -40,7 +40,7 @@ export default function ManageCourses() {
 
       getAllCategoriesAPI()
          .then((res) => {
-            setCategories(res.data.content);
+            setCategories(res.data);
          })
          .catch((err) => console.log(err));
    }, [rerender]);

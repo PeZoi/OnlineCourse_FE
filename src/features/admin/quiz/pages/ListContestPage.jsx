@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import { FaPen, FaPlus } from 'react-icons/fa';
+import { FaPen, FaPlus, FaRegTrashAlt } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import TableContest from '../components/TableContest';
 import useAxios from 'src/hooks/useAxios';
-import { getAllContestAPI } from 'src/api/contestApi';
+import { deleteContestAPI, getAllContestAPI } from 'src/api/contestApi';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import useScrollToTop from 'src/hooks/useScrollToTop';
+import toast from 'react-hot-toast';
 
 export default function ListContestPage() {
    useScrollToTop();
@@ -19,6 +20,20 @@ export default function ListContestPage() {
    const [rerender, setRerender] = useState(0);
 
    const { response: contests, loading: contestsLoading } = useAxios(getAllContestAPI, [rerender]);
+
+   const handleDeleteContest = (id) => {
+      const confirm = window.confirm('Bạn có chắc chắn xoá bài thi này không');
+      if (confirm) {
+         deleteContestAPI(id).then((res) => {
+            if (res.status === 200) {
+               toast.success(res.data);
+               setRerender((prev) => prev + 1);
+            } else {
+               toast.error(res.message);
+            }
+         });
+      }
+   };
 
    return (
       <div>
@@ -40,6 +55,17 @@ export default function ListContestPage() {
                   }}
                >
                   <FaPen />
+               </button>
+               <button
+                  disabled={!selectedContest}
+                  className={`py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white ${
+                     !selectedContest ? 'opacity-40' : 'opacity-100 hover:opacity-80'
+                  }`}
+                  onClick={() => {
+                     handleDeleteContest(selectedContest.id);
+                  }}
+               >
+                  <FaRegTrashAlt />
                </button>
             </div>
             <div className="relative">

@@ -5,7 +5,7 @@ export const signUpCheckExistsAPI = async (dataCheck) => {
    const res = await axios
       .post('/api/auth/validate', dataCheck)
       .then((response) => {
-         return response.data;
+         return response;
       })
       .catch((error) => {
          console.log(error);

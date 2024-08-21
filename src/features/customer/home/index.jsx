@@ -83,7 +83,7 @@ export default function Home() {
                         </button>
                      </Link>
 
-                     {categories?.content?.map((category) => (
+                     {categories?.map((category) => (
                         <Link
                            to={`/?categoryId=${category.id}`}
                            key={category.id}

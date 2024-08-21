@@ -21,7 +21,7 @@ const AddUserForm = ({ onClose, setRerender }) => {
          .max(64, 'Tên đăng nhập chỉ được tối đa 64 ký tự')
          .transform((value) => value.trim())
          .test('check-exists-username', 'Tên đăng nhập đã tồn tại', async function (value) {
-            const typeToCheck = 'USERNAME';
+            const typeToCheck = 'username';
             const data = { username: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -33,7 +33,7 @@ const AddUserForm = ({ onClose, setRerender }) => {
          .max(64, 'Email đã tồn tại')
          .transform((value) => value.trim())
          .test('check-exists-email', 'Email đã tồn tại', async function (value) {
-            const typeToCheck = 'EMAIL';
+            const typeToCheck = 'email';
             const data = { email: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -46,7 +46,7 @@ const AddUserForm = ({ onClose, setRerender }) => {
          .matches(/^(01|03|05|08|09)\d{8}$/, 'Số điện thoại không hợp lệ')
          .transform((value) => value.trim())
          .test('check-exists-phoneNumber', 'Số điện thoại đã tồn tại', async function (value) {
-            const typeToCheck = 'PHONE_NUMBER';
+            const typeToCheck = 'phoneNumber';
             const data = { phoneNumber: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -67,8 +67,8 @@ const AddUserForm = ({ onClose, setRerender }) => {
          const response = await signUpCheckExistsAPI(data).then((response) => {
             return response;
          });
-         if (response) {
-            return !response?.find((res) => res.type === type); // Trả về true nếu trường đó chưa tồn tại
+         if (response.status === 200) {
+            return false;
          }
          return true;
       } catch (error) {

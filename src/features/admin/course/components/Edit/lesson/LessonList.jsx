@@ -49,7 +49,6 @@ export default function LessonList({ course, setRerender }) {
                key={chapter.id}
                index={index}
                chapter={chapter}
-               course={course}
                handleToggleCollapse={handleToggleCollapse}
                openCollapses={openCollapses}
                setChapterSelected={setChapterSelected}

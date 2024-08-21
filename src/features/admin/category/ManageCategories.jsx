@@ -50,7 +50,7 @@ const ManageCategories = () => {
       const fetchCategories = async () => {
          try {
             const categories = await getAllCategoriesAPI(); //Lấy dữu liệu api câtegories
-            setCategories(categories.data.content);
+            setCategories(categories.data);
          } catch (error) {
             console.error(error);
          }

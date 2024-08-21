@@ -10,7 +10,7 @@ import toast from 'react-hot-toast';
 import AddUserForm from './components/AddUserForm';
 import EditUserForm from './components/EditUserForm';
 import { deleteUserAPI, getAllUsersAPI, getUserByIdAPI, updateUserAPI } from 'src/api/userApi';
-import { FaPen, FaPlus, FaRegTrashAlt } from 'react-icons/fa';
+import { FaPen, FaPlus } from 'react-icons/fa';
 import { BiSearch } from 'react-icons/bi';
 import { BsFillTrashFill } from 'react-icons/bs';
 
@@ -49,7 +49,7 @@ export default function ManageUsers() {
       const fetchUsers = async () => {
          try {
             const users = await getAllUsersAPI(); // Giả định getAllUsers là async và trả về data từ axios.get
-            setUsers(users.data.content); // Giả sử response trả về có dạng { data: [...] }
+            setUsers(users.data); // Giả sử response trả về có dạng { data: [...] }
          } catch (error) {
             console.error(error);
          }
@@ -96,7 +96,7 @@ export default function ManageUsers() {
 
    //Hàm check enable
    const handleCheckedEnabled = async (users) => {
-      const userFetch = await getUserByIdAPI(users.id)
+      const userFetch = await getUserByIdAPI(users.user_id)
          .then((res) => {
             if (res.status === 200) {
                return res.data;
@@ -126,7 +126,7 @@ export default function ManageUsers() {
          ),
       );
 
-      updateUserAPI(users.id, formData).then((res) => {
+      updateUserAPI(users.user_id, formData).then((res) => {
          if (res.status === 200) {
             setRerender(Math.random() * 1000);
          } else {
@@ -180,7 +180,7 @@ export default function ManageUsers() {
       return (
          <button
             className="hover:opacity-60 py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white"
-            onClick={() => setSelectedUserId(rowData.id)} // Truyền mảng gồm một người dùng để xóa
+            onClick={() => setSelectedUserId(rowData.user_id)} // Truyền mảng gồm một người dùng để xóa
          >
             <BsFillTrashFill />
          </button>
@@ -192,7 +192,7 @@ export default function ManageUsers() {
          <button
             label="Edit"
             onClick={() => {
-               openEditUserModal(rowData.id);
+               openEditUserModal(rowData.user_id);
             }}
             className="py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white "
          >
@@ -207,7 +207,7 @@ export default function ManageUsers() {
       <div className=" card test-sm">
          {/* Đoạn này để render ra cái modal thêm user */}
          <div className="relative">
-            <div className="mb-[16px]   cursor-pointer ">
+            <div className="mb-[16px]">
                <button
                   label="Add User"
                   onClick={openAddUserModal}
@@ -244,7 +244,7 @@ export default function ManageUsers() {
             emptyMessage="No users found."
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
          >
-            <Column field="id" header="Id" sortable />
+            <Column field="user_id" header="Id" sortable />
             <Column field="photo" body={photoTemplate} header="Photo" sortable />
             <Column field="email" header="Email" sortable />
             <Column field="enabled" body={actionEnabled} header="Enabled" sortable />

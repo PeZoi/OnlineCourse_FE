@@ -10,7 +10,7 @@ axiosInstance.interceptors.request.use(
    function (config) {
       const token = getTokenByLocalStorage();
       if (token) {
-         config.headers.Authorization = 'Bearer ' + token;
+         // config.headers.Authorization = 'Bearer ' + token;
       }
       return config;
    },
@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(
 // Add a response interceptor
 axiosInstance.interceptors.response.use(
    function (response) {
-      return response;
+      return response.data;
    },
    function (error) {
       // Trả về status

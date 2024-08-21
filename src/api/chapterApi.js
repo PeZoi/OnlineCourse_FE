@@ -2,7 +2,7 @@ import axios from 'src/utils/axios';
 
 export const createChapterAPI = (data, courseId) => {
    return axios
-      .post(`/api/courses/${courseId}/chapters/create`, data)
+      .post(`/api/chapter/create/${courseId}`, data)
       .then((response) => {
          return response;
       })
@@ -14,7 +14,7 @@ export const createChapterAPI = (data, courseId) => {
 
 export const updateChapterAPI = (data, courseId) => {
    return axios
-      .put(`/api/courses/${courseId}/chapters/${data.id}/update`, data)
+      .put(`/api/chapter/update/${data.id}/${courseId}`, data)
       .then((response) => {
          return response;
       })
@@ -24,9 +24,9 @@ export const updateChapterAPI = (data, courseId) => {
       });
 };
 
-export const deleteChapterAPI = (courseId, chapterId) => {
+export const deleteChapterAPI = (chapterId) => {
    return axios
-      .delete(`/api/courses/${courseId}/chapters/${chapterId}/delete`)
+      .delete(`/api/chapter/delete/${chapterId}`)
       .then((response) => {
          return response;
       })

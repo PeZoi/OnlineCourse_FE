@@ -59,6 +59,18 @@ export const updateContestAPI = (id, formData) => {
       });
 };
 
+// xoá contest
+export const deleteContestAPI = (id) => {
+   return axios
+      .delete(`/api/contest/delete/${id}`)
+      .then((response) => {
+         return response;
+      })
+      .catch((error) => {
+         return error;
+      });
+};
+
 // Tìm kiếm theo title
 export const searchContestAPI = (searchText) => {
    return axios
