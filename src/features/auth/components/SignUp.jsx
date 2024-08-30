@@ -24,7 +24,7 @@ export default function SignUp({ setTypes, resetModal }) {
          .max(64, 'Tên đăng nhập chỉ được tối đa 64 ký tự')
          .transform((value) => value.trim())
          .test('check-exists-username', 'Tên đăng nhập đã tồn tại', async function (value) {
-            const typeToCheck = 'USERNAME';
+            const typeToCheck = 'username';
             const data = { username: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -36,7 +36,7 @@ export default function SignUp({ setTypes, resetModal }) {
          .max(64, 'Email đã tồn tại')
          .transform((value) => value.trim())
          .test('check-exists-email', 'Email đã tồn tại', async function (value) {
-            const typeToCheck = 'EMAIL';
+            const typeToCheck = 'email';
             const data = { email: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -49,7 +49,7 @@ export default function SignUp({ setTypes, resetModal }) {
          .matches(phoneNumberRegex, 'Số điện thoại không hợp lệ')
          .transform((value) => value.trim())
          .test('check-exists-phoneNumber', 'Số điện thoại đã tồn tại', async function (value) {
-            const typeToCheck = 'PHONE_NUMBER';
+            const typeToCheck = 'phoneNumber';
             const data = { phoneNumber: value };
             return await checkExists(data, typeToCheck);
          }),
@@ -60,15 +60,16 @@ export default function SignUp({ setTypes, resetModal }) {
    async function checkExists(data, type) {
       try {
          const response = await signUpCheckExistsAPI(data).then((response) => {
-            return response;
+            return response.data;
          });
+
          if (response) {
-            return !response?.find((res) => res.type === type); // Trả về true nếu trường đó chưa tồn tại
+            return !Object.keys(response).find((key) => key === type); // Trả về true nếu trường đó chưa tồn tại
          }
          return true;
       } catch (error) {
          console.error(error);
-         return true; // Nếu có lỗi, cho phép để không bị lỗi validation
+         return false; // Nếu có lỗi, cho phép để không bị lỗi validation
       }
    }
 
@@ -85,7 +86,7 @@ export default function SignUp({ setTypes, resetModal }) {
       reset,
       formState: { errors },
    } = useForm({
-      mode: 'onChange',
+      mode: 'onBlur',
       resolver: yupResolver(schema),
    });
 

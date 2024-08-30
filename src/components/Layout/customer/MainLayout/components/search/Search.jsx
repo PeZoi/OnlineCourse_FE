@@ -5,6 +5,7 @@ import useDebounce from 'src/hooks/useDebounce';
 import { searchCourseAPI } from 'src/api/courseApi';
 import { searchContestAPI } from 'src/api/contestApi';
 import { searchBlogAPI } from 'src/api/blogApi';
+import { IoSearch } from 'react-icons/io5';
 
 export default function Search() {
    // Render Counter
@@ -83,7 +84,9 @@ export default function Search() {
                ref={divContainerRef}
                className="flex items-center w-[420px] h-[40px] border-2 border-[#e8e8e8] rounded-full p-1 transition-all ease-linear overflow-hidden relative "
             >
-               <div className="w-[32px] h-[32px] bg-[url(https://fullstack.edu.vn/static/media/search.9bd3926522ea0937310c.svg)] bg-[length:18px] bg-no-repeat bg-[50%] opacity-70 hover:opacity-100 transition-all"></div>
+               <div className="flex items-center justify-center w-[32px] h-[32px] opacity-70 hover:opacity-100 transition-all">
+                  <IoSearch className="text-[#727272] size-5" />
+               </div>
                <input
                   ref={inputSearchRef}
                   value={searchText}

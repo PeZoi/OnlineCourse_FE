@@ -63,10 +63,7 @@ export default function MyNote({ isShow, setIsShow, courseSelected }) {
                ))
             ) : (
                <div className="flex items-center justify-center flex-col mt-64 text-base">
-                  <img
-                     src="https://fullstack.edu.vn/static/media/no-note-yet.17b90847cc48c790cb73ed2d495e0ea3.svg"
-                     alt=""
-                  />
+                  <img src="https://fullstack.edu.vn/assets/no-note-yet-Cz1TLb5Q.svg" alt="" />
                   <p className="font-semibold my-2 mt-5">Bạn chưa có ghi chú nào</p>
                   <p>Hãy ghi chép để nhớ những gì bạn đã học!</p>
                </div>

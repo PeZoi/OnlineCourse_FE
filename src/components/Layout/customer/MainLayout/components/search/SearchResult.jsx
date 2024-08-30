@@ -1,3 +1,4 @@
+import { IoSearch } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -5,7 +6,9 @@ export default function SearchResult({ searchText, searchResult }) {
    return (
       <>
          <div className="flex justify-start items-center">
-            <div className="w-[18px] h-[18px] bg-[url(https://fullstack.edu.vn/static/media/search.9bd3926522ea0937310c.svg)] bg-[length:15px] bg-no-repeat bg-[50%] opacity-70 hover:opacity-100 transition-all"></div>
+            <div className="flex items-center justify-center w-[32px] h-[32px] opacity-70 hover:opacity-100 transition-all">
+               <IoSearch className="text-[#727272] size-5" />
+            </div>
             <span className="text-sm text-gray ml-3">Kết quả cho &apos;{searchText}&apos;</span>
          </div>
          {searchResult.courses.length === 0 && searchResult.quizzes.length === 0 && searchResult.blogs.length === 0 ? (

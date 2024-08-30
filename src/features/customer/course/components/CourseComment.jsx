@@ -5,6 +5,7 @@ import Comment from './comment/CommentItem';
 import Editor from 'src/components/Editor';
 import { getUserDataByLocalStorage } from 'src/utils/common';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 export default function CourseComment({ isShow, setIsShow, lessonId }) {
    const [comments, setComments] = useState([]);
@@ -12,6 +13,8 @@ export default function CourseComment({ isShow, setIsShow, lessonId }) {
    const [isCommenting, setIsCommenting] = useState(false);
 
    const [rerender, setRerender] = useState(0);
+
+   const { user } = useSelector((state) => state.auth);
 
    const handleCreateComment = () => {
       const user = getUserDataByLocalStorage();
@@ -58,11 +61,7 @@ export default function CourseComment({ isShow, setIsShow, lessonId }) {
             </p>
 
             <div className="mt-10 flex">
-               <img
-                  className="size-9 rounded-full my-2"
-                  src="	https://fullstack.edu.vn/static/media/fallback-avatar.155cdb2376c5d99ea151.jpg"
-                  alt="Avatar"
-               ></img>
+               <img className="size-9 object-cover rounded-full my-2" src={user?.photo} alt="Avatar"></img>
 
                {isCommenting ? (
                   <div className="ml-4 flex-1">
