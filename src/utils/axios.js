@@ -3,6 +3,7 @@ import { getTokenByLocalStorage } from './common';
 
 const axiosInstance = axios.create({
    baseURL: import.meta.env.VITE_URL_API,
+   withCredentials: true, // để chấp nhận lưu cookie
 });
 
 // Add a request interceptor
@@ -10,7 +11,7 @@ axiosInstance.interceptors.request.use(
    function (config) {
       const token = getTokenByLocalStorage();
       if (token) {
-         // config.headers.Authorization = 'Bearer ' + token;
+         config.headers.Authorization = 'Bearer ' + token;
       }
       return config;
    },

@@ -94,3 +94,11 @@ export const verifyAccountByCode = async (code, email) => {
       });
    return res;
 };
+
+// logout
+export const logoutAPI = () => {
+   axios.get(`/api/auth/logout`).catch((error) => {
+      console.log(error);
+      return null;
+   });
+};
