@@ -16,16 +16,16 @@ export default function VerifyPage() {
          const email = searchParams.get('email');
          verifyAccountByCode(code, email)
             .then((res) => {
-               if (res.is_process) {
-                  toast.success(res.content);
+               if (res.status !== 200) {
+                  toast.error(res.message);
                } else {
-                  toast.error(res.content);
+                  toast.success(res.data);
                }
                navigate('/');
             })
             .catch((err) => {
                console.log(err);
-               toast.error(err);
+               toast.error(err.message);
             });
       }
    }, [isLogged, navigate, searchParams]);
