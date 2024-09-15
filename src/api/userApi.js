@@ -37,6 +37,18 @@ export const updateUserAPI = (userId, formData) => {
       });
 };
 
+// Cập nhật thông tin trạng thái user
+export const switchStatusBlockedUserAPI = (userId) => {
+   return axios
+      .put(`/api/users/switch-blocked/${userId}`)
+      .then((res) => {
+         return res;
+      })
+      .catch((error) => {
+         return error;
+      });
+};
+
 // Xóa user
 export const deleteUserAPI = (userId) => {
    return axios
