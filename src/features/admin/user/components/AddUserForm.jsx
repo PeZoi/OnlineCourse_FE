@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
 import { signUpCheckExistsAPI } from 'src/api/auth';
 import { createUserAPI } from 'src/api/userApi';
+import { getAllRolesAPI } from 'src/api/roleAPI';
 
-const AddUserForm = ({ onClose, setRerender }) => {
+const AddUserForm = ({ setOpenModal, setRerender, resetModal }) => {
+   const [roles, setRoles] = useState([]);
+   //Set photo (quản lý ảnh của người dùng)
+   const [photo, setPhoto] = useState(null);
+
    const schema = yup.object().shape({
       full_name: yup
          .string()
@@ -50,19 +55,50 @@ const AddUserForm = ({ onClose, setRerender }) => {
             const data = { phoneNumber: value };
             return await checkExists(data, typeToCheck);
          }),
-      password: yup.string().required('Password is required').min(8, 'Password must be at least 8 characters'),
+      password: yup.string().required('Mật khẩu không được để trống').min(8, 'Mật khẩu phải có ít nhất 8 ký tự'),
       repeat_password: yup
          .string()
-         .oneOf([yup.ref('password'), null], 'Passwords must match')
-         .required('Confirm password is required'),
+         .oneOf([yup.ref('password'), null], 'Mật khẩu không trùng khớp')
+         .required('Mật khẩu không được để trống'),
       photo: yup.mixed().test('fileSize', 'The file is too large', (value) => {
          if (!value || !value.length) return true; // Allow if no file is uploaded
          return value[0].size <= 5242880; // 5MB
       }),
+      role: yup.string().test('select-role', 'Quyền không được để trống', (value) => {
+         return value !== undefined && value !== '0';
+      }),
    });
 
+   const {
+      register,
+      handleSubmit,
+      reset,
+      formState: { errors },
+   } = useForm({
+      mode: 'onBlur',
+      resolver: yupResolver(schema),
+   });
+
+   useEffect(() => {
+      if (resetModal) {
+         reset();
+      }
+
+      getAllRolesAPI()
+         .then((res) => {
+            if (res.status === 200) {
+               setRoles(res.data);
+            }
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [resetModal]);
+
    // Hàm kiểm tra xem các trường username, email, phone number tồn tại chưa
-   async function checkExists(data, type) {
+   async function checkExists(data) {
       try {
          const response = await signUpCheckExistsAPI(data).then((response) => {
             return response;
@@ -76,18 +112,6 @@ const AddUserForm = ({ onClose, setRerender }) => {
          return true; // Nếu có lỗi, cho phép để không bị lỗi validation
       }
    }
-
-   const {
-      register,
-      handleSubmit,
-      formState: { errors },
-   } = useForm({
-      mode: 'onBlur',
-      resolver: yupResolver(schema),
-   });
-
-   //Set photo (quản lý ảnh của người dùng)
-   const [photo, setPhoto] = useState(null);
 
    const onSubmit = async (data) => {
       try {
@@ -103,6 +127,9 @@ const AddUserForm = ({ onClose, setRerender }) => {
                      email: data.email,
                      phone_number: data.phone_number,
                      password: data.password,
+                     role: {
+                        id: +data.role,
+                     },
                   }),
                ],
                { type: 'application/json' },
@@ -118,7 +145,7 @@ const AddUserForm = ({ onClose, setRerender }) => {
                .then((res) => {
                   if (res.status === 201) {
                      setRerender(Math.random() * 1000);
-                     onClose();
+                     setOpenModal(false);
                   }
                })
                .catch((err) => {
@@ -142,67 +169,128 @@ const AddUserForm = ({ onClose, setRerender }) => {
       setPhoto(e.target.files);
    };
 
+   function MessageTemplate({ message }) {
+      return <span className="italic text-xs ml-1 text-red">{message}</span>;
+   }
+
    return (
       <form
          onSubmit={handleSubmit(onSubmit, onError)}
-         className="w-full max-w-xl  grid grid-cols-2 gap-4 ml-[24px] mr-[24px]"
+         className="w-full max-w-xl grid grid-cols-2 gap-4 ml-[24px] mr-[24px]"
       >
-         <div className="mb-4  ">
-            <label className="block text-gray-700 text-sm font-bold mb-2">FullName</label>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="full_name">
+               Họ và tên
+            </label>
             <input
-               type="text"
-               className=" shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                {...register('full_name')}
+               id="full_name"
+               type="text"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.full_name ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập họ và tên"
             />
-            {errors.full_name && <p className="text-red mt-1 text-xs italic">{errors.full_name.message}</p>}
+            {errors?.full_name && <MessageTemplate message={errors?.full_name?.message} />}
          </div>
-         <div className="mb-4 ">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="email">
+               Email
+            </label>
             <input
-               type="email"
-               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                {...register('email')}
-            />
-            {errors.email && <p className="text-red mt-1 text-xs italic">{errors.email.message}</p>}
-         </div>
-         <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">PhoneNumber</label>
-            <input
+               id="email"
                type="text"
-               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.email ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập email"
+            />
+            {errors?.email && <MessageTemplate message={errors?.email?.message} />}
+         </div>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="phone_number">
+               Số điện thoại
+            </label>
+            <input
                {...register('phone_number')}
-            />
-            {errors.phone_number && <p className="text-red mt-1 text-xs italic">{errors.phone_number.message}</p>}
-         </div>
-         <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">UserName</label>
-            <input
+               id="phone_number"
                type="text"
-               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.phone_number ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập số điện thoại"
+            />
+            {errors?.phone_number && <MessageTemplate message={errors?.phone_number?.message} />}
+         </div>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="username">
+               Tên hiển thị
+            </label>
+            <input
                {...register('username')}
+               id="username"
+               type="text"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.username ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập tên hiển thị"
             />
-            {errors.username && <p className="text-red mt-1 text-xs italic">{errors.username.message}</p>}
+            {errors?.username && <MessageTemplate message={errors?.username?.message} />}
          </div>
-         <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="password">
+               Mật khẩu
+            </label>
             <input
-               type="password"
-               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                {...register('password')}
-            />
-            {errors.password && <p className="text-red mt-1 text-xs italic">{errors.password.message}</p>}
-         </div>
-         <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Confirm Password</label>
-            <input
+               id="password"
                type="password"
-               className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-               {...register('repeat_password')}
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.password ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập mật khẩu"
             />
-            {errors.repeat_password && <p className="text-red mt-1 text-xs italic">{errors.repeat_password.message}</p>}
+            {errors?.password && <MessageTemplate message={errors?.password?.message} />}
+         </div>
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="repeat_password">
+               Xác nhận mật khẩu
+            </label>
+            <input
+               {...register('repeat_password')}
+               id="repeat_password"
+               type="password"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.repeat_password ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập lại mật khẩu"
+            />
+            {errors?.repeat_password && <MessageTemplate message={errors?.repeat_password?.message} />}
          </div>
          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Photo</label>
+            <label className="block font-bold text-gray-dark mb-2" htmlFor="category">
+               Quyền:
+            </label>
+            <select
+               {...register('role')}
+               defaultValue={0}
+               id="role"
+               className={`py-2 px-3 border text-gray-dark text-sm rounded-md block w-full ${
+                  errors?.role ? ' border-2 border-red outline-none' : 'border-[#ccc]'
+               }`}
+            >
+               <option value={0}>Chọn quyền</option>
+               {roles?.map((role) => (
+                  <option key={role.id} value={role.id}>
+                     {role.name}
+                  </option>
+               ))}
+            </select>
+            {errors.role && <p className="text-red mt-1 text-xs italic">{errors?.role?.message}</p>}
+         </div>
+         <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Ảnh đại diện</label>
             <input type="file" onChange={handleAvatarChange} />
             {errors.photo && <p className="text-red mt-1 text-xs italic">{errors.photo.message}</p>}
          </div>

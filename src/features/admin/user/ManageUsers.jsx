@@ -1,314 +1,147 @@
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { Button } from 'primereact/button';
-import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
-import { Dialog } from 'primereact/dialog';
-import { InputSwitch } from 'primereact/inputswitch';
-import { InputText } from 'primereact/inputtext';
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import { FaPen, FaPlus, FaTrashAlt } from 'react-icons/fa';
+import { BiSearch } from 'react-icons/bi';
+import ModalMiddle from 'src/components/ModalMiddle';
+import TableUser from './components/TableUser';
+import { deleteUserAPI, getAllUsersAPI } from 'src/api/userApi';
 import AddUserForm from './components/AddUserForm';
 import EditUserForm from './components/EditUserForm';
-import { deleteUserAPI, getAllUsersAPI, getUserByIdAPI, updateUserAPI } from 'src/api/userApi';
-import { FaPen, FaPlus } from 'react-icons/fa';
-import { BiSearch } from 'react-icons/bi';
-import { BsFillTrashFill } from 'react-icons/bs';
+import toast from 'react-hot-toast';
 
 export default function ManageUsers() {
+   const [selectedUser, setSelectedUser] = useState(null);
+   const [searchKeyWord, setSearchKeyWord] = useState('');
+
+   const [openCreateModal, setOpenCreateModal] = useState(null);
+   const [openEditModal, setOpenEditModal] = useState(null);
+
    const [users, setUsers] = useState([]);
-   const [selectedUsers, setSelectedUsers] = useState([]);
-   const [globalFilterValue, setGlobalFilterValue] = useState('');
-   const [visible, setVisible] = useState(false);
-   const [selectedUserId, setSelectedUserId] = useState(null);
 
-   const [modalState, setModalState] = useState({
-      isVisible: false,
-      type: null,
-      userId: null,
-   });
-
+   // Reset modal này để reset lại tất cả các lỗi validate trong form trước đó, để khi mở lại modal sẽ reset lại form đó
+   const [resetModal, setResetModal] = useState(false);
    const [rerender, setRerender] = useState(0);
 
-   //Mở modal thêm user
-   const openAddUserModal = () => setModalState({ isVisible: true, type: 'add', userId: null });
-
-   //Mở modal edit user
-   const openEditUserModal = (userId) => setModalState({ isVisible: true, type: 'edit', userId: userId });
-
-   const [filters, setFilters] = useState({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      email: {
-         operator: FilterOperator.AND,
-         constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-   });
-
-   // Để lấy api về cũng như trả về dạng dữ liệu của api đó
-   //Fetch danh sách người dùng khi component được mount
    useEffect(() => {
-      const fetchUsers = async () => {
-         try {
-            const users = await getAllUsersAPI(); // Giả định getAllUsers là async và trả về data từ axios.get
-            setUsers(users.data); // Giả sử response trả về có dạng { data: [...] }
-         } catch (error) {
-            console.error(error);
-         }
-      };
-
-      fetchUsers();
-   }, [rerender]); // eslint-disable-line react-hooks/exhaustive-deps
-
-   const photoTemplate = (rowData) => {
-      return (
-         <img
-            src={rowData.photo}
-            alt={rowData.full_name}
-            style={{ width: '50px', height: '50px', borderRadius: '50%' }}
-         />
-      );
-   };
-
-   const onGlobalFilterChange = (e) => {
-      const value = e.target.value;
-      let _filters = { ...filters };
-
-      _filters['global'].value = value;
-
-      setFilters(_filters);
-      setGlobalFilterValue(value);
-   };
-
-   const renderHeader = () => {
-      return (
-         <div className="flex flex-wrap gap-2 justify-content-between align-items-center ">
-            <div className="flex ">
-               <h4 className="m-0">Users</h4>
-            </div>
-            <div className="flex justify-end ml-[16px] ">
-               <span className="p-input-icon-right">
-                  <BiSearch className="absolute right-2  text-2xl text-gray " />
-                  <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-               </span>
-            </div>
-         </div>
-      );
-   };
-
-   //Hàm check enable
-   const handleCheckedEnabled = async (users) => {
-      const userFetch = await getUserByIdAPI(users.user_id)
+      getAllUsersAPI()
          .then((res) => {
             if (res.status === 200) {
-               return res.data;
-            } else {
-               toast.error('Lỗi khi lấy dữ liệu user');
+               setUsers(res.data);
             }
          })
-         .catch((error) => {
-            toast.error(error.getMessage());
+         .catch((err) => {
+            console.log(err);
          });
-
-      const formData = new FormData();
-      formData.append(
-         'user',
-         new Blob(
-            [
-               JSON.stringify({
-                  username: userFetch.username,
-                  full_name: userFetch.full_name,
-                  email: userFetch.email,
-                  phone_number: userFetch.phone_number,
-                  password: 'Unknown password',
-                  enabled: !userFetch.enabled,
-               }),
-            ],
-            { type: 'application/json' },
-         ),
-      );
-
-      updateUserAPI(users.user_id, formData).then((res) => {
-         if (res.status === 200) {
-            setRerender(Math.random() * 1000);
-         } else {
-            toast.success('Cập nhật người dùng thất bại');
-         }
-      });
-   };
-
-   //Hàm xử lý enable
-   const actionEnabled = (rowData) => {
-      return (
-         <div className="flex justify-content-center">
-            <InputSwitch
-               checked={rowData.enabled}
-               onChange={() => {
-                  handleCheckedEnabled(rowData);
-               }}
-            />
-         </div>
-      );
-   };
+   }, [rerender]);
 
    // Hàm gọi API DELETE để xóa người dùng
-   const deleteUser = (userId) => {
-      setSelectedUserId(null);
+   const deleteUser = () => {
       try {
-         toast.promise(
-            deleteUserAPI(userId)
-               .then((res) => {
-                  if (res.status === 200) {
-                     setRerender(Math.random() * 1000);
-                  }
-               })
-               .catch((err) => {
-                  console.log(err);
-               }),
-            {
-               loading: 'Đang xử lý ...',
-               success: 'Xóa thành công',
-               error: 'Xóa thất bại',
-            },
-         );
+         deleteUserAPI(selectedUser?.user_id)
+            .then((res) => {
+               if (res.status === 200) {
+                  toast.success(res.data); // message
+                  setRerender(Math.random() * 1000);
+               } else {
+                  toast.error(res.data);
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+            });
          // Sau khi xóa thành công, cập nhật lại danh sách người dùng
       } catch (error) {
          console.error('Lỗi xóa user: ', error);
       }
    };
 
-   //Hành động kích hoạt xóa user
-   const actionDeleteTemplate = (rowData) => {
-      return (
-         <button
-            className="hover:opacity-60 py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white"
-            onClick={() => setSelectedUserId(rowData.user_id)} // Truyền mảng gồm một người dùng để xóa
-         >
-            <BsFillTrashFill />
-         </button>
-      );
-   };
-
-   const actionUpdateTemplate = (rowData) => {
-      return (
-         <button
-            label="Edit"
-            onClick={() => {
-               openEditUserModal(rowData.user_id);
-            }}
-            className="py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white "
-         >
-            <FaPen />
-         </button>
-      );
-   };
-
-   const header = renderHeader();
-
    return (
-      <div className=" card test-sm">
-         {/* Đoạn này để render ra cái modal thêm user */}
-         <div className="relative">
-            <div className="mb-[16px]">
+      <div>
+         <div className="bg-gray-light border border-[#cccccc85] rounded-lg w-full flex items-center justify-between px-8 py-5 font-bold">
+            <div className="flex items-center gap-3">
                <button
-                  label="Add User"
-                  onClick={openAddUserModal}
-                  className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white "
+                  className="py-3 px-4 text-sm bg-green rounded-lg flex items-center gap-2 text-white hover:opacity-80"
+                  onClick={() => {
+                     setOpenCreateModal(true);
+                  }}
                >
                   <FaPlus />
                </button>
-            </div>
-            {visible && <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50"></div>}
-         </div>
-         <DataTable
-            value={users}
-            paginator
-            header={header}
-            rows={5}
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            rowsPerPageOptions={[10, 25, 50]}
-            dataKey="id"
-            selectionMode="checkbox"
-            selection={selectedUsers}
-            onSelectionChange={(e) => setSelectedUsers(e.value)}
-            filters={filters}
-            filterDisplay="menu"
-            globalFilterFields={[
-               'id',
-               'username',
-               'email',
-               'photo',
-               'enabled',
-               'roleName',
-               'full_name',
-               'phone_number',
-            ]}
-            emptyMessage="No users found."
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-         >
-            <Column field="user_id" header="Id" sortable />
-            <Column field="photo" body={photoTemplate} header="Photo" sortable />
-            <Column field="email" header="Email" sortable />
-            <Column field="enabled" body={actionEnabled} header="Enabled" sortable />
-            <Column field="full_name" header="Full_name" sortable />
-
-            <Column
-               headerStyle={{ width: '5rem', textAlign: 'center' }}
-               bodyStyle={{ textAlign: 'center', overflow: 'visible' }}
-               body={actionUpdateTemplate}
-            />
-            <Column
-               headerStyle={{ width: '5rem', textAlign: 'center' }}
-               bodyStyle={{ textAlign: 'center', overflow: 'visible' }}
-               body={actionDeleteTemplate}
-            />
-         </DataTable>
-         {/* Xác nhận xóa người dùng có muốn xóa hay không */}
-         {selectedUserId && (
-            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50 flex justify-center items-center">
-               <div className="bg-white p-8 rounded shadow-md">
-                  <p>Are you sure you want to delete this user?</p>
-                  <div className="flex justify-end mt-4">
-                     <Button
-                        label="Confirm Delete"
-                        onClick={() => deleteUser(selectedUserId)}
-                        className="p-button-danger bg-[red] mr-2  text-white mt-5"
-                     />
-                     <Button
-                        label="Cancel"
-                        onClick={() => setSelectedUserId(null)}
-                        className="p-button-secondary bg-[gray] text-white mt-5"
-                     />
-                  </div>
-               </div>
-            </div>
-         )}
-
-         {modalState.isVisible && (
-            <Dialog
-               style={{ width: '55vw', height: '100vw' }}
-               header={modalState.type === 'add' ? 'Create New User' : 'Edit User'}
-               visible={modalState.isVisible}
-               onHide={() => setModalState({ isVisible: false, type: null, userId: null })}
-            >
-               {modalState.type === 'add' ? (
-                  <AddUserForm
-                     setRerender={setRerender}
-                     onClose={() => setModalState({ isVisible: false, type: null, userId: null })}
-                  />
-               ) : (
-                  <EditUserForm
-                     setRerender={setRerender}
-                     userId={modalState.userId}
-                     onClose={() =>
-                        setModalState({
-                           isVisible: false,
-                           type: null,
-                           userId: null,
-                        })
+               <button
+                  disabled={!selectedUser}
+                  className={`py-3 px-4 text-sm bg-blue rounded-lg flex items-center gap-2 text-white ${
+                     !selectedUser ? 'opacity-40' : 'opacity-100 hover:opacity-80'
+                  }`}
+                  onClick={() => {
+                     setOpenEditModal(true);
+                  }}
+               >
+                  <FaPen />
+               </button>
+               <button
+                  disabled={!selectedUser}
+                  className={`py-3 px-4 text-sm bg-red rounded-lg flex items-center gap-2 text-white ${
+                     !selectedUser ? 'opacity-40' : 'opacity-100 hover:opacity-80'
+                  }`}
+                  onClick={() => {
+                     const confirm = window.confirm('Bạn có chắc chắn xoá tài khoản này chứ?');
+                     if (confirm) {
+                        deleteUser();
                      }
-                  />
-               )}
-            </Dialog>
-         )}
+                  }}
+               >
+                  <FaTrashAlt />
+               </button>
+            </div>
+            <div className="relative">
+               <input
+                  id="search"
+                  spellCheck={false}
+                  type="text"
+                  value={searchKeyWord}
+                  onChange={(e) => setSearchKeyWord(e.target.value)}
+                  className={`rounded-lg w-full outline-[#ccc] px-5 py-3 h-11}`}
+                  placeholder="Nhập keyword"
+               />
+               <label htmlFor="search">
+                  <BiSearch className="absolute right-2 top-1/2 text-2xl text-gray transform -translate-y-1/2" />
+               </label>
+            </div>
+         </div>
+
+         <div>
+            <TableUser
+               users={users}
+               selectedUser={selectedUser}
+               setSelectedUser={setSelectedUser}
+               searchKeyWord={searchKeyWord}
+               setRerender={setRerender}
+            />
+         </div>
+
+         {/* Modal add user */}
+         <ModalMiddle
+            isShow={openCreateModal}
+            setIsShow={setOpenCreateModal}
+            setResetModal={setResetModal}
+            className={'w-fit mx-auto'}
+         >
+            <AddUserForm setOpenModal={setOpenCreateModal} setRerender={setRerender} resetModal={resetModal} />
+         </ModalMiddle>
+
+         {/* Modal update user */}
+         <ModalMiddle
+            isShow={openEditModal}
+            setIsShow={setOpenEditModal}
+            setResetModal={setResetModal}
+            className={'w-fit mx-auto'}
+         >
+            <EditUserForm
+               setOpenModal={setOpenEditModal}
+               setRerender={setRerender}
+               resetModal={resetModal}
+               selectedUser={selectedUser}
+            />
+         </ModalMiddle>
       </div>
    );
 }

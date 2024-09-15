@@ -74,7 +74,7 @@ export default function AddFormCourse({ categories, setOpenModal, setRerender, r
       reset,
       formState: { errors },
    } = useForm({
-      mode: 'onChange',
+      mode: 'onBlur',
       resolver: yupResolver(schema),
       defaultValues,
    });
