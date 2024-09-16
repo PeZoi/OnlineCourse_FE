@@ -1,25 +1,17 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from 'primereact/button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
 import { getCategoryByIdAPI, updateCategoryAPI } from 'src/api/categoryApi';
 
-const EditCategoryForm = ({ categoryId, onClose, setRerender }) => {
-   const [categoryData, setCategoryData] = useState();
-
+const EditCategoryForm = ({ setOpenModal, setRerender, resetModal, selectedCategory }) => {
    const schema = yup.object().shape({
       name: yup
          .string()
          .required('Tên không được để trống')
          .min(10, 'Tên phải có ít nhất 10 ký tự')
          .max(45, 'Tên chỉ được tối đa 45 ký tự'),
-      slug: yup
-         .string()
-         .max(50, 'Slug chỉ được tối đa 50 ký tự')
-         .matches(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and dashes'),
    });
 
    const {
@@ -33,12 +25,16 @@ const EditCategoryForm = ({ categoryId, onClose, setRerender }) => {
    });
 
    useEffect(() => {
+      if (resetModal) {
+         reset();
+      }
+   }, [reset, resetModal]);
+
+   useEffect(() => {
       //Fetch dữ liệu người dùng cần chỉnh sửa
       const fetchCategoryData = async () => {
          try {
-            const response = await getCategoryByIdAPI(categoryId);
-            setCategoryData(response.data);
-            console.log(response.data.title);
+            const response = await getCategoryByIdAPI(selectedCategory?.id);
             reset({
                name: response.data.name,
             });
@@ -46,30 +42,29 @@ const EditCategoryForm = ({ categoryId, onClose, setRerender }) => {
             console.error(error);
          }
       };
-      fetchCategoryData();
-   }, [categoryId]);
+
+      if (selectedCategory?.id) {
+         fetchCategoryData();
+      }
+   }, [reset, selectedCategory]);
 
    const onSubmit = async (data) => {
       try {
          //Post dữ liệu lên api
-         toast.promise(
-            updateCategoryAPI(categoryId, { name: data.name })
-               .then((res) => {
-                  if (res.status === 200) {
-                     setRerender(Math.random() * 1000);
-                     onClose();
-                  }
-               })
-               .catch((err) => {
-                  console.log(err);
-                  return err;
-               }),
-            {
-               loading: 'Đang cập nhật ...',
-               success: 'Cập nhật thành công',
-               error: 'Cập nhật thất bại',
-            },
-         );
+         updateCategoryAPI(selectedCategory?.id, { name: data.name })
+            .then((res) => {
+               if (res.status === 200) {
+                  setRerender(Math.random() * 1000);
+                  setOpenModal(false);
+                  toast.success('Cập nhật thành công');
+               } else {
+                  toast.error('Cập nhật thất bại');
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+               return err;
+            });
       } catch (error) {
          console.error(error);
       }
@@ -77,16 +72,26 @@ const EditCategoryForm = ({ categoryId, onClose, setRerender }) => {
 
    const onError = (errors, e) => console.log(errors, e);
 
+   function MessageTemplate({ message }) {
+      return <span className="italic text-xs ml-1 text-red">{message}</span>;
+   }
+
    return (
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="w-full max-w-sm  grid  gap-4 ml-[48px] mr-[48px]">
-         <div className="mb-4  ">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-4 w-80">
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="name">
+               Tên danh mục:
+            </label>
             <input
-               type="text"
-               className=" shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                {...register('name')}
+               id="name"
+               type="text"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.name ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập tên danh mục"
             />
-            {errors.name && <p className="text-red-500 text-xs italic">{errors.name.message}</p>}
+            {errors?.name && <MessageTemplate message={errors?.name?.message} />}
          </div>
          <div className="col-span-2 flex justify-center">
             <button className="py-1 px-3 font-medium rounded-lg bg-primary text-white hover:opacity-80 transition-all ">

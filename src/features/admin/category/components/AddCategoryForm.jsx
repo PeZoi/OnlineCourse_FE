@@ -1,91 +1,80 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import axios from 'axios';
-import { Button } from 'primereact/button';
-import toast from 'react-hot-toast';
 import { createCategoryAPI } from 'src/api/categoryApi';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
-const AddCategoryForm = ({ onClose, setRerender }) => {
+const AddCategoryForm = ({ setOpenModal, setRerender, resetModal }) => {
    const schema = yup.object().shape({
       name: yup
          .string()
          .required('Tên không được để trống')
          .min(10, 'Tên phải có ít nhất 10 ký tự')
          .max(45, 'Tên chỉ được tối đa 45 ký tự')
-         .transform((value) => value.trim()), // Xóa khoảng trắng ở đầu và cuối
-
-      slug: yup
-         .string()
-         // .required("Slug không được để trống")
-         // .min(4, "Slug có ít nhất 4 ký tự")
-         .max(50, 'Slug chỉ được tối đa 50 ký tự')
-         .matches(/^[a-z0-9-]+$/, 'Slug must contain only lowercase letters, numbers, and dashes')
-         .transform((value) => value.trim()), // Xóa khoảng trắng ở đầu và cuối
+         .transform((value) => value.trim()),
    });
 
    const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
    } = useForm({
       mode: 'onBlur',
       resolver: yupResolver(schema),
    });
 
+   // Reset validation
+   useEffect(() => {
+      if (resetModal) {
+         reset();
+      }
+   }, [reset, resetModal]);
+
    const onSubmit = async (data) => {
       try {
-         // Kiểm tra sự tồn tại của tên category trước khi thêm mới
-         const isNameExists = await checkNameExistsLocally(data.name);
-         if (isNameExists) {
-            toast.error('Tên category đã tồn tại!');
-            return;
-         }
-         //Post dữ liệu lên api
-         toast.promise(
-            createCategoryAPI({ name: data.name })
-               .then((res) => {
-                  if (res.status === 201) {
-                     setRerender(Math.random() * 1000);
-                     onClose();
-                  }
-               })
-               .catch((err) => {
-                  console.log(err);
-                  return err;
-               }),
-            {
-               loading: 'Đang xử lý ...',
-               success: 'Thêm thành công',
-               error: 'Thêm thất bại',
-            },
-         );
+         createCategoryAPI({ name: data.name })
+            .then((res) => {
+               if (res.status === 201) {
+                  setRerender(Math.random() * 1000);
+                  setOpenModal(false);
+                  toast.success('Thêm danh mục thành công');
+               } else {
+                  toast.error('Thêm danh mục thất bại');
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+               return err;
+            });
       } catch (error) {
          console.error(error);
       }
    };
 
-   // Hàm kiểm tra sự tồn tại của tên category (tính năng chỉ frontend)
-   const checkNameExistsLocally = async (name) => {
-      // Lấy danh sách các category hiện có từ state hoặc từ API nếu cần
-      const existingCategories = []; // Thay bằng danh sách category hiện có
-
-      // Kiểm tra xem tên category có tồn tại trong danh sách hiện có không
-      return existingCategories.some((category) => category.name === name);
-   };
-
    const onError = (errors, e) => console.log(errors, e);
 
+   function MessageTemplate({ message }) {
+      return <span className="italic text-xs ml-1 text-red">{message}</span>;
+   }
+
    return (
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="max-w-sm flex flex-col gap-4 ml-[48px] mr-[48px]">
-         <div className="mb-4  ">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="flex flex-col gap-4 w-80">
+         <div className="flex flex-col gap-2">
+            <label className="font-bold text-gray-dark" htmlFor="name">
+               Tên danh mục:
+            </label>
             <input
-               type="text"
-               className=" shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                {...register('name')}
+               id="name"
+               type="text"
+               className={`px-3 py-2 border rounded-md ${
+                  errors?.name ? ' border-2 border-red outline-none' : ' border-[#ccc] outline-[#aaa]'
+               }`}
+               placeholder="Nhập tên danh mục"
             />
-            {errors.name && <p className="text-red-500 text-xs italic">{errors.name.message}</p>}
+            {errors?.name && <MessageTemplate message={errors?.name?.message} />}
          </div>
 
          <div className="col-span-2 flex justify-center">
