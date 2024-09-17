@@ -10,6 +10,17 @@ export const getAllQAAPI = (lessonId) => {
       });
 };
 
+export const getAllQAForAdminAPI = () => {
+   return axios
+      .get(`/api/qa/get-all-list`)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
 export const createQAAPI = (data) => {
    return axios
       .post(`/api/qa/create`, data)

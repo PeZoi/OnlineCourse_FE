@@ -58,6 +58,7 @@ import ManageBlogs from 'src/features/admin/blog/ManageBlogs';
 import ManageContacts from 'src/features/admin/contact/ManageContacts';
 import CodeLayout from 'src/components/Layout/customer/CodeLayout';
 import CodeCompiler from 'src/features/code';
+import ManageQA from 'src/features/admin/q&a/ManageQA';
 
 export const router = createBrowserRouter([
    {
@@ -393,6 +394,10 @@ export const router = createBrowserRouter([
          {
             path: 'manage-course-reviews',
             element: <ManageReviews />,
+         },
+         {
+            path: 'manage-course-qa',
+            element: <ManageQA />,
          },
          {
             path: 'manage-blogs',

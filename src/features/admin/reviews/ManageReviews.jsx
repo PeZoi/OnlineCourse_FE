@@ -112,7 +112,7 @@ export default function ManageReviews() {
                   rows={10}
                   rowsPerPageOptions={[10, 25, 50]}
                   paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                  currentPageReportTemplate="Đang hiện {first} đến {last} trong tổng số {totalRecords} hoá đơn"
+                  currentPageReportTemplate="Đang hiện {first} đến {last} trong tổng số {totalRecords} đánh giá"
                   removableSort
                   resizableColumns
                   dataKey="id"

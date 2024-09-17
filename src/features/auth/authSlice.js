@@ -54,9 +54,9 @@ const authSlice = createSlice({
       }),
          builder.addCase(loginAsync.fulfilled, (state, action) => {
             if (action.payload.status !== 200) {
-               state.error = action.payload.data.message;
                state.loading = false;
-               toast.error(action.payload.data.message);
+               state.error = action.payload.message;
+               toast.error(action.payload.message);
             } else {
                state.user = action.payload.user;
                state.token = action.payload.token;

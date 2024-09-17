@@ -2,7 +2,7 @@ import { FaTachometerAlt, FaRegChartBar, FaRegUser, FaBook } from 'react-icons/f
 import { NavLink } from 'react-router-dom';
 import Header from './Header';
 import { FaMoneyBill1Wave } from 'react-icons/fa6';
-import { MdContactSupport, MdQuiz, MdRateReview } from 'react-icons/md';
+import { MdContactSupport, MdQuestionAnswer, MdQuiz, MdRateReview } from 'react-icons/md';
 import { BlogIcon } from 'src/public/icons';
 
 const Sidebar = ({ children }) => {
@@ -31,6 +31,11 @@ const Sidebar = ({ children }) => {
          path: '/admin/manage-orders',
          icon: <FaMoneyBill1Wave />,
          title: 'Đơn hàng',
+      },
+      {
+         path: '/admin/manage-course-qa',
+         icon: <MdQuestionAnswer />,
+         title: 'Hỏi đáp',
       },
       {
          path: '/admin/manage-course-reviews',
