@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from 'src/features/auth/authSlice';
 import { Avatar } from 'primereact/avatar';
 import { getMyCourses } from 'src/features/customer/course/courseSlice';
+import { ROLES } from 'src/utils/constant';
 
 export default function Action() {
    const dispatch = useDispatch();
@@ -168,9 +169,12 @@ export default function Action() {
                         <Link to={'/settings/personal'} className="block text-gray text-sm py-2 hover:text-black">
                            Cài đặt
                         </Link>
-                        {user?.role_name === 'ROLE_ADMIN' && (
+                        {ROLES.some((role) => role === user?.role_name) && (
                            <>
-                              <Link to={'/admin'} className="block text-gray text-sm py-2 hover:text-black">
+                              <Link
+                                 to={user?.role_name === ROLES[0] ? '/admin' : '/admin/manage-course-qa'}
+                                 className="block text-gray text-sm py-2 hover:text-black"
+                              >
                                  Trang quản trị
                               </Link>
                               <hr />

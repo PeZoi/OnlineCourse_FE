@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function PrivateAdminRoute({ children }) {
+export default function PrivateAdminRoute({ roles = [], children }) {
    const navigate = useNavigate();
    const { user, isLogged } = useSelector((state) => state.auth);
 
@@ -13,13 +13,13 @@ export default function PrivateAdminRoute({ children }) {
       if (!isLogged) {
          navigate('/?m=si', { replace: true });
       } else {
-         if (!(user?.role_name === 'ROLE_ADMIN')) {
+         if (!roles.some((role) => role === user?.role_name)) {
             navigate('/403');
          } else {
             setIsLoading(false);
          }
       }
-   }, [user, navigate, isLogged]);
+   }, [user, navigate, isLogged, roles]);
 
    return isLoading ? null : children;
 }

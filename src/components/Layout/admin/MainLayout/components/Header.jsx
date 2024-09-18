@@ -44,6 +44,14 @@ const Header = () => {
                            <button
                               className="block text-gray text-sm py-2 hover:text-black w-full text-start"
                               onClick={() => {
+                                 navigate('/');
+                              }}
+                           >
+                              Trang chủ
+                           </button>
+                           <button
+                              className="block text-gray text-sm py-2 hover:text-black w-full text-start"
+                              onClick={() => {
                                  navigate('/settings/personal');
                               }}
                            >

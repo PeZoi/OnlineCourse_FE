@@ -37,3 +37,5 @@ export const CODE_SNIPPETS = {
       'using System;\n\nnamespace HelloWorld\n{\n\tclass Hello { \n\t\tstatic void Main(string[] args) {\n\t\t\tConsole.WriteLine("Hello World in C#");\n\t\t}\n\t}\n}\n',
    c: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello, World!");\n\treturn 0;\n}`,
 };
+
+export const ROLES = ['ROLE_ADMIN', 'ROLE_ASSISTANT'];

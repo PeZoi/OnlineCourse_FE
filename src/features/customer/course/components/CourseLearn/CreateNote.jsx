@@ -5,7 +5,7 @@ import Editor from 'src/components/Editor';
 import { createNoteAPI } from 'src/api/noteApi';
 import toast from 'react-hot-toast';
 
-export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
+export default function CreateNote({ videoRef = null, currentTimeVideo = null, lesson }) {
    const [isShowCreateNote, setIsShowCreateNote] = useState(false);
    const [noteContent, setNoteContent] = useState('');
 
@@ -14,7 +14,7 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
       const data = {
          user_id: user?.user_id,
          lesson_id: lesson.id,
-         current_time: secondsConvert(currentTimeVideo),
+         current_time: currentTimeVideo == null ? secondsConvert(0) : secondsConvert(currentTimeVideo),
          content: noteContent,
       };
 
@@ -39,8 +39,10 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
             className="flex items-center p-3 bg-gray-light text-black rounded-lg hover:opacity-80 "
             onClick={() => {
                setIsShowCreateNote(!isShowCreateNote);
-               // Cho video dừng
-               videoRef.current.pause();
+               if (videoRef !== null) {
+                  // Cho video dừng
+                  videoRef.current.pause();
+               }
             }}
          >
             <CreateIcon className="size-4" />
@@ -68,8 +70,10 @@ export default function CreateNote({ videoRef, currentTimeVideo, lesson }) {
                      className="mr-3 text-gray hover:text-black px-4 py-2"
                      onClick={() => {
                         setIsShowCreateNote(false);
-                        // Cho video phát
-                        videoRef.current.play();
+                        if (videoRef !== null) {
+                           // Cho video phát
+                           videoRef.current.play();
+                        }
                      }}
                   >
                      Huỷ bỏ

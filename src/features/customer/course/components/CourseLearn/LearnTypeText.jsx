@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 import { getMyCourseSelected } from '../../courseSlice';
 import { fireCompletedLesson } from 'src/utils/fire';
+import CreateNote from './CreateNote';
 
 export default function LearnTypeText({ lesson }) {
    const { courseSelected, myCourseSelected } = useSelector((state) => state.course);
@@ -55,6 +56,10 @@ export default function LearnTypeText({ lesson }) {
                <span>HOÀN THÀNH</span>
                <ArrowRightIcon className="size-0 ml-3 visible font-semibold group-hover:size-3 transition-all ease-linear" />
             </button>
+         </div>
+         <hr className="mt-10" />
+         <div className="flex justify-end mt-10">
+            <CreateNote lesson={lesson} />
          </div>
       </div>
    );

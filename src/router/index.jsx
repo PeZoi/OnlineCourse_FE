@@ -59,6 +59,7 @@ import ManageContacts from 'src/features/admin/contact/ManageContacts';
 import CodeLayout from 'src/components/Layout/customer/CodeLayout';
 import CodeCompiler from 'src/features/code';
 import ManageQA from 'src/features/admin/q&a/ManageQA';
+import { ROLES } from 'src/utils/constant';
 
 export const router = createBrowserRouter([
    {
@@ -341,11 +342,9 @@ export const router = createBrowserRouter([
    {
       path: 'admin',
       element: (
-         <PrivateAdminRoute>
-            <MainLayoutAdmin>
-               <AdminPage />
-            </MainLayoutAdmin>
-         </PrivateAdminRoute>
+         <MainLayoutAdmin>
+            <AdminPage />
+         </MainLayoutAdmin>
       ),
       children: [
          {
@@ -354,58 +353,117 @@ export const router = createBrowserRouter([
          },
          {
             path: 'dashboard',
-            element: <Dashboard />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0], ROLES[1]]}>
+                  <Dashboard />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-users',
-            element: <ManageUsers />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageUsers />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-categories',
-            element: <ManageCategories />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageCategories />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-courses',
-            element: <ManageCourses />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageCourses />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-courses/:courseId',
-            element: <CourseDetailAdmin />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <CourseDetailAdmin />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-orders',
-            element: <OrderAdminPage />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <OrderAdminPage />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-contests',
-            element: <ManageContests />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageContests />
+               </PrivateAdminRoute>
+            ),
             children: [
-               { path: '', element: <ListContestPage /> },
+               {
+                  path: '',
+                  element: (
+                     <PrivateAdminRoute roles={[ROLES[0]]}>
+                        <ListContestPage />
+                     </PrivateAdminRoute>
+                  ),
+               },
                {
                   path: 'add',
-                  element: <AddContestPage />,
+                  element: (
+                     <PrivateAdminRoute roles={[ROLES[0]]}>
+                        <AddContestPage />
+                     </PrivateAdminRoute>
+                  ),
                },
                {
                   path: 'edit/:contestId',
-                  element: <EditContestPage />,
+                  element: (
+                     <PrivateAdminRoute roles={[ROLES[0]]}>
+                        <EditContestPage />
+                     </PrivateAdminRoute>
+                  ),
                },
             ],
          },
          {
             path: 'manage-course-reviews',
-            element: <ManageReviews />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0], ROLES[1]]}>
+                  <ManageReviews />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-course-qa',
-            element: <ManageQA />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0], ROLES[1]]}>
+                  <ManageQA />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-blogs',
-            element: <ManageBlogs />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageBlogs />
+               </PrivateAdminRoute>
+            ),
          },
          {
             path: 'manage-contacts',
-            element: <ManageContacts />,
+            element: (
+               <PrivateAdminRoute roles={[ROLES[0]]}>
+                  <ManageContacts />
+               </PrivateAdminRoute>
+            ),
          },
       ],
    },
