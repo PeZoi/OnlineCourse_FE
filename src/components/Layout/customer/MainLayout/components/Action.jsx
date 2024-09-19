@@ -171,10 +171,7 @@ export default function Action() {
                         </Link>
                         {ROLES.some((role) => role === user?.role_name) && (
                            <>
-                              <Link
-                                 to={user?.role_name === ROLES[0] ? '/admin' : '/admin/manage-course-qa'}
-                                 className="block text-gray text-sm py-2 hover:text-black"
-                              >
+                              <Link to={'/admin'} className="block text-gray text-sm py-2 hover:text-black">
                                  Trang quản trị
                               </Link>
                               <hr />

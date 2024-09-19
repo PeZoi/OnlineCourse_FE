@@ -1,26 +1,18 @@
 import { Link } from 'react-router-dom';
-import NotFoundSVG from 'src/public/images/404.svg';
 
 export default function NotFoundPage() {
    document.title = 'Không tìm thấy!';
 
    return (
       <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
-         <div className="relative h-[200px] w-full">
-            <div
-               className="absolute inset-0 bg-no-repeat bg-center bg-contain mask"
-               style={{
-                  backgroundImage: "url('https://fullstack.edu.vn/static/media/ccgradient.24a9b0fc1e10582a3f3d.jpg')",
-                  WebkitMaskImage: `url(${NotFoundSVG})`,
-                  maskImage: `url(${NotFoundSVG})`,
-                  WebkitMaskPosition: 'center',
-                  maskPosition: 'center',
-                  WebkitMaskRepeat: 'no-repeat',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskSize: 'auto',
-                  maskSize: 'auto',
-               }}
-            ></div>
+         <div className="h-[200px] w-full flex items-center justify-center">
+            <div className="mb-20">
+               <img
+                  src="https://png.pngtree.com/png-clipart/20220303/original/pngtree-error-404-under-construction-sign-3d-icon-website-banner-concept-png-image_7382631.png"
+                  alt=""
+                  className="w-80"
+               />
+            </div>
          </div>
          <h1 className="font-bold text-4xl">Không tìm thấy nội dung 😓</h1>
          <ul className="flex flex-col text-center font-medium mt-8 text-lg">

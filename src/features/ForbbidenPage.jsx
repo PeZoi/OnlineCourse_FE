@@ -1,25 +1,17 @@
 import { Link } from 'react-router-dom';
-import ForbbidenSVG from 'src/public/images/403.svg';
 
 export default function ForbbidenPage() {
    document.title = 'Không có quyền!';
    return (
       <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
-         <div className="relative h-[200px] w-full">
-            <div
-               className="absolute inset-0 bg-no-repeat bg-center bg-contain mask"
-               style={{
-                  backgroundImage: "url('https://fullstack.edu.vn/static/media/ccgradient.24a9b0fc1e10582a3f3d.jpg')",
-                  WebkitMaskImage: `url(${ForbbidenSVG})`,
-                  maskImage: `url(${ForbbidenSVG})`,
-                  WebkitMaskPosition: 'center',
-                  maskPosition: 'center',
-                  WebkitMaskRepeat: 'no-repeat',
-                  maskRepeat: 'no-repeat',
-                  WebkitMaskSize: 'auto',
-                  maskSize: 'auto',
-               }}
-            ></div>
+         <div className="flex justify-center items-center h-[200px] w-full mb-20">
+            <div>
+               <img
+                  src="https://cdn3d.iconscout.com/3d/premium/thumb/403-forbidden-error-3d-icon-download-in-png-blend-fbx-gltf-file-formats--status-code-http-response-pack-seo-web-icons-5073043.png?f=webp"
+                  alt=""
+                  className="w-80"
+               />
+            </div>
          </div>
          <h1 className="font-bold text-4xl">Bạn không có quyền truy cập vào đường dẫn này 😓</h1>
 

@@ -33,8 +33,8 @@ export default function Footer() {
                         title="DMCA Protected"
                      >
                         <img
-                           className="Footer_dmca__70ZIa"
-                           src="https://fullstack.edu.vn/static/media/dmca.2593d9ecf1c982e3c3a2.png"
+                           className="w-20"
+                           src="https://images.dmca.com/Badges/dmca-badge-w250-2x1-03.png"
                            alt="DMCA"
                         />
                      </a>

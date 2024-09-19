@@ -20,7 +20,7 @@ export default function Sidebar({ children }) {
       },
       {
          icon: <MdQuiz className="size-5" />,
-         name: 'Quiz',
+         name: 'Trắc nghiệm',
          path: '/quiz',
       },
       {
