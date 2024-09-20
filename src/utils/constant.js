@@ -38,4 +38,4 @@ export const CODE_SNIPPETS = {
    c: `#include <stdio.h>\n\nint main() {\n\tprintf("Hello, World!");\n\treturn 0;\n}`,
 };
 
-export const ROLES = ['ROLE_ADMIN', 'ROLE_ASSISTANT'];
+export const ROLES = ['ROLE_ADMIN', 'ROLE_ASSISTANT', 'ROLE_CUSTOMER'];

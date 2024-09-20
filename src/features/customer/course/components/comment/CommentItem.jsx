@@ -2,15 +2,16 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSolidPencil } from 'react-icons/bi';
 import { FaTrash } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { createQAAPI, deleteQAAPI, updateQAAPI } from 'src/api/qaApi';
 import Editor from 'src/components/Editor';
-import { getUserDataByLocalStorage } from 'src/utils/common';
+import { ROLES } from 'src/utils/constant';
 const Comment = ({ comment, isParent, isNested, setRerender }) => {
+   const { user } = useSelector((state) => state.auth);
    const [openCommentNested, setOpenCommentNested] = useState(isNested && true);
    const [commentContent, setCommentContent] = useState('');
    const [isCommenting, setIsCommenting] = useState(false);
    const [isUpdatingComment, setIsUpdatingComment] = useState(false);
-   const user = getUserDataByLocalStorage();
 
    const handleCreateComment = () => {
       const data = {
@@ -83,8 +84,20 @@ const Comment = ({ comment, isParent, isNested, setRerender }) => {
             <img className="size-9 rounded-full my-2" src={comment.photo_user} alt="Avatar"></img>
             <div className="flex-1 ml-4">
                <div className="rounded-2xl py-2 px-4 bg-gray-light min-w-fit max-w-fit overflow-hidden">
-                  <span className="font-semibold text-sm">{comment.username}</span>
-
+                  <div className="flex items-center gap-2">
+                     <span className="font-semibold text-sm">{comment.username}</span>
+                     {comment?.role_name !== ROLES[2] && (
+                        <span
+                           className={`inline-flex items-center rounded-md px-1 py-[2px] text-[8px] font-bold ring-1 ring-inset ${
+                              comment?.role_name === ROLES[0]
+                                 ? 'ring-red bg-[#f5727295] text-[#d31b1b]'
+                                 : 'ring-yellow bg-[#ffea607b] text-[#ffbc05]'
+                           }`}
+                        >
+                           {comment?.role_name === ROLES[0] ? 'ADMIN' : 'ASSISTANT'}
+                        </span>
+                     )}
+                  </div>
                   <div className="my-3 w-fit font-normal ql-snow">
                      <p className=" w-fit" dangerouslySetInnerHTML={{ __html: comment.content }}></p>
                   </div>
