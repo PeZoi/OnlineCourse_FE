@@ -81,7 +81,7 @@ const Comment = ({ comment, isParent, isNested, setRerender }) => {
    return (
       <div className={`pl-5 ml-${isNested ? 8 : 0} ${isNested && 'border-l-2 border-gray-light'}`}>
          <div id={comment.id} className="flex my-3" key={comment.id}>
-            <img className="size-9 rounded-full my-2" src={comment.photo_user} alt="Avatar"></img>
+            <img className="size-9 rounded-full my-2 object-cover" src={comment.photo_user} alt="Avatar"></img>
             <div className="flex-1 ml-4">
                <div className="rounded-2xl py-2 px-4 bg-gray-light min-w-fit max-w-fit overflow-hidden">
                   <div className="flex items-center gap-2">

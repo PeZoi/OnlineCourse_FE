@@ -3,21 +3,29 @@ import HTMLReactParser from 'html-react-parser';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiSearch } from 'react-icons/bi';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import { FaRegTrashAlt, FaReply } from 'react-icons/fa';
 import { deleteQAAPI, getAllQAForAdminAPI } from 'src/api/qaApi';
 import ModalMiddle from 'src/components/ModalMiddle';
 import useAxios from 'src/hooks/useAxios';
+import ReplyForm from './components/ReplyForm';
 
 export default function ManageQA() {
    const [rerender, setRerender] = useState(false);
+   const [openModalReply, setOpenModalReply] = useState(false);
    const [openModalDetailContent, setOpenModalDetailContent] = useState(null);
    const [selectContent, setSelectContent] = useState('');
+   const [replyContent, setReplyContent] = useState('');
+   const [selectQA, setSelectQA] = useState();
 
    const { response: qaList, loading } = useAxios(getAllQAForAdminAPI, [rerender]);
    const [searchKeyWord, setSearchKeyWord] = useState('');
+
+   useEffect(() => {
+      setReplyContent('');
+   }, [openModalReply]);
 
    const handleDeleteQA = (qaId) => {
       const confirm = window.confirm('Bạn có chắc chắn xoá chứ');
@@ -70,13 +78,29 @@ export default function ManageQA() {
       );
    };
 
-   const deleleTemplate = (rowData) => {
+   const actionTemplate = (rowData) => {
       return (
-         <Tippy content="Xoá đánh giá">
-            <button onClick={() => handleDeleteQA(rowData?.id)} className="flex items-center justify-center w-full">
-               <FaRegTrashAlt className="text-red size-5" />
-            </button>
-         </Tippy>
+         <div className="flex items-center">
+            <Tippy content="Trả lời">
+               <button
+                  onClick={() => {
+                     setSelectQA(rowData);
+                     setOpenModalReply(true);
+                  }}
+                  className="flex items-center justify-center w-full hover:opacity-60"
+               >
+                  <FaReply className="text-blue size-5" />
+               </button>
+            </Tippy>
+            <Tippy content="Xoá đánh giá">
+               <button
+                  className="flex items-center justify-center w-full hover:opacity-60"
+                  onClick={() => handleDeleteQA(rowData?.id)}
+               >
+                  <FaRegTrashAlt className="text-red size-5" />
+               </button>
+            </Tippy>
+         </div>
       );
    };
 
@@ -153,7 +177,7 @@ export default function ManageQA() {
                      header="Vào lúc"
                      body={(data) => stringFieldTemplate(data, 'created_at_formatted')}
                   ></Column>
-                  <Column header="Hành động" body={deleleTemplate}></Column>
+                  <Column header="Hành động" body={actionTemplate}></Column>
                </DataTable>
             </div>
          )}
@@ -165,7 +189,17 @@ export default function ManageQA() {
          >
             <p className="text-lg mt-5">{HTMLReactParser(selectContent)}</p>
          </ModalMiddle>
-         ;
+
+         {/* MODAL REPLY */}
+         <ModalMiddle isShow={openModalReply} setIsShow={setOpenModalReply} className={'w-fit px-10 mx-auto'}>
+            <ReplyForm
+               selectQA={selectQA}
+               setRerender={setRerender}
+               setOpenModalReply={setOpenModalReply}
+               replyContent={replyContent}
+               setReplyContent={setReplyContent}
+            />
+         </ModalMiddle>
       </div>
    );
 }
