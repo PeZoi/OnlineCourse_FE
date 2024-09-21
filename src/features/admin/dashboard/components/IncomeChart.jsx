@@ -33,10 +33,16 @@ export default function IncomeChart(props) {
       labels,
       datasets: [
          {
-            label: 'Tổng Doanh thu',
+            label: 'Tổng doanh thu',
             data: props.data?.map((data) => data.total_income),
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
+         },
+         {
+            label: 'Tổng số hoá đơn',
+            data: props.data?.map((data) => data.order_count),
+            borderColor: 'rgb(126, 190, 155)',
+            backgroundColor: 'rgb(126, 190, 155, 0.5)',
          },
       ],
    };

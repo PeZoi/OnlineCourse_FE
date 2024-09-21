@@ -39,3 +39,15 @@ export const CODE_SNIPPETS = {
 };
 
 export const ROLES = ['ROLE_ADMIN', 'ROLE_ASSISTANT', 'ROLE_CUSTOMER'];
+
+// Màu để dùng cho thống kê
+export const COLORS = [
+   'rgb(237, 108, 2)',
+   'rgb(153, 51, 0)',
+   'rgb(25, 135, 84)',
+   'rgb(78, 78, 230)',
+   'rgb(121, 55, 170)',
+   'rgb(50, 166, 219)',
+   'rgb(241, 196, 2)',
+   'rgb(245, 62, 45)',
+];

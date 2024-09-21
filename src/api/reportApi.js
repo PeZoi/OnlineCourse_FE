@@ -24,10 +24,34 @@ export const getSaleIncomeDataByPeriodAPI = (period) => {
       });
 };
 
-// CCC => Category, Course, Contest (Lấy ra các số liệu của 3 cái)
-export const getCCCDataByPeriodAPI = (groupBy, period) => {
+// Lấy thông số tổng số tiền theo category
+export const getCategoryIncomeAPI = () => {
    return axios
-      .get(`/api/report/sales/${groupBy}/${period}`)
+      .get(`/api/report/category-income`)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
+// Lấy thông số tổng số tiền theo course
+export const getCourseIncomeAPI = (period) => {
+   return axios
+      .get(`/api/report/course-income/${period}`)
+      .then((res) => {
+         return res;
+      })
+      .catch((err) => {
+         return err;
+      });
+};
+
+// Lấy thông số contest
+export const getContestReportAPI = () => {
+   return axios
+      .get(`/api/report/contest-report`)
       .then((res) => {
          return res;
       })

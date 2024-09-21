@@ -1,6 +1,6 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { getRandomColor } from 'src/utils/common';
+import { COLORS } from 'src/utils/constant';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -23,8 +23,8 @@ export default function CategoryChart(props) {
          {
             label: 'Doanh thu',
             data: props.data?.map((data) => data.total_income),
-            backgroundColor: props.data?.map(() => getRandomColor()),
-            borderColor: ['rgba(0, 0, 0, 1)'],
+            backgroundColor: COLORS,
+            borderColor: ['rgba(0, 0, 0, 0.5)'],
             borderWidth: 1,
          },
       ],

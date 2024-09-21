@@ -2,7 +2,13 @@ import { BiSolidCategoryAlt } from 'react-icons/bi';
 import { FaBook, FaUser } from 'react-icons/fa';
 import { RiBillFill } from 'react-icons/ri';
 import { MdAttachMoney, MdQuiz, MdRateReview } from 'react-icons/md';
-import { getCCCDataByPeriodAPI, getGeneralDataAPI, getSaleIncomeDataByPeriodAPI } from 'src/api/reportApi';
+import {
+   getCategoryIncomeAPI,
+   getContestReportAPI,
+   getCourseIncomeAPI,
+   getGeneralDataAPI,
+   getSaleIncomeDataByPeriodAPI,
+} from 'src/api/reportApi';
 import useAxios from 'src/hooks/useAxios';
 import { BlogIcon } from 'src/public/icons';
 import { formatCurrency } from 'src/utils/common';
@@ -16,8 +22,7 @@ import ContestJoinCountChart from './components/ContestJoinCountChart';
 
 const TYPE_PERIOD = [
    { value: 'last_7_days', display: '7 ngày trước' },
-   { value: 'last_28_days', display: '28 ngày trước' },
-   { value: 'last_6_months', display: '6 tháng trước' },
+   { value: 'last_14_days', display: '14 ngày trước' },
    { value: 'last_year', display: '12 tháng trước' },
 ];
 
@@ -29,18 +34,9 @@ const Dashboard = () => {
       () => getSaleIncomeDataByPeriodAPI(period),
       [period],
    );
-   const { response: categoryData, loading: loadingCategory } = useAxios(
-      () => getCCCDataByPeriodAPI('CATEGORY', period),
-      [period],
-   );
-   const { response: courseData, loading: loadingCourse } = useAxios(
-      () => getCCCDataByPeriodAPI('COURSE', period),
-      [period],
-   );
-   const { response: contestData, loading: loadingContest } = useAxios(
-      () => getCCCDataByPeriodAPI('CONTEST', period),
-      [period],
-   );
+   const { response: categoryData, loading: loadingCategory } = useAxios(getCategoryIncomeAPI, []);
+   const { response: courseData, loading: loadingCourse } = useAxios(() => getCourseIncomeAPI(period), [period]);
+   const { response: contestData, loading: loadingContest } = useAxios(getContestReportAPI, []);
 
    return (
       <div className="pt-[25px] px-[25px] pb-20">
